@@ -56,9 +56,10 @@ public class FearSignalReader : MonoBehaviour
         float dB = 20 * Mathf.Log10(rms + 1e-7f); 
         currentDB = dB;
 
+        float displayDB = dB + 60f; // 화면에 양수로 표현하기 위해 오프셋 60 더함.
 
         if (decibelText)
-            decibelText.text = $"Decibel_Now: {Mathf.RoundToInt(dB)} dB";
+            decibelText.text = $"Decibel_Now: {Mathf.Round(displayDB)} dB";
         
     }
 

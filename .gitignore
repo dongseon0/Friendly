@@ -1,0 +1,19 @@
+# Unity ignores
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Burst
+[Bb]urst/
+
+# Test files
+testfile.tmp
+

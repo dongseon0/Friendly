@@ -10,7 +10,9 @@ public class FearSignalReader : MonoBehaviour
 
     private AudioClip micClip;
     private Vector2 lastMousePos;
-    private float mouseShakeAmount;
+
+    public float currentDB = 0f;
+    public float mouseShakeAmount;
 
     void Start()
     {
@@ -51,10 +53,13 @@ public class FearSignalReader : MonoBehaviour
 
         float rms = Mathf.Sqrt(sum / samples.Length);
 
-        float dB = 20 * Mathf.Log10(rms + 1e-7f); // 안정성
+        float dB = 20 * Mathf.Log10(rms + 1e-7f); 
+        currentDB = dB;
+
 
         if (decibelText)
             decibelText.text = $"Decibel_Now: {Mathf.RoundToInt(dB)} dB";
+        
     }
 
     // 2. 마우스 흔들림 측정

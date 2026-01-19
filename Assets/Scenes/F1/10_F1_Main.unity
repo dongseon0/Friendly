@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 73731288}
   m_Layer: 0
-  m_Name: DoorMarkder_Room4
+  m_Name: DoorMarkder_R4(invalid)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1861,7 +1861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 550909284}
   m_Layer: 0
-  m_Name: DoorMarker_Room1
+  m_Name: DoorMarker_R1(invalid)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3742,7 +3742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1499810981}
   m_Layer: 0
-  m_Name: DoorMarker_Room2
+  m_Name: DoorMarker_R2(invalid)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4545,7 +4545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2078596519}
   m_Layer: 0
-  m_Name: DoorMarkder_Room5
+  m_Name: DoorMarkder_R5(invalid)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4576,7 +4576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2080368191}
   m_Layer: 0
-  m_Name: DoorMarker_Room3
+  m_Name: DoorMarker_R3(invalid)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -56,71 +56,88 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Assets\SojinAsset\EasyRoads3D\lib\EasyRoads3Dv3.dll" />
+    <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Assets\SojinAsset\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll" />
+    <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Assets\SojinAsset\EasyRoads3D\lib\DelaunayER.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\UnityChan\Scripts\SpringManager.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\RandomWind.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\IdleChanger.cs" />
-    <Compile Include="Assets\Enviroment\enviroment\Office building\scripts\evelator_controll.cs" />
-    <Compile Include="Assets\Enviroment\enviroment\Office building\scripts\Door.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\SpringBone.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\FaceUpdate.cs" />
-    <Compile Include="Assets\Enviroment\enviroment\Office building\scripts\pass_on_parent.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\ThirdPersonCamera.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\SpringCollider.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\CameraController.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\AutoBlink.cs" />
+    <Compile Include="Assets\SojinAsset\Office building\scripts\DoorAction.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\SpringBone.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\SceneSwitchGen.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\MouseLook.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\Rotator.cs" />
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Z Axis -1\Drawer_Pull_Zopp.cs" />
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipR.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\CameraController.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Drawer\X Axis\Drawer_Pull_X.cs" />
+    <Compile Include="Assets\Keypad\Scripts\SlidingDoor.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor1.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\SpringCollider.cs" />
+    <Compile Include="Assets\Keypad\Scripts\KeypadButton.cs" />
+    <Compile Include="Assets\SojinAsset\Office building\scripts\evelator_controll.cs" />
+    <Compile Include="Assets\ScifiOfficeLite\Scripts\DemoFirstPersonController.cs" />
+    <Compile Include="Assets\SojinAsset\Office building\scripts\Door.cs" />
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Slide\BRGlassDoor.cs" />
+    <Compile Include="Assets\SojinAsset\Office building\scripts\Fix_elevator_fall.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Drawer\Z Axis\Drawer_Pull_Z.cs" />
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Slide\opencloseSlide.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Dongseon0\PlayerController.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\Rotator.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\AutoBlink.cs" />
-    <Compile Include="Assets\Enviroment\enviroment\Office building\scripts\DoorAction.cs" />
-    <Compile Include="Assets\UnityChan\Scripts\IKCtrlRightHand.cs" />
-    <Compile Include="Assets\Enviroment\enviroment\Office building\scripts\Fix_elevator_fall.cs" />
+    <Compile Include="Assets\Keypad\Scripts\Keypad.cs" />
+    <Compile Include="Assets\Keypad\Scripts\KeypadInteractionFPV.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseStallDoor.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\FaceUpdate.cs" />
+    <Compile Include="Assets\SojinAsset\Office building\scripts\pass_on_parent.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\ThirdPersonCamera.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\SpringManager.cs" />
+    <Compile Include="Assets\ScifiOfficeLite\Scripts\DemoDoor.cs" />
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipL.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\IdleChanger.cs" />
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Closet\ClosetopencloseDoor.cs" />
+    <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\IKCtrlRightHand.cs" />
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Windows\opencloseWindowApt.cs" />
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\OvenOpen\OvenFlip.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\RandomWind.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\EasyRoads3D\lib\DelaunayER.dll" />
+    <None Include="Assets\SojinAsset\EasyRoads3D\lib\DelaunayER.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
-    <None Include="Assets\EasyRoads3D\SRP Support Packages\_Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\EasyRoads3D\Resources\custom prefabs\_custom prefabs.txt" />
-    <None Include="Assets\EasyRoads3D\prefab meshes\_custom prefabs.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\EasyRoads3D\Quick Start.txt" />
+    <None Include="Assets\QA_Books\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\EasyRoads3D\lib\EasyRoads3Dv3.dll" />
-    <None Include="Assets\EasyRoads3D\_readme .txt" />
+    <None Include="Assets\SojinAsset\EasyRoads3D\lib\EasyRoads3Dv3.dll" />
     <None Include="Assets\README_UnityChan_en.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\EasyRoads3D\shaders\ER Surface.shader" />
+    <None Include="Assets\SojinAsset\EasyRoads3D\shaders\ER Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\EasyRoads3D\shaders\ER Road.shader" />
+    <None Include="Assets\SojinAsset\EasyRoads3D\shaders\ER Road.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\UnityChan\Voice\unity-chan_voice_list.txt" />
-    <None Include="Assets\EasyRoads3D\shaders\ER Road Transparency.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\EasyRoads3D\Resources\dynamic prefabs\dynamic prefabs.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\Enviroment\enviroment\Office building\Read me.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\EasyRoads3D\prefab sources\_custom prefabs.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
-    <None Include="Assets\EasyRoads3D\_Release Notes.txt" />
     <None Include="Assets\README_UnityChan_jp.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -597,7 +614,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="DelaunayER">
-      <HintPath>Assets\EasyRoads3D\lib\DelaunayER.dll</HintPath>
+      <HintPath>Assets\SojinAsset\EasyRoads3D\lib\DelaunayER.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
@@ -609,7 +626,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="EasyRoads3Dv3">
-      <HintPath>Assets\EasyRoads3D\lib\EasyRoads3Dv3.dll</HintPath>
+      <HintPath>Assets\SojinAsset\EasyRoads3D\lib\EasyRoads3Dv3.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Hashing">

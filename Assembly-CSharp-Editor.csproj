@@ -56,16 +56,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Assets\SojinAsset\EasyRoads3D\lib\EasyRoads3Dv3.dll" />
+    <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Assets\SojinAsset\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll" />
+    <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Assets\SojinAsset\EasyRoads3D\lib\DelaunayER.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\UnityChan\Editor\CreateLocatorHere.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
+    <Compile Include="Assets\SojinAsset\UnityChan\Editor\CreateLocatorHere.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll" />
+    <None Include="Assets\SojinAsset\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -557,7 +560,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="DelaunayER">
-      <HintPath>Assets\EasyRoads3D\lib\DelaunayER.dll</HintPath>
+      <HintPath>Assets\SojinAsset\EasyRoads3D\lib\DelaunayER.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.YamlDotNet">
@@ -577,7 +580,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="EasyRoads3Dv3Editor">
-      <HintPath>Assets\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll</HintPath>
+      <HintPath>Assets\SojinAsset\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
@@ -593,7 +596,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="EasyRoads3Dv3">
-      <HintPath>Assets\EasyRoads3D\lib\EasyRoads3Dv3.dll</HintPath>
+      <HintPath>Assets\SojinAsset\EasyRoads3D\lib\EasyRoads3Dv3.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.IonicZip">

@@ -822,7 +822,8 @@ PlayerSettings:
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Standalone: UNITY_PIPELINE_URP
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
@@ -919,7 +920,7 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: 3f2224c2-5dd0-40bc-933d-ac1d92728377
   framebufferDepthMemorylessMode: 0

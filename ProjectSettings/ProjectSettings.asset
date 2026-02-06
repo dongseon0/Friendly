@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 5fbea070672f94f9a828055ce409d2f0
+  productGUID: 65bfe3614eb00c64093f83b2b1ffc3a0
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Friendly_6
+  productName: Friendly-0206
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -843,14 +843,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Friendly_6
+  metroPackageName: Friendly-0206
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Friendly_6
+  metroApplicationDescription: Friendly-0206
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -921,11 +921,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 3f2224c2-5dd0-40bc-933d-ac1d92728377
+  cloudProjectId: 31837515-d72d-47ee-a0d1-32ad178f72d8
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Friendly_6
-  organizationId: ydsperfect08
+  projectName: Friendly-0206
+  organizationId: juyoung03715-gmail-com
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

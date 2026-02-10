@@ -33,10 +33,11 @@ public class PlayerController : MonoBehaviour
             transform.forward * moveInput.y;
 
         rb.linearVelocity = new Vector3(
-            move.x * moveSpeed,
-            rb.linearVelocity.y,
-            move.z * moveSpeed
+        move.x * moveSpeed,
+        rb.linearVelocity.y,
+        move.z * moveSpeed
         );
+
     }
 
     void Update()
@@ -58,11 +59,14 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.started || !isGrounded) return;
+        Debug.Log($"Jump ctx.phase={ctx.phase} grounded={isGrounded}");
+        if (!ctx.performed || !isGrounded) return;
 
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
     }
+
+
 
 
     void HandleLook()

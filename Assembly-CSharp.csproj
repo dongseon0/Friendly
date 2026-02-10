@@ -61,6 +61,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Brick Project Studio\Apartment Kit\Scenes\Quitgame.cs" />
     <Compile Include="Assets\SojinAsset\UnityChan\Scripts\AutoBlink.cs" />
     <Compile Include="Assets\SojinAsset\Office building\scripts\DoorAction.cs" />
     <Compile Include="Assets\SojinAsset\UnityChan\Scripts\SpringBone.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Drawer\X Axis\Drawer_Pull_X.cs" />
     <Compile Include="Assets\Keypad\Scripts\SlidingDoor.cs" />
+    <Compile Include="Assets\Scripts\TitleManager.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor1.cs" />
     <Compile Include="Assets\SojinAsset\UnityChan\Scripts\SpringCollider.cs" />
     <Compile Include="Assets\Keypad\Scripts\KeypadButton.cs" />
@@ -99,9 +101,11 @@
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipL.cs" />
     <Compile Include="Assets\SojinAsset\UnityChan\Scripts\IdleChanger.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Closet\ClosetopencloseDoor.cs" />
+    <Compile Include="Assets\Scripts\TestInteraction.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\SojinAsset\UnityChan\Scripts\IKCtrlRightHand.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Windows\opencloseWindowApt.cs" />
+    <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\OvenOpen\OvenFlip.cs" />
     <Compile Include="Assets\SojinAsset\UnityChan\Scripts\RandomWind.cs" />
   </ItemGroup>
@@ -133,6 +137,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\Brick Project Studio\Apartment Kit\Scenes\BPS Apartment Kit.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\README_UnityChan_jp.txt" />

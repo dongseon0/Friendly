@@ -12,8 +12,11 @@ public class PlayerController : MonoBehaviour
     public float mouseSensitivity = 0.12f;
 
     [Header("Interact")]
-    public float interactDistance = 2f;
+    public float interactDistance = 4f;
     public LayerMask interactLayer;
+    public GameObject interactUI;
+    public InventoryManager inventory;
+
 
     Rigidbody rb;
     Vector2 moveInput;
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleLook(); // 매 프레임 이동 처리
+        CheckInteractable();
     }
 
     // Input Events
@@ -79,28 +83,26 @@ public class PlayerController : MonoBehaviour
     {
         if (!ctx.performed) return;
 
-        // Ray 쏘기
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
         {
-            // 1) 콜라이더에 직접 붙어있으면
-            if (hit.collider.TryGetComponent<MonoBehaviour>(out var mb) && mb is IInteractable i1)
+            var interactable = hit.collider.GetComponent<IInteractable>();
+            if (interactable != null)
             {
-                i1.Interact();
-                return;
-            }
-
-            // 2) 부모 오브젝트에 붙어있으면 (자주 필요)
-            var i2 = hit.collider.GetComponentInParent<MonoBehaviour>();
-            if (i2 is IInteractable i3)
-            {
-                i3.Interact();
-                return;
+                interactable.Interact();
             }
         }
-
-        Debug.Log("Interact pressed (no target)");
     }
+
+    // X키로 인벤토리 열기
+    public void OnInventory(InputAction.CallbackContext ctx)
+    {
+        if (!ctx.performed) return;
+        inventory.ToggleInventory();
+    }
+
+
 
 
     void HandleLook()
@@ -117,6 +119,24 @@ public class PlayerController : MonoBehaviour
 
         transform.Rotate(Vector3.up * mouseX);
     }
+
+    void CheckInteractable()
+    {
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
+        {
+            if (hit.collider.GetComponent<IInteractable>() != null)
+            {
+                interactUI.SetActive(true);
+                return;
+            }
+        }
+
+        interactUI.SetActive(false);
+    }
+
+
 
     void OnCollisionEnter(Collision col)
     {

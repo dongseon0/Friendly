@@ -11,11 +11,16 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     public float mouseSensitivity = 0.12f;
 
+    [Header("Interact")]
+    public float interactDistance = 2f;
+    public LayerMask interactLayer;
+
     Rigidbody rb;
     Vector2 moveInput;
     Vector2 lookInput;
     float cameraPitch;
     bool isGrounded;
+    
 
     void Awake()
     {
@@ -47,16 +52,19 @@ public class PlayerController : MonoBehaviour
 
     // Input Events
 
+    // WASD 움직이기
     public void OnMove(InputAction.CallbackContext ctx)
     {
         moveInput = ctx.ReadValue<Vector2>();
     }
 
+    // 마우스로 시야 움직이기
     public void OnLook(InputAction.CallbackContext ctx)
     {
         lookInput = ctx.ReadValue<Vector2>();
     }
 
+    // Space바로 점프처리
     public void OnJump(InputAction.CallbackContext ctx)
     {
         Debug.Log($"Jump ctx.phase={ctx.phase} grounded={isGrounded}");
@@ -66,12 +74,38 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
     }
 
+    // Z키로 상호작용하기
+    public void OnInteract(InputAction.CallbackContext ctx)
+    {
+        if (!ctx.performed) return;
 
+        // Ray 쏘기
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
+        {
+            // 1) 콜라이더에 직접 붙어있으면
+            if (hit.collider.TryGetComponent<MonoBehaviour>(out var mb) && mb is IInteractable i1)
+            {
+                i1.Interact();
+                return;
+            }
+
+            // 2) 부모 오브젝트에 붙어있으면 (자주 필요)
+            var i2 = hit.collider.GetComponentInParent<MonoBehaviour>();
+            if (i2 is IInteractable i3)
+            {
+                i3.Interact();
+                return;
+            }
+        }
+
+        Debug.Log("Interact pressed (no target)");
+    }
 
 
     void HandleLook()
     {
-        // 입력값에 따라 위치 변경 (X, Y 축 이동)
+        // 입력값에 따라 위치 변경 
         float mouseX = lookInput.x * mouseSensitivity;
         float mouseY = lookInput.y * mouseSensitivity;
 
@@ -86,7 +120,16 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.CompareTag("Ground"))
-            isGrounded = true;
+        if (col.collider.CompareTag("Ground")) isGrounded = true;
+    }
+
+    void OnCollisionStay(Collision col)
+    {
+        if (col.collider.CompareTag("Ground")) isGrounded = true;
+    }
+
+    void OnCollisionExit(Collision col)
+    {
+        if (col.collider.CompareTag("Ground")) isGrounded = false;
     }
 }

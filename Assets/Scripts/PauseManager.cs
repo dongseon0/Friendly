@@ -11,9 +11,29 @@ public class PauseManager : MonoBehaviour
     public PlayerInput playerInput;  
 
     bool isPaused;
+    public static PauseManager Instance; // 중복 방지용 싱글톤
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject); // 중복이면 삭제
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
+        SetPaused(false);
+    }
+
+     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 씬 바뀌면 새 PlayerInput 다시 잡기
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player) playerInput = player.GetComponent<PlayerInput>();
         SetPaused(false);
     }
 

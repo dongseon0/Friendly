@@ -25,6 +25,13 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // Scene 넘어가도 인벤토리 유지되도록ㄴ
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+
     public void ToggleInventory()
     {
         inventoryPanel.SetActive(!inventoryPanel.activeSelf);

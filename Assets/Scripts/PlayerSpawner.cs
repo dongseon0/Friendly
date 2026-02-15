@@ -18,7 +18,7 @@ public class PlayerSpawner : MonoBehaviour
             return;
         }
 
-        var spawn = Object.FindFirstObjectByType<PlayerSpawnPoint>();
+        var spawn = Object.FindFirstObjectByType<PlayerSpawnPoint>(); // PlayerSpawnPoint.cs가 붙어있으면 그자리에 스폰됨
         if (spawn == null)
         {
             Debug.LogWarning("[PlayerSpawner] No PlayerSpawnPoint found in this scene.");

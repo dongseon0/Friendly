@@ -1,46 +1,55 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class PauseManager : MonoBehaviour
 {
-    [Header("UI")]
     public GameObject pauseCanvasRoot;
+    public PlayerInput playerInput;
 
-    [Header("Input")]
-    public PlayerInput playerInput;  
-
-    bool isPaused;
-    public static PauseManager Instance; // 중복 방지용 싱글톤
+    private bool isPaused;
+    public static PauseManager Instance;
 
     void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject); // 중복이면 삭제
-            return;
-        }
+        if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void Start()
     {
+        Time.timeScale = 1f;
         SetPaused(false);
     }
 
-     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnDestroy()
     {
-        // 씬 바뀌면 새 PlayerInput 다시 잡기
+        if (Instance == this)
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player) playerInput = player.GetComponent<PlayerInput>();
+
+        Time.timeScale = 1f;
         SetPaused(false);
+
+        if (pauseCanvasRoot == null)
+        {
+            var panel = Resources.FindObjectsOfTypeAll<Transform>()
+                .FirstOrDefault(t => t.name == "PausePanel" && t.gameObject.scene.isLoaded);
+            if (panel != null) pauseCanvasRoot = panel.gameObject;
+        }
     }
 
-    // Pause 상태 (esc 누르는 경우)
     public void OnPause(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed) return;   // Press Only면 performed 한 번만
+        if (!ctx.performed) return;
         SetPaused(!isPaused);
     }
 
@@ -55,11 +64,8 @@ public class PauseManager : MonoBehaviour
         Cursor.visible = paused;
         Cursor.lockState = paused ? CursorLockMode.None : CursorLockMode.Locked;
 
-        // 맵 스위치 (Player 맵과 UI맵)
         if (playerInput)
-        {
             playerInput.SwitchCurrentActionMap(paused ? "UI" : "Player");
-        }
     }
 
     public void OnClickResume() => SetPaused(false);

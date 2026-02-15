@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class Bootstrapper : MonoBehaviour
+public static class Bootstrapper
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Init()
     {
-        
-    }
+        if (Object.FindFirstObjectByType<PersistentRoot>() != null) return;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var prefab = Resources.Load<GameObject>("[PersistentRoot]");
+        if (prefab == null)
+        {
+            Debug.LogError("[Bootstrapper] Resources/[PersistentRoot].prefab not found.");
+            return;
+        }
+
+        var go = Object.Instantiate(prefab);
+        Object.DontDestroyOnLoad(go);
     }
 }

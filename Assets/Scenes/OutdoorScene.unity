@@ -2664,6 +2664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9932ba992b0641328a76741b765ccc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnID: 
 --- !u!4 &590782709
 Transform:
   m_ObjectHideFlags: 0
@@ -12454,6 +12455,51 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bde2a622d06ff1a41a155d6e61fb9a7b, type: 3}
+--- !u!1 &1094981525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1094981526}
+  - component: {fileID: 1094981527}
+  m_Layer: 0
+  m_Name: SpawnPoint_Hospital
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1094981526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094981525}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
+  m_LocalPosition: {x: 130.53, y: 2.8511, z: 207.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1094981527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094981525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9932ba992b0641328a76741b765ccc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnID: From_Outdoor
 --- !u!1001 &1108396905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13678,6 +13724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: 10_F1_Main
+  targetSpawnID: From_1F
 --- !u!65 &1426681531
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14409,6 +14456,51 @@ Texture2D:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1655595666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1655595668}
+  - component: {fileID: 1655595667}
+  m_Layer: 0
+  m_Name: SpawnPoint_Ossuary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1655595667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655595666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9932ba992b0641328a76741b765ccc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnID: From_Ossuary
+--- !u!4 &1655595668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655595666}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
+  m_LocalPosition: {x: 120.08, y: 5.15, z: 108.13992}
+  m_LocalScale: {x: 5.456238, y: 4.671571, z: 4.667511}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1660816778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14918,6 +15010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: OssuaryIndoorScene
+  targetSpawnID: 
 --- !u!65 &1750476185
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16067,4 +16160,6 @@ SceneRoots:
   - {fileID: 1396697568}
   - {fileID: 1376083688}
   - {fileID: 1750476188}
+  - {fileID: 1655595668}
   - {fileID: 1426681534}
+  - {fileID: 1094981526}

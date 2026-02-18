@@ -1,15 +1,37 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class TestInteraction : MonoBehaviour
 {
-    // ÇÃ·¹ÀÌ¾î°¡ Åõ¸í ¹Ú½º ¾È¿¡ µé¾î¿Í ÀÖ´Â µ¿¾È °è¼Ó ½ÇÇàµÊ
-    private void OnTriggerStay(Collider other)
+    // í”Œë ˆì´ì–´ê°€ SceneLoader ì˜ì—­ ì•ˆì— ìˆëŠ”ì§€
+    private bool isPlayerInRange = false;
+
+    private void Update()
     {
-        // µé¾î¿Â °Ô ÇÃ·¹ÀÌ¾îÀÌ°í + ZÅ°¸¦ ´­·¶´Ù¸é?
-        if (other.CompareTag("Player") && Input.GetKeyDown(KeyCode.Z))
+        // ë²”ìœ„ ì•ˆì— ìˆê³  Zí‚¤ ëˆ„ë¦„
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.Z))
         {
-            // °°Àº ¿ÀºêÁ§Æ®¿¡ ºÙ¾îÀÖ´Â SceneLoader¸¦ °¡Á®¿Í¼­ ½ÇÇà!
+            Debug.Log("Zí‚¤: " + GetComponent<SceneLoader>().sceneName);
             GetComponent<SceneLoader>().LoadScene();
+        }
+    }
+
+    // í”Œë ˆì´ì–´ê°€ SceneLoader ì˜ì—­ ì•ˆ
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = true;
+            Debug.Log("í”Œë ˆì´ì–´ ì§„ì…" + isPlayerInRange);
+        }
+    }
+
+    // í”Œë ˆì´ì–´ê°€ SceneLoader ì˜ì—­ ë°–
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = false;
+            Debug.Log("í”Œë ˆì´ì–´ ë‚˜ê°" + isPlayerInRange);
         }
     }
 }

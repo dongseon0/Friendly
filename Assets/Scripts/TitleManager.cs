@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
@@ -15,7 +15,7 @@ public class TitleManager : MonoBehaviour
 
     public void OnClickExitButton()
     {
-        Debug.Log("°ÔÀÓÀÌ Á¾·áµÊ");
+        Debug.Log("ê²Œì„ì´ ì¢…ë£Œë¨");
         Application.Quit();
     }
 }

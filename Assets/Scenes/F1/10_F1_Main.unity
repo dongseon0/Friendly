@@ -734,6 +734,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3409065176696660731, guid: 5f733be2459d65142be1f42cc0c6a811, type: 3}
   m_PrefabInstance: {fileID: 75566883}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &107509010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107509011}
+  - component: {fileID: 107509012}
+  m_Layer: 0
+  m_Name: SpawnPoint_LeftStair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &107509011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107509010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 31.06, y: 3.62, z: -4.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &107509012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107509010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9932ba992b0641328a76741b765ccc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnID: From_2F
 --- !u!1001 &118081513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3924,7 +3969,7 @@ GameObject:
   - component: {fileID: 469313856}
   - component: {fileID: 469313855}
   m_Layer: 0
-  m_Name: PlayerSpawnPoint
+  m_Name: PlayerSpawnPoint_MainDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3942,6 +3987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9932ba992b0641328a76741b765ccc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnID: From_Outdoor
 --- !u!4 &469313856
 Transform:
   m_ObjectHideFlags: 0
@@ -4824,7 +4870,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553257640}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43bab127fcefeb240977d5dcabb8bccf, type: 3}
   m_Name: 
@@ -4842,6 +4888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: 2F_Hall
+  targetSpawnID: From_2F_Left
 --- !u!65 &553257643
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6515,7 +6562,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713594457}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43bab127fcefeb240977d5dcabb8bccf, type: 3}
   m_Name: 
@@ -6533,6 +6580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: 2F_Hall
+  targetSpawnID: From_2F_Right
 --- !u!65 &713594460
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12242,7 +12290,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1285391330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12250,7 +12298,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285391329}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43bab127fcefeb240977d5dcabb8bccf, type: 3}
   m_Name: 
@@ -12268,6 +12316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: 11_F1_CCTVInterior
+  targetSpawnID: 
 --- !u!65 &1285391332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13513,7 +13562,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413383051}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43bab127fcefeb240977d5dcabb8bccf, type: 3}
   m_Name: 
@@ -13531,6 +13580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: OutdoorScene
+  targetSpawnID: From_Outdoor
 --- !u!65 &1413383054
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14327,6 +14377,10 @@ PrefabInstance:
     - target: {fileID: 6424270456704572960, guid: 214b673e61a328f4b97a4c1f1bba63d3, type: 3}
       propertyPath: m_Name
       value: DoorV1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6424270456704572960, guid: 214b673e61a328f4b97a4c1f1bba63d3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6424270456704860672, guid: 214b673e61a328f4b97a4c1f1bba63d3, type: 3}
       propertyPath: m_LocalScale.x
@@ -19572,3 +19626,4 @@ SceneRoots:
   - {fileID: 1285391335}
   - {fileID: 1413383057}
   - {fileID: 469313856}
+  - {fileID: 107509011}

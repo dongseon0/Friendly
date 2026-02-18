@@ -1,21 +1,24 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    [Header("ÀÌµ¿ÇÒ ¾À ÀÌ¸§À» ¿©±â¿¡ ÀûÀ¸¼¼¿ä")]
+    [Header("ì´ë™í•  ì”¬ ì´ë¦„")]
     public string sceneName;
+
+    [Header("ìŠ¤í° ì§€ì ì˜ ID")]
+    public string targetSpawnID;
+
+    //ì”¬ì´ ë„˜ì–´ê°€ë„ ì§€ì›Œì§€ì§€ ì•ŠëŠ” ê³µìš© ë©”ëª¨ì§€
+    public static string nextSpawnID = "";
 
     public void LoadScene()
     {
-        // ºóÄ­ÀÌ ¾Æ´Ï¸é ±× ÀÌ¸§ÀÇ ¾ÀÀ¸·Î ÀÌµ¿
         if (!string.IsNullOrEmpty(sceneName))
         {
+            // ì”¬ì„ ë„˜ì–´ê°€ê¸° ì§ì „ì— ë„ì°©í•  IDë¥¼ nextSpawnIDì— 
+            nextSpawnID = targetSpawnID;
             SceneManager.LoadScene(sceneName);
-        }
-        else
-        {
-            Debug.LogError("ÀÌµ¿ÇÒ ¾À ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä.");
         }
     }
 }

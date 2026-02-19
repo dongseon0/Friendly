@@ -1,0 +1,887 @@
+{
+    "meta":{
+        "title": "Friendly",
+        "language": "eng",
+        "version": "0.1",
+        "variables": {
+            "PC_DAD_NAME": "Ian Mogan", "PC_DAD_FIRSTNAME": "Ian",
+            "PC_NAME": "Yujin Mogan", "PC_FIRSTNAME": "Yujin",
+            "NPC_NAME": "Jackie Stevens", "NPC_FIRSTNAME": "Jack",
+            "NPC_DAD_NAME": "Mark Stevens", "NPC_DAD_FIRSTNAME": "Mark",
+            "RICH_PATIENT_NAME": "Daniel Jane Garret",
+            "YEAR_PAST": 1996,
+            "PAST_DATE": "10-12-1996",
+            "TODAY_DATE": "10-12-2011"
+        }
+    },
+    "state":{
+        "flags":{
+            "npc_missing": false,
+            "hospital_lock checked": false,
+            "found_business_card": false,
+            "found_magazine": false,
+            "found_protest_photo": false,
+            "found_schedule_sheet": false,
+            "found_sticky_note": false,
+            "safe_unlocked": false,
+            "found_money_memo": false,
+            "found_npcdad_chart": false,
+            "cctv_room_unlocked": false,
+            "watched_dvd": false,
+            "npc_confronted": false,
+            "alarm_started": false,
+            "chase_started": false,
+            "truth_poverty": false,
+            "truth_consent": false,
+            "truth_relationship": false,
+            "truth_contract": false,
+            "truth_hippocratic": false,
+            "ending_ready": false
+        },
+        "vars":{
+            "suspicion" : 0,
+            "trust_npc" : 0,
+            "inventory_slots": 12
+        },
+        "inventory": []
+    },
+    "items":{
+        "BUSINESS_CARD": {
+            "name" : "Ian's business card",
+            "desc" : "Dr. {PC_DAD_NAME} / General Surgeon / call : 0000-000-000-000",
+            "onInspectLines": [
+                "Oh, it's my dad's."
+            ],
+            "addFlags": ["found_business_card"],
+            "addVar": {"suspicion": 0}
+        },
+        "MAGAZINE": {
+            "name" : "Monthly Doctor",
+            "desc" : "Proud of Doctor, {PC_DAD_NAME}, Commended for Emergency Medical Commitment",
+            "onInspectLines": [
+                "I'm so proud of my dad. I hope to be a doctor like him."
+            ],
+            "addFlags": [ "found_magazine" ],
+            "addVar": {"suspicion": 0}
+        },
+        "PROTEST_PHOTO": {
+            "name" : "protest photo",
+            "desc" : "'Give me back my dad! Out of the way, doctor {PC_DAD_NAME}!'",
+            "onInspectLines": [
+                "{NPC_FIRSTNAME}? No, wait, that's my father!"
+            ],
+            "addFlags": ["found_protest_photo"],
+            "addVar": {"suspicion": 1, "trust_npc": -1}
+        },
+        "SCHEDULE_SHEET": {
+            "name" : "Surgical Scheduler",
+            "desc" : "{PAST_DATE} / {NPC_DAD_NAME} -> {RICH_PATIENT_NAME} (Roughly modified with a pen) / Doctor : {PC_DAD_NAME}",
+            "onInspectLines": [
+                "{NPC_DAD_NAME}...? I've heard this name before...",
+                "...Did he change the schedule? Why?"
+            ],
+            "addFlags": ["found_schedule_sheet"],
+            "addVar": {"suspicion": 2}
+        },
+        "STICKY_NOTE": {
+            "name" : "sticky note",
+            "desc" : "<b>M</b>M-D<b>D</b>-YY<b>YY</b>... I'm sorry, but it's gonna be good for you, my friend",
+            "onInspectLines": [
+                "Only a few letters are written in bold...",
+                "Apologies... for what?"
+            ],
+            "addFlags": ["found_sticky_note"],
+            "addVar": {"suspicion": 1}
+        },
+        "NPCDAD_CHART": {
+            "name": "Diagnostic Record of Patient {NPC_DAD_NAME}",
+            "desc": "Diagonstic record. At the bottom, it is faintly written : 'Security PW needed. Two-digit personal access code + 985 (as the last three digits)'.",
+            "onInspectLines": [
+                "{NPC_DAD_NAME}... Wait, isn't it the name of {NPC_FIRSTNAME}'s dad?",
+                "...It has some hints for security passwords on it. Where's the rest..."
+            ],
+            "addFlags": ["found_npcdad_chart"],
+            "addVar": { "suspicion": 1 }
+        },
+        "SAFE_MONEY_MEMO": {
+            "name": "envelopes and notes",
+            "desc": "Cash envelope + note: '{PAST_DATE} / Receipt of subsidy (Source:{RICH_PATIENT_NAME})'",
+            "onInspectLines": [
+                "Cash...? Did your dad get the money?"
+            ],
+            "addFlags": ["found_money_memo"],
+            "addVar": { "suspicion": 1 }
+        },
+        "DVD_RICH_SURGERY": {
+            "name": "an operating room DVD",
+            "desc": "{RICH_PATIENT_NAME} Surgical image recording",
+            "onInspectLines": [
+                "... Oh, It's my dad's surgery video.",
+                "If I look at this... Maybe I can find out what happened."
+            ]
+        },
+
+        "ARREARS_NOTICE": {
+            "name": "a delinquent/unpaid bill",
+            "desc": "Nonpayment for hospitalization and surgery. Several memos requesting installment payments.",
+            "onInspectLines": [
+                "At this point... he probably wanted to give up on the surgery.",
+                "Poverty really can... push someone this far."
+            ],  
+            "addFlags": ["truth_poverty"]
+        },
+        "CONSENT_NOTE": {
+            "name": "Handwritten Note (Patient Signature)",
+            "desc": "'I don't want to be a burden to my family anymore. Even knowing the situation, I will go through with the surgery.'",
+            "onInspectLines": [
+                "It's not that he didn't want the surgery... it's that... he 'didn't want to be a burden'..."
+            ],
+            "addFlags": ["truth_consent"]
+        },
+        "PHOTO_BABY": {
+            "name": "Photo (Entrance Ceremony)",
+            "desc": "{NPC_NAME}'s entrance ceremony. {PC_DAD_NAME} and {NPC_DAD_NAME} are smiling together. It is circled on 1.1 birthday.",
+            "onInspectLines": [
+                "They look like they completely trusted each other."
+            ],
+            "addFlags": ["truth_relationship"]
+        },
+        "CONTRACT": {
+            "name": "Sponsorship Agreement (Copy)",
+            "desc": "'Party A ({RICH_PATIENT_NAME}) will fully cover the cost of Party B ({NPC_DAD_NAME})'s surgery scheduled for the following day. However, Party A’s surgery will be performed first.”",
+            "onInspectLines": [
+                "It's a contract.",
+                "So this is what Dad meant by 'There's always a way when it comes to money'...",
+                "...But because of this priority, it got pushed back by a day, and that one day..."
+            ],
+            "addFlags": ["truth_contract"]
+        },
+        "HIPPOCRATIC": {
+            "name": "Hippocratic Oath Framed Plaque",
+            "desc": "A worn frame. 'The patient's life comes first...'",
+            "onInspectLines": [
+                "'A doctor is someone who fights to save lives.'",
+                "...Did Dad stay that way until the very end?"
+            ],
+            "addFlags": ["truth_hippocratic"]
+        }
+    },
+
+    "scenes":[
+        {
+            "id": "S00_CAR_OUTSIDE",
+            "name": "Out of the Car (In Front of the Ossuary / Abandoned Hospital)",
+            "onEnter": [
+                { "type": "uiObjective", "text": "Let's go to the ossuary." }
+            ],
+            "nodes": [
+                {
+                    "id": "S00_N0",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "Here we come. ...Thanks for coming today.",
+                    "next": "S00_N1"
+                },
+                {
+                    "id": "S00_N1",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "It's fine. Nearby, the hospital where my dad used to work is around here too. So, two birds with one stone.",
+                    "next": "S00_N2"
+                },
+                {
+                    "id": "S00_N2",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "Yeah. That hospital... it's closed down now, though.",
+                    "next": "S00_N3"
+                },
+                {
+                    "id": "S00_N3",
+                    "type": "interaction",
+                    "target": "Abandoned Hospital : Main Entrance",
+                    "whenInteract": [
+                        {
+                            "type": "branch",
+                            "conditions": [{ "flagNot": "hospital_locked_checked" }],
+                            "then": [
+                                { "type": "setFlag", "flag": "hospital_locked_checked", "value": true },
+                                {
+                                "type": "narration",
+                                "text": "The doorknob doesn't budge. A rusty padlock is hanging from it."
+                                },
+                                { "type": "dialogue", "speaker": "{PC_NAME}", "text": "It's locked... Let's check it later.", "next": "S00_N4" }
+                            ],
+                            "else": [
+                                { "type": "narration", "text": "It's still locked." },
+                                { "type": "dialogue", "speaker": "{PC_NAME}", "text": "Not right now.", "next": "S00_N4" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "S00_N4",
+                    "type": "uiObjective",
+                    "text": "Head to the ossuary",
+                    "nextScene": "S01_OSSUARY_INSIDE"
+                }
+            ]
+        },
+        {
+            "id": "S01_OSSUARY_INSIDE",
+            "name": "The Ossuary",
+            "nodes": [
+                {
+                    "id": "S01_N0",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "Dad... I'm here.",
+                    "next": "S01_N1"
+                },
+                {
+                    "id": "S01_N1",
+                    "type": "action",
+                    "do": [{ "type": "emote", "target": "{NPC_NAME}", "name": "placeFlowers" }],
+                    "next": "S01_N2"
+                },
+                {
+                    "id": "S01_N2",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "...He passed away at... thirty... something. That's so young.",
+                    "next": "S01_N3"
+                },
+                {
+                    "id": "S01_N3",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "Yeah. So it feels even more like... time stopped back then.",
+                    "next": "S01_N4"
+                },
+                {
+                    "id": "S01_N4",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "{NPC_FirstName}... are you okay?",
+                    "next": "S01_N5"
+                },
+                {
+                    "id": "S01_N5",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "...I'm going to step outside for some air. I'll be right back.",
+                    "effects": [
+                        { "type": "setFlag", "flag": "npc_missing", "value": true }
+                    ],
+                    "next": "S01_N6"
+                },
+                {
+                    "id": "S01_N6",
+                    "type": "timeSkip",
+                    "seconds": 6,
+                    "text": "A little time passes...",
+                    "next": "S01_N7"
+                },
+                {
+                    "id": "S01_N7",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "Why is he taking so long...? I should go look for him.",
+                    "nextScene": "S02_HOSPITAL_LOBBY"
+                }
+            ]
+        },
+
+        {
+            "id": "S02_HOSPITAL_LOBBY",
+            "name": "Abandoned Hospital Part 1 - Lobby (Reception Desk)",
+            "onEnter": [
+                { "type": "uiObjective", "text": "Search the hospital for {NPC_NAME}." }
+            ],
+            "nodes": [
+                {
+                    "id": "S02_N0",
+                    "type": "narration",
+                    "text": "The smell of dust, a lingering trace of disinfectant. Your footsteps echo..."
+                },
+                {
+                    "id": "S02_N1",
+                    "type": "pickup",
+                    "itemId": "BUSINESS_CARD"
+                },
+                {
+                    "id": "S02_N2",
+                    "type": "uiObjective",
+                    "text": "Head to the patient waiting room",
+                    "nextScene": "S03_WAITING_ROOM"
+                }
+            ]
+        },
+        {
+            "id": "S03_WAITING_ROOM",
+            "name": "Part 1 - Patient Waiting Room",
+            "nodes": [
+                {
+                    "id": "S03_N0",
+                    "type": "pickup",
+                    "itemId": "MAGAZINE"
+                },
+                {
+                    "id": "S03_N1",
+                    "type": "uiObjective",
+                    "text": "Head to the corridor",
+                    "nextScene": "S04_CORRIDOR"
+                }
+            ]
+        },
+        {
+            "id": "S04_CORRIDOR",
+            "name": "Part 1 - Corridor",
+            "nodes": [
+                {
+                    "id": "S04_N0",
+                    "type": "pickup",
+                    "itemId": "PROTEST_PHOTO"
+                },
+                {
+                    "id": "S04_N1",
+                    "type": "uiObjective",
+                    "text": "Head to Dad's private office",
+                    "nextScene": "S05_PC_DAD_OFFICE"
+                }
+            ]
+        },
+        {
+            "id": "S05_PC_DAD_OFFICE",
+            "name": "Part 1 - Private Office (My Dad)",
+            "nodes": [
+                {
+                    "id": "S05_N0",
+                    "type": "narration",
+                    "text": "Let's take a look around {PC_DAD_NAME}'s office."
+                },
+                {
+                    "id": "S05_N1",
+                    "type": "pickup",
+                    "itemId": "SCHEDULE_SHEET"
+                },
+                {
+                    "id": "S05_N2",
+                    "type": "pickup",
+                    "itemId": "STICKY_NOTE"
+                },
+                {
+                    "id": "S05_N3",
+                    "type": "pickup",
+                    "itemId": "NPCDAD_CHART"
+                },
+                {
+                    "id": "S05_N4",
+                    "type": "interaction",
+                    "target": "Locked Safe",
+                    "whenInteract": [
+                        {
+                        "type": "branch",
+                        "conditions": [
+                                { "flag": "found_schedule_sheet" },
+                                { "flag": "found_sticky_note" },
+                                { "flag": "found_npcdad_chart" }
+                            ],
+                            "then": [
+                                {
+                                "type": "dialogue",
+                                "speaker": "{PC_NAME}",
+                                "text": "There was... more of a clue about the safe on the medical chart. But the numbers are missing... I need another hint.",
+                                "next": "S05_N5"
+                                }
+                            ],
+                            "else": [
+                                {
+                                "type": "dialogue",
+                                "speaker": "{PC_NAME}",
+                                "text": "I should look around the office more before trying the safe.",
+                                "next": "S05_N0"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "S05_N5",
+                    "type": "uiObjective",
+                    "text": "Let's head to the CCTV room.",
+                    "nextScene": "S06_CCTV_DOOR"
+                }
+            ]
+        },
+        {
+            "id": "S06_CCTV_DOOR",
+            "name": "Part 1 - CCTV Room Door",
+            "nodes": [
+                {
+                    "id": "S06_N0",
+                    "type": "interaction",
+                    "target": "Keypad",
+                    "whenInteract": [
+                        {
+                            "type": "branch",
+                            "conditions": [{ "flag": "found_sticky_note" }],
+                            "then": [
+                                { "type": "inputCode", "expected": "1296", "onSuccess": "S06_N1", "onFail": "S06_N2", "onCancel": "S06_N3" }
+                            ],
+                            "else": [
+                                {
+                                "type": "dialogue",
+                                "speaker": "{PC_NAME}",
+                                "text": "I can't... remember the number. There was a hint somewhere.",
+                                "next": "S06_N3"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "S06_N1",
+                    "type": "action",
+                    "do": [
+                        { "type": "setFlag", "flag": "cctv_room_unlocked", "value": true },
+                        { "type": "sound", "name": "door_unlock" }
+                    ],
+                    "nextScene": "S07_CCTV_ROOM"
+                },
+                {
+                    "id": "S06_N2",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "...No. That's not it.",
+                    "next": "S06_N0"
+                },
+                {
+                    "id": "S06_N3",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "Not now. I should look around first.",
+                    "nextScene": "S04_CORRIDOR",
+                    "nextNode": "S04_N1"
+                }
+            ]
+        },
+
+        {
+            "id": "S07_CCTV_ROOM",
+            "name": "Transition - CCTV Room",
+            "nodes": [
+                {
+                    "id": "S07_N0",
+                    "type": "pickup",
+                    "itemId": "DVD_RICH_SURGERY"
+                },
+                {
+                    "id": "S07_N1",
+                    "type": "interaction",
+                    "target": "{PC_NAME}",
+                    "whenInteract": [
+                        { "type": "setFlag", "flag": "watched_dvd", "value": true },
+                        { "type": "video", "id": "RICH_SURGERY_FOOTAGE" },
+                        { "type": "narration", "text": "Date on screen: {PAST_DATE}. Lead surgeon: {PC_DAD_NAME}." },
+                        { "type": "sound", "name": "footsteps_slow" },
+                        { "type": "narration", "text": "Behind you... the sound of step..." },
+                        { "type": "setFlag", "flag": "npc_confronted", "value": true },
+                        { "type": "dialogue", "speaker": "{NPC_NAME}", "text": "That... is surgery footage, isn't it?", "next": "S07_N2" }
+                    ]
+                },
+                {
+                    "id": "S07_N2",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "What the... You scared me. Where did you go?",
+                    "next": "S07_N3"
+                },
+                {
+                    "id": "S07_N3",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "Today, fifteen years ago. {PAST_DATE}. The records here say... '{PC_DAD_NAME}' was the surgeon in charge...",
+                    "next": "S07_N4"
+                },
+                {
+                    "id": "S07_N4",
+                    "type": "choice",
+                    "prompt": "Choose a response.",
+                    "choices": [
+                        {
+                            "text": "...Yeah. That's my dad.",
+                            "effects": [{ "type": "addVar", "var": "trust_npc", "value": 1 }],
+                            "next": "S07_N5"
+                        },
+                        {
+                            "text": "...Why are you asking that?",
+                            "effects": [{ "type": "addVar", "var": "trust_npc", "value": 1 }],
+                            "next": "S07_N5"
+                        }
+                    ]
+                },
+                {
+                    "id": "S07_N5",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "There's no denying he was... an incredible surgeon.",
+                    "next": "S07_N6"
+                },
+                {
+                    "id": "S07_N6",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "But the patient who was supposed to be operated on that day... was someone else..",
+                    "next": "S07_N7"
+                },
+                {
+                    "id": "S07_N7",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "Because he was poor! With no money... he lost his place in the surgery order, and in the end... it cost him his life.",
+                    "next": "S07_N8"
+                },
+                {
+                    "id": "S07_N8",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "...What are you trying to say, {NPC_FIRSTNAME}.",
+                    "next": "S07_N9"
+                },
+                {
+                    "id": "S07_N9",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "And wouldn't you know it... today is my dad's death anniversary. You saw it too. At the ossuary.",
+                    "next": "S07_N10"
+                },
+                {
+                    "id": "S07_N10",
+                    "type": "action",
+                    "do": [
+                        { "type": "light", "mode": "redPulse", "intensity": 0.6 },
+                        { "type": "sound", "name": "low_rumble" }
+                    ],
+                    "next": "S07_N11"
+                },
+                {
+                    "id": "S07_N11",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "But you know...? When I see him today... it just broke me.",
+                    "next": "S07_N12"
+                },
+                {
+                    "id": "S07_N12",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "{PC_DAD_NAME}. If he had just done his job properly... my dad would still be alive right now.",
+                    "next": "S07_N13"
+                },
+                {
+                    "id": "S07_N13",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "When you celebrated your dad's birthday every year, I... I mark the day he died.",
+                    "next": "S07_N14"
+                },
+                {
+                    "id": "S07_N14",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "He could've lived longer... he should've lived longer...!",
+                    "next": "S07_N15"
+                },
+                {
+                    "id": "S07_N15",
+                    "type": "action",
+                    "do": [
+                        { "type": "setFlag", "flag": "alarm_started", "value": true },
+                        { "type": "sound", "name": "alarm_siren" },
+                        { "type": "vignette", "mode": "red", "strength": 0.8 },
+                        { "type": "setFlag", "flag": "chase_started", "value": true }
+                    ],
+                    "next": "S07_N16"
+                },
+                {
+                    "id": "S07_N16",
+                    "type": "uiObjective",
+                    "text": "Get out of here! (Press Shift to run)",
+                    "nextScene": "S08_CHASE_ROUTE"
+                }
+            ]
+        },
+
+        {
+            "id": "S08_CHASE_ROUTE",
+            "name": "Part 2 - Chase / Escape",
+            "onEnter": [
+                { "type": "narration", "text": "The alarm blares, pounding in your skull. Behind you, a door slams-BANG." }
+            ],
+            "nodes": [
+                {
+                    "id": "S08_N0",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "{NPC_FIRSTNAME}, shit, calm down! There should be a misunderstanding!",
+                    "next": "S08_N1"
+                },
+                {
+                    "id": "S08_N1",
+                    "type": "narration",
+                    "text": "No answer-only ragged breathing. And then... footsteps sprinting toward you.",
+                    "next": "S08_N2"
+                },
+                {
+                    "id": "S08_N2",
+                    "type": "uiObjective",
+                    "text": "Go up to the annex's second floor and gather clues.",
+                    "nextScene": "S09_ANNEX_2F"
+                }
+            ]
+        },
+
+        {
+            "id": "S09_ANNEX_2F",
+            "name": "Part 2 - Annex 2F (Find the Truth)",
+            "nodes": [
+                {
+                    "id": "S09_N0",
+                    "type": "pickup",
+                    "itemId": "ARREARS_NOTICE"
+                },
+                {
+                    "id": "S09_N1",
+                    "type": "pickup",
+                    "itemId": "CONSENT_NOTE"
+                },
+                {
+                    "id": "S09_N2",
+                    "type": "pickup",
+                    "itemId": "PHOTO_BABY"
+                },
+                {
+                    "id": "S09_N3",
+                    "type": "pickup",
+                    "itemId": "CONTRACT"
+                },
+                {
+                    "id": "S09_N4",
+                    "type": "pickup",
+                    "itemId": "HIPPOCRATIC"
+                },
+                {
+                    "id": "S09_N5",
+                    "type": "action",
+                    "do": [
+                        {
+                        "type": "branch",
+                        "conditions": [
+                            { "flag": "truth_poverty" },
+                            { "flag": "truth_consent" },
+                            { "flag": "truth_relationship" },
+                            { "flag": "truth_contract" }
+                        ],
+                        "then": [
+                            { "type": "setFlag", "flag": "ending_ready", "value": true },
+                            { "type": "uiObjective", "text": "Go back down to the first-floor office, open the safe, and secure the decisive evidence."}
+                        ],
+                        "else": [
+                            { "type": "uiObjective", "text": "I still don't have enough clues... I need to keep searching."}
+                        ]
+                        }
+                    ],
+                    "nextScene": "S10_RETURN_OFFICE_SAFE"
+                }
+            ]
+        },
+
+        {
+            "id": "S10_RETURN_OFFICE_SAFE",
+            "name": "Conclusion - 1F Office (Safe / Decisive Evidence)",
+            "nodes": [
+                {
+                    "id": "S10_N0",
+                    "type": "interaction",
+                    "target": "Locked Safe",
+                    "whenInteract": [
+                        {
+                        "type": "branch",
+                        "conditions": [{ "flag": "ending_ready" }],
+                        "then": [
+                            { "type": "narration", "text": "On the medical chart, last three digit was 985... And there were two digit on your item..." },
+                            { "type": "inputCode", "expected": "11985", "onSuccess": "S10_N1", "onFail": "S10_N2" }
+                        ],
+                        "else": [
+                            { "type": "dialogue", "speaker": "{PC_NAME}", "text": "I'm still not sure... I need more clues.", "next": "S10_N2" }
+                        ]
+                        }
+                    ]
+                },
+                {
+                    "id": "S10_N1",
+                    "type": "action",
+                    "do": [
+                        { "type": "setFlag", "flag": "safe_unlocked", "value": true },
+                        { "type": "sound", "name": "safe_open" }
+                    ],
+                    "next": "S10_N3"
+                },
+                {
+                    "id": "S10_N2",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "...No. That's wrong. Think again.",
+                    "next": "S10_N0"
+                },
+                {
+                    "id": "S10_N3",
+                    "type": "pickup",
+                    "itemId": "SAFE_MONEY_MEMO"
+                },
+                {
+                    "id": "S10_N4",
+                    "type": "uiObjective",
+                    "text": "Find {NPC_NAME} and tell her the truth.",
+                    "nextScene": "S11_FINAL_CONFRONT"
+                }
+            ]
+        },
+
+        {
+            "id": "S11_FINAL_CONFRONT",
+            "name": "Ending Branch - Final Confrontation",
+            "nodes": [
+                {
+                    "id": "S11_N0",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "...Are you going to hide it to the very end? Just like your dad.",
+                    "next": "S11_N1"
+                },
+                {
+                    "id": "S11_N1",
+                    "type": "choice",
+                    "prompt": "What do you say?",
+                    "choices": [
+                        {
+                        "text": "Show the evidence. 'It was a misunderstanding. This is the contract.'",
+                        "effects": [{ "type": "addVar", "var": "trust_npc", "value": 2 }],
+                        "next": "S11_GOOD_0"
+                        },
+
+
+                        {
+                        "text": "Snap back emotionally. 'What do you even know?!'",
+                        "effects": [{ "type": "addVar", "var": "trust_npc", "value": -2 }],
+                        "next": "S11_BAD_0"
+                        }
+
+
+
+                    ]
+                },
+
+
+                {
+                    "id": "S11_GOOD_0",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "{NPC_FirstName}, look. {PAST_DATE}. Not 'priority surgery'-but 'full support for the next patient.'",
+                    "next": "S11_GOOD_1"
+                },
+                {
+                    "id": "S11_GOOD_1",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "Dad wasn't trying to take the money. He was trying to find a way... any way... to cover your dad's surgery costs.",
+                    "next": "S11_GOOD_2"
+                },
+                {
+                    "id": "S11_GOOD_2",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "...Then why... why did it get pushed back by a day...?",
+                    "next": "S11_GOOD_3"
+                },
+                {
+                    "id": "S11_GOOD_3",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "I know that one day... was fatal. But it wasn't intentional.",
+                    "next": "S11_GOOD_4"
+                },
+                {
+                    "id": "S11_GOOD_4",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "And... this photo. It's your first birthday party. My dad and your dad... they were friends.",
+                    "next": "S11_GOOD_5"
+                },
+                {
+                    "id": "S11_GOOD_5",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "...You're lying... No... I... I've just been... believing whatever I wanted to believe...",
+                    "next": "S11_GOOD_6"
+                },
+                {
+                    "id": "S11_GOOD_6",
+                    "type": "action",
+                    "do": [
+                        { "type": "sound", "name": "alarm_fade" },
+                        { "type": "light", "mode": "normal", "intensity": 1.0 },
+                        { "type": "vignette", "mode": "off" }
+                    ],
+                    "next": "S11_GOOD_7"
+                },
+                {
+                    "id": "S11_GOOD_7",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "...I want to go back to the ossuary... again. Properly... I want to apologize.",
+                    "next": "S11_GOOD_END"
+                },
+                {
+                    "id": "S11_GOOD_END",
+                    "type": "ending",
+                    "endingId": "ENDING_RECONCILE",
+                    "title": "Together, Toward the Anniversary",
+                    "text": "Fade out. Fade in. The two of them stand in front of the ossuary. The wind brushes past quietly."
+                },
+
+                {
+                    "id": "S11_BAD_0",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "네가 뭘 안다고! 우리 아빠는…!",
+                    "next": "S11_BAD_1"
+                },
+                {
+                    "id": "S11_BAD_1",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "그래. 결국 너도 똑같네. ‘가족’이란 이유로 다 용서하려고 하지.",
+                    "next": "S11_BAD_2"
+                },
+                {
+                    "id": "S11_BAD_2",
+                    "type": "action",
+                    "do": [
+                        { "type": "sound", "name": "alarm_peak" },
+                        { "type": "light", "mode": "redPulse", "intensity": 0.9 }
+                    ],
+                    "next": "S11_BAD_3"
+                },
+                {
+                    "id": "S11_BAD_3",
+                    "type": "ending",
+                    "endingId": "ENDING_RUPTURE",
+                    "title": "끊어진 대화",
+                    "text": "서로의 말이 닿지 않는다. 문이 쾅 닫히고, 경보음만 남는다."
+                }
+            ]
+        }
+    ]
+}

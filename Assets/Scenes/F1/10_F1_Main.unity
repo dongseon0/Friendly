@@ -3971,7 +3971,7 @@ GameObject:
   - component: {fileID: 467080042}
   - component: {fileID: 467080041}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4060,7 +4060,7 @@ Transform:
   m_GameObject: {fileID: 467080040}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.2, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 80, y: 0.099999994, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []

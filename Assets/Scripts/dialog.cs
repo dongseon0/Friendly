@@ -34,7 +34,7 @@ public class dialog : MonoBehaviour
 
     //Flow control
     private string _nextNodeId;
-    private string _pendingSceneID;
+    private string _pendingSceneId;
     private string _pendingSceneStartNodeId;
 
     private void Awake()
@@ -180,7 +180,7 @@ public class dialog : MonoBehaviour
 
     private void GotoScene(string sceneId, string startNodeId = null)
     {
-        _pendingSceneID = sceneId;
+        _pendingSceneId = sceneId;
         _pendingSceneStartNodeId = startNodeId;
         _nextNodeId = null;
     }
@@ -191,7 +191,7 @@ public class dialog : MonoBehaviour
 
     private IEnumerator RunNode(NodeDef node)
     {
-        switch (node.type)
+        switch (node.Type)
         {
             case NodeType.narration:
             {
@@ -360,7 +360,7 @@ public class dialog : MonoBehaviour
             yield return new WaitForSeconds(1.8f);
         }
 
-        Debug.Log($Picked Up : {node.itemId});
+        Debug.Log($"Picked Up : {node.itemId}");
     }
 
     private IEnumerator RunInteraction(InteractionNode node)

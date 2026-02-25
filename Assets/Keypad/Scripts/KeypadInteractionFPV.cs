@@ -19,7 +19,7 @@ namespace NavKeypad {
             if(modal != null && modal.IsOpen)
             {
                 if(Input.GetKeyDown(KeyCode.Escape)){   //press esc
-                    if(keypad !=null) keyapd.RequestCancel();
+                    if(keypad !=null) keypad.RequestCancel();
                     //json S06_N3 분기 연결 위해 cancel event -> RequestCancel()
                     else modal.Close(); //return to the state before
                     return; //end the scripts.

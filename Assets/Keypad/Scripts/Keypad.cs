@@ -13,7 +13,11 @@ namespace NavKeypad
         [SerializeField] private UnityEvent onAccessDenied;
         [Header("Combination Code (9 Numbers Max)")]
         [SerializeField] private int keypadCombo = 12345;
+        //canceling
+        [SerializeField] private UnityEvent onCanceled;
 
+        public UnityEvent OnCanceled => onCanceled;
+        //
         public UnityEvent OnAccessGranted => onAccessGranted;
         public UnityEvent OnAccessDenied => onAccessDenied;
 
@@ -60,6 +64,9 @@ namespace NavKeypad
                 case "enter":
                     CheckCombo();
                     break;
+                case "cancel":
+                    RequestCancel();
+                    break;
                 default:
                     if (currentInput != null && currentInput.Length == 9) // 9 max passcode size 
                     {
@@ -71,6 +78,15 @@ namespace NavKeypad
             }
 
         }
+
+        // json 의 expected 반영
+        public void SetCombo(int combo)
+        {
+            if (combo < 0) combo = 0;
+
+            keypadCombo = combo;
+        }
+
         public void CheckCombo()
         {
             if (int.TryParse(currentInput, out var currentKombo))
@@ -87,6 +103,17 @@ namespace NavKeypad
             }
 
         }
+
+        //cancelling
+        public void RequestCancel()
+        {
+            if (displayingResult) return;
+            if (accessWasGranted) return;
+            onCanceled?.Invoke();
+            //esc -> RequestCancel() -> onCanceled(json) -> (controller(modal) watching) Close()
+            //-> ClearAndResetVisual()
+        }
+        //
 
         //mainly for animations 
         private IEnumerator DisplayResultRoutine(bool granted)
@@ -116,6 +143,16 @@ namespace NavKeypad
         {
             currentInput = "";
             keypadDisplayText.text = currentInput;
+        }
+
+        //make the public access of ClearInput() 
+        public void ClearAndResetVisual(){
+            currentInput="";
+            keypadDisplayText.text=currentInput;
+            panelMesh.material.SetVector("_EmissionColor", screenNormalColor*screenIntensity);
+
+            displayingResult = false;
+            accessWasGranted = false;
         }
 
         private void AccessGranted()

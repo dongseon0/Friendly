@@ -770,19 +770,13 @@
                         "effects": [{ "type": "addVar", "var": "trust_npc", "value": 2 }],
                         "next": "S11_GOOD_0"
                         },
-
-
                         {
                         "text": "Snap back emotionally. 'What do you even know?!'",
                         "effects": [{ "type": "addVar", "var": "trust_npc", "value": -2 }],
                         "next": "S11_BAD_0"
                         }
-
-
-
                     ]
                 },
-
 
                 {
                     "id": "S11_GOOD_0",
@@ -849,37 +843,6 @@
                     "endingId": "ENDING_RECONCILE",
                     "title": "Together, Toward the Anniversary",
                     "text": "Fade out. Fade in. The two of them stand in front of the ossuary. The wind brushes past quietly."
-                },
-
-                {
-                    "id": "S11_BAD_0",
-                    "type": "dialogue",
-                    "speaker": "{PC_NAME}",
-                    "text": "네가 뭘 안다고! 우리 아빠는…!",
-                    "next": "S11_BAD_1"
-                },
-                {
-                    "id": "S11_BAD_1",
-                    "type": "dialogue",
-                    "speaker": "{NPC_NAME}",
-                    "text": "그래. 결국 너도 똑같네. ‘가족’이란 이유로 다 용서하려고 하지.",
-                    "next": "S11_BAD_2"
-                },
-                {
-                    "id": "S11_BAD_2",
-                    "type": "action",
-                    "do": [
-                        { "type": "sound", "name": "alarm_peak" },
-                        { "type": "light", "mode": "redPulse", "intensity": 0.9 }
-                    ],
-                    "next": "S11_BAD_3"
-                },
-                {
-                    "id": "S11_BAD_3",
-                    "type": "ending",
-                    "endingId": "ENDING_RUPTURE",
-                    "title": "끊어진 대화",
-                    "text": "서로의 말이 닿지 않는다. 문이 쾅 닫히고, 경보음만 남는다."
                 }
             ]
         }

@@ -9,7 +9,6 @@ public class PlayerSpawner : MonoBehaviour
     {
         _playerPrefab = playerPrefab;
     }
-
     public void SpawnOrMoveToSceneSpawn()
     {
         if (_playerPrefab == null)
@@ -17,17 +16,30 @@ public class PlayerSpawner : MonoBehaviour
             Debug.LogError("[PlayerSpawner] Player Prefab not assigned on PersistentRoot.");
             return;
         }
+        // 1. 씬에 있는 '모든' 스폰 포인트를 다 찾고 allSpawns에 저장
+        PlayerSpawnPoint[] allSpawns = Object.FindObjectsByType<PlayerSpawnPoint>(FindObjectsSortMode.None);
+        PlayerSpawnPoint targetSpawn = null;
 
-        var spawn = Object.FindFirstObjectByType<PlayerSpawnPoint>(); // PlayerSpawnPoint.cs가 붙어있으면 그자리에 스폰됨
-        if (spawn == null)
+        if (allSpawns.Length > 0)
         {
-            Debug.LogWarning("[PlayerSpawner] No PlayerSpawnPoint found in this scene.");
-            if (_playerInstance == null)
+            // 2. nextSpawnID와 이름이 똑같은 스폰 포인트를 찾고 targetSpawn으로 지정 
+            if (!string.IsNullOrEmpty(SceneLoader.nextSpawnID))
             {
-                _playerInstance = Object.Instantiate(_playerPrefab);
-                Object.DontDestroyOnLoad(_playerInstance);
+                foreach (var spawn in allSpawns)
+                {
+                    if (spawn.spawnID == SceneLoader.nextSpawnID)
+                    {
+                        targetSpawn = spawn;
+                        break;
+                    }
+                }
             }
-            return;
+
+            // 3. targetSpawn이 없다면 그냥 첫 번째 걸 쓰기
+            if (targetSpawn == null)
+            {
+                targetSpawn = allSpawns[0];
+            }
         }
 
         if (_playerInstance == null)
@@ -36,6 +48,10 @@ public class PlayerSpawner : MonoBehaviour
             Object.DontDestroyOnLoad(_playerInstance);
         }
 
-        _playerInstance.transform.SetPositionAndRotation(spawn.transform.position, spawn.transform.rotation);
+        // 4. 찾은 스폰 포인트 위치로 플레이어를 순간이동
+        if (targetSpawn != null)
+        {
+            _playerInstance.transform.SetPositionAndRotation(targetSpawn.transform.position, targetSpawn.transform.rotation);
+        }
     }
 }

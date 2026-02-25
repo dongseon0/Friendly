@@ -7901,7 +7901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: OutdoorScene
-  targetSpawnID: 
+  targetSpawnID: From_Ossuary
 --- !u!65 &1126377576
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1589,6 +1589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9932ba992b0641328a76741b765ccc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnID: 
 --- !u!1001 &117556263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12233,6 +12234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: 10_F1_Main
+  targetSpawnID: 
 --- !u!65 &1052472245
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17258,7 +17260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3022e4d9884542945806aafb52fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Strange Cube
+  item: {fileID: 11400000, guid: fc4868d4db8cb49b7bd3a1c1df14708b, type: 2}
+  amount: 1
 --- !u!1 &1527143930
 GameObject:
   m_ObjectHideFlags: 0

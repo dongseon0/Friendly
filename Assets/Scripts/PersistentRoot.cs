@@ -19,12 +19,13 @@ public class PersistentRoot : MonoBehaviour
             return;
         }
 
-        DontDestroyOnLoad(gameObject); // ✅ 이거 없어서 지금 터진 거
+        DontDestroyOnLoad(gameObject); 
 
         _spawner = gameObject.AddComponent<PlayerSpawner>();
         _spawner.Configure(playerPrefab);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
     }
 
     private void Start()

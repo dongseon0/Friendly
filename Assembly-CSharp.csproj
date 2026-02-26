@@ -64,7 +64,6 @@
     <Compile Include="Assets/Scripts/PlayerInputBridge.cs" />
     <Compile Include="Assets/Scripts/CommandListConverter.cs" />
     <Compile Include="Assets/Keypad/Scripts/SlidingDoor.cs" />
-    <Compile Include="Assets/Scripts/Bootstrapper.cs" />
     <Compile Include="Assets/Scripts/TitleManager.cs" />
     <Compile Include="Assets/Brick Project Studio/_BPS Basic Assets/Common/Scripts and Animations/Doors/opencloseDoor1.cs" />
     <Compile Include="Assets/SojinAsset/UnityChan/Scripts/SpringCollider.cs" />
@@ -73,6 +72,7 @@
     <Compile Include="Assets/Scripts/ItemPickup.cs" />
     <Compile Include="Assets/Scripts/NodeDef.cs" />
     <Compile Include="Assets/Scripts/dialog.cs" />
+    <Compile Include="Assets/Scripts/InventoryUI.cs" />
     <Compile Include="Assets/ScifiOfficeLite/Scripts/DemoFirstPersonController.cs" />
     <Compile Include="Assets/SojinAsset/Office building/scripts/Door.cs" />
     <Compile Include="Assets/Brick Project Studio/Apartment Kit/Common/Scripts &amp; Animation/Slide/BRGlassDoor.cs" />
@@ -80,8 +80,10 @@
     <Compile Include="Assets/SojinAsset/Office building/scripts/Fix_elevator_fall.cs" />
     <Compile Include="Assets/Scripts/IInteractable.cs" />
     <Compile Include="Assets/Brick Project Studio/_BPS Basic Assets/Common/Scripts and Animations/Drawer/Z Axis/Drawer_Pull_Z.cs" />
+    <Compile Include="Assets/Scripts/InventoryItemRow.cs" />
     <Compile Include="Assets/Keypad/Scripts/KeypadModalController.cs" />
     <Compile Include="Assets/Scripts/InventoryManager.cs" />
+    <Compile Include="Assets/Scripts/ItemData.cs" />
     <Compile Include="Assets/Brick Project Studio/Apartment Kit/Common/Scripts &amp; Animation/Slide/opencloseSlide.cs" />
     <Compile Include="Assets/Brick Project Studio/_BPS Basic Assets/Common/Scripts and Animations/Doors/opencloseDoor.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Assets/Scripts/PersistentRoot.cs" />
     <Compile Include="Assets/Brick Project Studio/_BPS Basic Assets/Common/Scripts and Animations/Doors/opencloseStallDoor.cs" />
     <Compile Include="Assets/SojinAsset/UnityChan/Scripts/FaceUpdate.cs" />
+    <Compile Include="Assets/Scripts/Editor(Don&apos;t Remove-DS)/AutoBootstrapEditor.cs" />
     <Compile Include="Assets/Scripts/PlayerSpawner.cs" />
     <Compile Include="Assets/SojinAsset/Office building/scripts/pass_on_parent.cs" />
     <Compile Include="Assets/SojinAsset/UnityChan/Scripts/ThirdPersonCamera.cs" />
@@ -1350,6 +1353,10 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">

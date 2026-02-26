@@ -77,7 +77,8 @@ public class InventoryManager : MonoBehaviour
     public void SetOpen(bool open)
     {
         inventoryPanel.SetActive(open);
-
+        
+        Debug.Log($"[Inventory] open={open} map={playerInput?.currentActionMap?.name}");
         // 인벤 열면 멈추고 커서 풀기
         Time.timeScale = open ? 0f : 1f;
         Cursor.visible = open;

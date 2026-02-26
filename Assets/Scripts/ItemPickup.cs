@@ -2,13 +2,19 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour, IInteractable
 {
-    public string itemName = "Strange File";
+    [Header("Assign Item Data")]
+    public ItemData item;          // ScriptableObject 아이템
+    public int amount = 1;         // 아직 수량 구현 안 함
 
     public void Interact()
     {
-        var inv = FindObjectOfType<InventoryManager>();
-        inv.AddItem(itemName);  // 인벤토리에 이름 저장
+        if (item == null)
+        {
+            Debug.LogError("[ItemPickup] ItemData가 비어있음. item 할당 필요");
+            return;
+        }
 
-        Destroy(gameObject); // 게임 오브젝트 파괴
+        InventoryManager.Instance.AddItem(item);  // ✅ ItemData로 추가
+        Destroy(gameObject);
     }
 }

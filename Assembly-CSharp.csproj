@@ -96,6 +96,7 @@
     <Compile Include="Assets/Scripts/PersistentRoot.cs" />
     <Compile Include="Assets/Brick Project Studio/_BPS Basic Assets/Common/Scripts and Animations/Doors/opencloseStallDoor.cs" />
     <Compile Include="Assets/SojinAsset/UnityChan/Scripts/FaceUpdate.cs" />
+    <Compile Include="Assets/Scripts/Editor(Don&apos;t Remove-DS)/AutoBootstrapEditor.cs" />
     <Compile Include="Assets/Scripts/PlayerSpawner.cs" />
     <Compile Include="Assets/SojinAsset/Office building/scripts/pass_on_parent.cs" />
     <Compile Include="Assets/SojinAsset/UnityChan/Scripts/ThirdPersonCamera.cs" />

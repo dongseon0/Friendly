@@ -2758,7 +2758,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df3022e4d9884542945806aafb52fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: test_cube
+  item: {fileID: 11400000, guid: b6b4382066f2c4459a2b8b5951d86d56, type: 2}
+  amount: 1
 --- !u!65 &597960480
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -47,7 +47,6 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/6000.0.62f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/Editor/AutoBootstrapEditor.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" />
     <Compile Include="Assets/SojinAsset/UnityChan/Editor/CreateLocatorHere.cs" />
   </ItemGroup>

@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour
         // UI/인벤 자동 바인딩 시도
         BindDependenciesIfNeeded();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     void FixedUpdate()

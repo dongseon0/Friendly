@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   runSpeed: 6
-  jumpForce: 5
+  jumpForce: 200
   animator: {fileID: 101965062335304370}
   cameraTransform: {fileID: 8057708308483150517}
   mouseSensitivity: 1

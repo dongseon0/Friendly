@@ -118,6 +118,11 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
+
+        if (animator != null)
+        {
+            animator.SetTrigger("JumpTrigger");
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)

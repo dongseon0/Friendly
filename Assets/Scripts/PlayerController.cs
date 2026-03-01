@@ -5,7 +5,11 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed = 4f;
+    public float runSpeed = 6f;
     public float jumpForce = 5f;
+
+    [Header("Animation")]
+    public Animator animator;
 
     [Header("Look")]
     public Transform cameraTransform;
@@ -22,6 +26,7 @@ public class PlayerController : MonoBehaviour
     Vector2 lookInput;
     float cameraPitch;
     bool isGrounded;
+    bool isSprinting;
 
     bool _uiBound;
     bool _inventoryBound;
@@ -53,11 +58,25 @@ public class PlayerController : MonoBehaviour
             transform.right * moveInput.x +
             transform.forward * moveInput.y;
 
+        float currentSpeed = isSprinting ? runSpeed : moveSpeed;
+
         rb.linearVelocity = new Vector3(
             move.x * moveSpeed,
             rb.linearVelocity.y,
-            move.z * moveSpeed
+            move.z * currentSpeed
         );
+
+        //Animator에 Speed 값 전달
+        if(animator != null)
+        {
+            float animSpeed = 0f; // 기본은 Idle(숨쉬기 속도 0)
+
+            if (moveInput.magnitude > 0.1f)
+            {
+                animSpeed = isSprinting ? 2f : 1f;
+            }
+            animator.SetFloat("Speed", animSpeed);
+        }
     }
 
     void Update()
@@ -88,12 +107,22 @@ public class PlayerController : MonoBehaviour
         lookInput = ctx.ReadValue<Vector2>();
     }
 
+    public void OnRun(InputAction.CallbackContext ctx)
+    {
+        isSprinting = ctx.ReadValueAsButton();
+    }
+
     public void OnJump(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed || !isGrounded) return;
 
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
+
+        if (animator != null)
+        {
+            animator.SetTrigger("JumpTrigger");
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)

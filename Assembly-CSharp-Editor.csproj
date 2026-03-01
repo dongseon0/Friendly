@@ -65,7 +65,7 @@
     <Compile Include="Assets\SojinAsset\UnityChan\Editor\CreateLocatorHere.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\SojinAsset\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll" />
+    <None Include="Assets\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -557,7 +557,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="DelaunayER">
-      <HintPath>Assets\SojinAsset\EasyRoads3D\lib\DelaunayER.dll</HintPath>
+      <HintPath>Assets\EasyRoads3D\lib\DelaunayER.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.YamlDotNet">
@@ -577,7 +577,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="EasyRoads3Dv3Editor">
-      <HintPath>Assets\SojinAsset\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll</HintPath>
+      <HintPath>Assets\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
@@ -593,7 +593,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="EasyRoads3Dv3">
-      <HintPath>Assets\SojinAsset\EasyRoads3D\lib\EasyRoads3Dv3.dll</HintPath>
+      <HintPath>Assets\EasyRoads3D\lib\EasyRoads3Dv3.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.IonicZip">

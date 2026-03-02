@@ -17,7 +17,7 @@
     "state":{
         "flags":{
             "npc_missing": false,
-            "hospital_lock checked": false,
+            "hospital_lock_checked": false,
             "found_business_card": false,
             "found_magazine": false,
             "found_protest_photo": false,

@@ -62,17 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Scenes\Quitgame.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\AutoBlink.cs" />
     <Compile Include="Assets\SojinAsset\Office building\scripts\DoorAction.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\SpringBone.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\SceneSwitchGen.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\MouseLook.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\Rotator.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Z Axis -1\Drawer_Pull_Zopp.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipR.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\CameraController.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Drawer\X Axis\Drawer_Pull_X.cs" />
     <Compile Include="Assets\Scripts\PlayerInputBridge.cs" />
@@ -80,13 +75,12 @@
     <Compile Include="Assets\Keypad\Scripts\SlidingDoor.cs" />
     <Compile Include="Assets\Scripts\TitleManager.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor1.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\SpringCollider.cs" />
+    <Compile Include="Assets\Scripts\dialogue\NodeDef.cs" />
     <Compile Include="Assets\Keypad\Scripts\KeypadButton.cs" />
     <Compile Include="Assets\SojinAsset\Office building\scripts\evelator_controll.cs" />
     <Compile Include="Assets\Scripts\ItemPickup.cs" />
     <Compile Include="Assets\Models\MonsterModel\MannequinTrigger.cs" />
-    <Compile Include="Assets\Scripts\NodeDef.cs" />
-    <Compile Include="Assets\Scripts\dialog.cs" />
+    <Compile Include="Assets\Scripts\dialogue\UIController.cs" />
     <Compile Include="Assets\Scripts\InventoryUI.cs" />
     <Compile Include="Assets\ScifiOfficeLite\Scripts\DemoFirstPersonController.cs" />
     <Compile Include="Assets\SojinAsset\Office building\scripts\Door.cs" />
@@ -102,31 +96,26 @@
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Slide\opencloseSlide.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Scripts\UIController.cs" />
     <Compile Include="Assets\Keypad\Scripts\Keypad.cs" />
     <Compile Include="Assets\Keypad\Scripts\KeypadInteractionFPV.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\InteractUIMarker.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\dialogue\dialog.cs" />
     <Compile Include="Assets\Scripts\PersistentRoot.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseStallDoor.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\FaceUpdate.cs" />
     <Compile Include="Assets\Scripts\Editor(Don&apos;t Remove-DS)\AutoBootstrapEditor.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\SojinAsset\Office building\scripts\pass_on_parent.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\ThirdPersonCamera.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\SpringManager.cs" />
     <Compile Include="Assets\ScifiOfficeLite\Scripts\DemoDoor.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipL.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\IdleChanger.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Closet\ClosetopencloseDoor.cs" />
     <Compile Include="Assets\Scripts\TestInteraction.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\IKCtrlRightHand.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Windows\opencloseWindowApt.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\OvenOpen\OvenFlip.cs" />
-    <Compile Include="Assets\SojinAsset\UnityChan\Scripts\RandomWind.cs" />
+    <Compile Include="Assets\Scripts\dialogue\ScriptLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

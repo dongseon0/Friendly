@@ -1,3 +1,17 @@
+///////////////////<summary>///////////////////////
+///This script automatically fills the fields of a newly created ItemData asset based on the corresponding item
+///How to use:
+///1st: Create a new ItemData asset (Right Click in Project Window -> Create -> Game -> Item).
+///2nd: The script will automatically fill the new ItemData's fields based on the corresponding itemId in the JSON file (SCRIPT_0209.json).
+///3rd: Make sure the JSON file is correctly placed in the StreamingAssets folder and contains the necessary item data with matching itemIds.
+///4th: If the itemId from the asset's file name does not exist in the JSON, only the itemId field will be filled, and a warning will be logged.
+///5th: Check the Console for logs about the auto-fill process and any potential issues with loading the JSON or missing itemIds.
+///6th: After creation, you can further customize the ItemData asset in the Inspector as needed.
+///7th: This script helps streamline the creation of ItemData assets by reducing manual data entry and ensuring consistency with the JSON data source.
+///8th: Remember to save your project after creating new ItemData assets to ensure all changes are preserved.
+///9th: If you encounter any issues, check the Console for error messages related to JSON loading or asset creation, and verify that the JSON file is correctly formatted and accessible.
+///10th: This script is intended for use in the Unity Editor and will not affect runtime behavior. It is designed to enhance the workflow of creating ItemData assets by automating the population of fields based on a predefined JSON structure.
+//////////////////<summary>//////////////////////
 using UnityEditor;
 using UnityEngine;
 using System.IO;
@@ -5,30 +19,26 @@ using System.Collections.Generic;
 
 public class ItemDataAutoFillOnCreate : UnityEditor.AssetModificationProcessor
 {
-    // StreamingAssets 안의 JSON 파일명 (네 파일명으로 변경)
     private const string JsonFileName = "SCRIPT_0209.json";
 
-    // Game > Item 으로 생성되는 ItemData 에셋이 만들어지는 순간 호출됨
     static void OnWillCreateAsset(string assetPath)
     {
-        // meta 파일 등 제외
+        // except meta files and non-asset files
         if (assetPath.EndsWith(".meta")) return;
 
-        // Unity가 넘겨주는 경로는 보통 "Assets/..." 형태지만 ".asset" 확실히 체크
         string cleanPath = assetPath.Replace(".meta", "");
         if (!cleanPath.EndsWith(".asset")) return;
 
-        // 먼저 에셋이 실제로 생성된 다음 LoadAssetAtPath가 가능하므로 한 프레임 뒤에 실행
         EditorApplication.delayCall += () =>
         {
             var itemData = AssetDatabase.LoadAssetAtPath<ItemData>(cleanPath);
-            if (itemData == null) return; // ItemData가 아니면 무시
+            if (itemData == null) return; // ignore if not ItemData
 
-            // 파일명으로 itemId 결정 (예: Assets/Items/S12.asset -> S12)
+            // determine itemId from file name (without extension)
             string fileName = Path.GetFileNameWithoutExtension(cleanPath);
             string itemId = fileName;
 
-            // JSON 로드
+            // load JSON and find matching itemId
             Dictionary<string, ItemJsonData> jsonItems;
             try
             {
@@ -36,14 +46,14 @@ public class ItemDataAutoFillOnCreate : UnityEditor.AssetModificationProcessor
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"[Item AutoFill] JSON 로드 실패: {e.Message}\n" +
-                               $"StreamingAssets/{JsonFileName} 경로/파일 확인");
+                Debug.LogError($"Fall to load [Item AutoFill] JSON: {e.Message}\n" +
+                               $"Check the address of file of StreamingAssets/{JsonFileName}");
                 return;
             }
 
             if (!jsonItems.ContainsKey(itemId))
             {
-                Debug.LogWarning($"[Item AutoFill] JSON에 itemId '{itemId}' 없음. (asset: {cleanPath})");
+                Debug.LogWarning($"There is no itemId at [Item AutoFill] Json. (asset: {cleanPath})");
                 // itemId만이라도 넣어두고 끝낼지, 아예 아무것도 안할지 선택 가능
                 Undo.RecordObject(itemData, "AutoFill ItemData (Set Id Only)");
                 itemData.itemId = itemId;
@@ -52,7 +62,7 @@ public class ItemDataAutoFillOnCreate : UnityEditor.AssetModificationProcessor
                 return;
             }
 
-            // 값 채우기 (네가 이미 갖고 있던 FillItemData 그대로 활용)
+            // Fill ItemData from JSON
             Undo.RecordObject(itemData, "AutoFill ItemData From JSON");
             itemData.itemId = itemId;
             ScriptLoader.FillItemData(itemData, itemId, jsonItems);

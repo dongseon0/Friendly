@@ -10,12 +10,12 @@ using Newtonsoft.Json;
 public class dialog : MonoBehaviour
 {
     [Header("Load")]
-    [SerializeField] private TextAsset scriptJson;  // Script json 파일 연결
+    [SerializeField] private TextAsset scriptJson;  // Connect Script json
     [SerializeField] private string startSceneId;
     [SerializeField] private string startNodeId;    //empty : [0]
 
     [Header("Refs")]
-    [SerializeField] private UIController ui; // ui.ShowToast 만든 후 연결
+    [SerializeField] private UIController ui; // Connect ui.ShowToast
     [SerializeField] private NavKeypad.Keypad keypad;
     [SerializeField] private NavKeypad.KeypadModalController modal;
 
@@ -210,7 +210,7 @@ public class dialog : MonoBehaviour
             case NodeType.pickup:
             {
                 var p = (PickupNode)node;
-                yield return RunPickup(p);
+                yield return PickupItemRoutine(p.itemId, true);
                 // pickup은 JSON에 next가 없을 때가 많아서 “배열상 다음 노드”로 진행
                 if (!string.IsNullOrEmpty(node.next)) Goto(node.next);
                 else GotoNextInScene(node.id);
@@ -311,7 +311,17 @@ public class dialog : MonoBehaviour
         while (!done) yield return null;
     }
 
-    private IEnumerator RunPickup(PickupNode node)
+    public void PickupItemById_FromWorld(string itemId, bool showInspectLine = false)
+    {
+        if (string.IsNullOrEmpty(itemId))
+        {
+            Debug.LogWarning("[dialog] PickupItemById_FromWorld: itemId is null/empty");
+            return;
+        }
+        StartCoroutine(PickupItemRoutine(itemId, showInspectLine));
+    }
+
+    private IEnumerator PickupItemRoutine(string itemId, bool showInspectLine)
     {
         if (data == null || data.items == null)
         {
@@ -319,16 +329,16 @@ public class dialog : MonoBehaviour
             yield break;
         }
 
-        if (!data.items.TryGetValue(node.itemId, out var item))
+        if (!data.items.TryGetValue(itemId, out var item))
         {
-            Debug.LogError($"Item not found: {node.itemId}");
+            Debug.LogError($"Item not found: {itemId}");
             yield break;
         }
     
         // inventory add
         if (data.state.inventory == null) data.state.inventory = new List<string>();
-        if (!data.state.inventory.Contains(node.itemId))
-            data.state.inventory.Add(node.itemId);
+        if (!data.state.inventory.Contains(itemId))
+            data.state.inventory.Add(itemId);
 
         // flags/vars apply
         if (item.addFlags != null)
@@ -348,19 +358,22 @@ public class dialog : MonoBehaviour
         }
 
         // randomly print inspect Line
-        string line = PickRandomInspectLine(item);
-        // and
-        yield return RunDialogueLike(Template("{PC_NAME}"), Template(line));
+        if (showInspectLine)
+        {
+            string line = PickRandomInspectLine(item);
+            // and
+            yield return RunDialogueLike(Template("{PC_NAME}"), Template(line));
+        }
 
         // Toast
-        if (node.itemId == "PHOTO_BABY" && ui != null)
+        if (itemId == "PHOTO_BABY" && ui != null)
         {
             //Toast UI 만들어진 상태면 toast 출력됨
             ui.ShowToast("Safe Passcode Unlocked: 11985", 1.8f);
             yield return new WaitForSeconds(1.8f);
         }
 
-        Debug.Log($"Picked Up : {node.itemId}");
+        Debug.Log($"Picked Up : {itemId}");
     }
 
     private IEnumerator RunInteraction(InteractionNode node)
@@ -438,6 +451,7 @@ public class dialog : MonoBehaviour
             switch(cmd.type)
             {
                 case "setFlags" :
+                case "setFlag":
                 {
                     if (data.state.flags == null) data.state.flags = new Dictionary<string, bool>();
                     data.state.flags[cmd.flag] = cmd.value ?? true;

@@ -71,6 +71,7 @@
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipR.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Drawer\X Axis\Drawer_Pull_X.cs" />
+    <Compile Include="Assets\Scripts\SnowEffect.cs" />
     <Compile Include="Assets\Scripts\PlayerInputBridge.cs" />
     <Compile Include="Assets\Scripts\CommandListConverter.cs" />
     <Compile Include="Assets\Keypad\Scripts\SlidingDoor.cs" />

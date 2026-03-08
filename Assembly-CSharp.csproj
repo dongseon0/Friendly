@@ -73,6 +73,7 @@
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Drawer\X Axis\Drawer_Pull_X.cs" />
     <Compile Include="Assets\Scripts\SnowEffect.cs" />
     <Compile Include="Assets\Scripts\PlayerInputBridge.cs" />
+    <Compile Include="Assets\Scripts\PictureGlitchManager.cs" />
     <Compile Include="Assets\Scripts\CommandListConverter.cs" />
     <Compile Include="Assets\Keypad\Scripts\SlidingDoor.cs" />
     <Compile Include="Assets\Scripts\TitleManager.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\OvenOpen\OvenFlip.cs" />
     <Compile Include="Assets\Scripts\dialogue\ScriptLoader.cs" />
+    <Compile Include="Assets\Scripts\PictureTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

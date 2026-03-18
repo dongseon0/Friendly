@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 public class dialog : MonoBehaviour
 {
     [Header("Load")]
-    [SerializeField] private TextAsset scriptJson;  // Connect Script json
+    [SerializeField] private string jsonFileName = "SCRIPT_0209.json";  // Connect Script json
     [SerializeField] private string startSceneId;
     [SerializeField] private string startNodeId;    //empty : [0]
 
@@ -39,8 +39,8 @@ public class dialog : MonoBehaviour
 
     private void Awake()
     {
-        if (scriptJson != null)
-        LoadFromTextAsset(scriptJson);
+        if (jsonFileName != null)
+        LoadFromStreamingAssets(jsonFileName);
     }
 
     private void Start()
@@ -52,10 +52,34 @@ public class dialog : MonoBehaviour
     }
 
     #region Loading
-    public void LoadFromTextAsset(TextAsset json)
-    {
-        data = JsonConvert.DeserializeObject<StoryData>(json.text);
-        BuildLookups();
+    public void LoadFromStreamingAssets(string fileName)
+{
+        string path = System.IO.Path.Combine(Application.streamingAssetsPath, fileName);
+
+        if (!System.IO.File.Exists(path))
+        {
+            Debug.LogError($"[dialog] JSON file not found: {path}");
+            return;
+        }
+
+        try
+        {
+            string json = System.IO.File.ReadAllText(path);
+            data = JsonConvert.DeserializeObject<StoryData>(json);
+
+            if (data == null)
+            {
+                Debug.LogError("[dialog] Failed to deserialize JSON.");
+                return;
+            }
+
+            BuildLookups();
+            Debug.Log("[dialog] JSON Loaded Successfully");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[dialog] JSON Load Exception: {e.Message}");
+        }
     }
 
     private void BuildLookups()
@@ -95,13 +119,26 @@ public class dialog : MonoBehaviour
         _currentScene = scene;
         _currentNodes = scene.nodes ?? new List<NodeDef>();
 
+        if (_currentNodes == null || _currentNodes.Count == 0)
+        {
+            Debug.LogError($"[dialog] Scene has no nodes: {scene.id}");
+            yield break;
+        }
+
         // build node lookup for this scene
         _nodesById.Clear();
         _nodeIndexById.Clear();
+
         for (int i = 0; i < _currentNodes.Count; i++)
         {
             var n = _currentNodes[i];
-            if (n == null || string.IsNullOrEmpty(n.id)) continue;
+
+            if (n == null || string.IsNullOrEmpty(n.id))
+            {
+            Debug.LogWarning($"[dialog] Invalid node at index {i} in scene {scene.id}");
+            continue;
+            }
+
             _nodesById[n.id] = n;
             _nodeIndexById[n.id] = i;
         }
@@ -582,7 +619,6 @@ public class dialog : MonoBehaviour
     {
         if (string.IsNullOrEmpty(s) || data?.meta?.variables == null) return s;
 
-        // simple {KEY} replace
         foreach (var kv in data.meta.variables)
         {
             if (kv.Key == null) continue;
@@ -590,6 +626,12 @@ public class dialog : MonoBehaviour
             if (s.Contains(token))
                 s = s.Replace(token, kv.Value?.ToString() ?? "");
         }
+
+        if (s.Contains("{"))
+        {
+            Debug.LogWarning($"[Template] Unresolved variable in text: {s}");
+        }
+
         return s;
     }
 
@@ -617,4 +659,85 @@ public class dialog : MonoBehaviour
     }
 
     #endregion
+
+    public void SkipToNextNode()
+    {
+        if (_currentScene == null)
+        {
+            Debug.LogError("[dialog] Current scene is null.");
+            return;
+        }
+
+        if (_currentNodes == null || _currentNodes.Count == 0)
+        {
+            Debug.LogError("[dialog] No nodes to skip.");
+            return;
+        }
+
+        int currentIdx = -1;
+
+        if (!string.IsNullOrEmpty(_nextNodeId) && _nodeIndexById.TryGetValue(_nextNodeId, out var pendingIdx))
+        {
+            currentIdx = pendingIdx - 1;
+        }
+
+        if (currentIdx < 0)
+        {
+            currentIdx = 0;
+        }
+
+        int nextIdx = currentIdx + 1;
+
+        if (nextIdx >= _currentNodes.Count)
+        {
+            Debug.LogWarning("[dialog] End of nodes reached.");
+            return;
+        }
+
+        StopAllCoroutines();
+        StartCoroutine(RunScene(_currentScene, _currentNodes[nextIdx].id));
+    }
+
+    public void SkipToNextScene()
+    {
+        if (data == null || data.scenes == null || data.scenes.Count == 0)
+        {
+            Debug.LogError("[dialog] No scene data.");
+            return;
+        }
+
+        if (_currentScene == null)
+        {
+            Debug.LogError("[dialog] Current scene is null.");
+            return;
+        }
+
+        int currentSceneIndex = data.scenes.FindIndex(s => s.id == _currentScene.id);
+
+        if (currentSceneIndex < 0)
+        {
+            Debug.LogError("[dialog] Current scene not found in story data.");
+            return;
+        }
+
+        int nextIndex = currentSceneIndex + 1;
+
+        if (nextIndex >= data.scenes.Count)
+        {
+            Debug.LogWarning("[dialog] No next scene.");
+            return;
+        }
+
+        var nextScene = data.scenes[nextIndex];
+        if (nextScene == null)
+        {
+            Debug.LogError("[dialog] Next scene is null.");
+            return;
+        }
+
+        Debug.Log($"[CMD] Force move to scene: {nextScene.id}");
+
+        StopAllCoroutines();
+        StartScene(nextScene.id);
+    }
 }

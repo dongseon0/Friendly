@@ -13,9 +13,46 @@ public class KeypadOpen : MonoBehaviour
     //Based on the distance to the keypad, you can decide to open the keypad or not.
     //For simplicity, we will just open it when the player presses the "Z" key.
 
+    private void Awake()
+    {
+        AutoAssignReferences();
+
+        if (promptUI != null) promptUI.SetActive(false); // Ensure the prompt is hidden at the start
+    }
+
+    private void AutoAssignReferences()
+    {
+        if (keypadModal == null)
+            keypadModal = FindFirstObjectByType<KeypadModalController>();
+        if (keypadTransform == null && keypadModal != null)
+            keypadTransform = keypadModal.transform;
+        if (promptUI == null)
+        {
+            GameObject foundPrompt = GameObject.Find("KeypadOpen Z");
+            if (foundPrompt != null)
+                promptUI = foundPrompt;
+        }
+        if (keypadModal == null)
+        {
+            Debug.LogError("KeypadModalController reference is missing and could not be found in the scene.");
+        }
+        if (keypadTransform == null)
+        {
+            Debug.LogError("Keypad Transform reference is missing and could not be found in the scene.");
+        }
+        if (promptUI == null)
+        {
+            Debug.LogError("Prompt UI reference is missing and could not be found in the scene.");
+        }
+    }
+
     void Update()
     {
+        if (keypadModal == null || keypadTransform == null || promptUI == null)
+            return; // Exit if any reference is missing
+
         float dist = Vector3.Distance(transform.position, keypadTransform.position);
+        
         if (dist <= openDistance)
         {
             promptUI.SetActive(true); // Show the prompt to the player

@@ -73,6 +73,7 @@
     <Compile Include="Assets/Scripts/dialogue/UIController.cs" />
     <Compile Include="Assets/Scripts/InventoryUI.cs" />
     <Compile Include="Assets/ScifiOfficeLite/Scripts/DemoFirstPersonController.cs" />
+    <Compile Include="Assets/Scripts/DocumentViewrUI.cs" />
     <Compile Include="Assets/SojinAsset/Office building/scripts/Door.cs" />
     <Compile Include="Assets/Brick Project Studio/Apartment Kit/Common/Scripts &amp; Animation/Slide/BRGlassDoor.cs" />
     <Compile Include="Assets/Scripts/PauseManager.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/Keypad/Scripts/Keypad.cs" />
     <Compile Include="Assets/Keypad/Scripts/KeypadInteractionFPV.cs" />
+    <Compile Include="Assets/Scripts/DocumentInteractable.cs" />
     <Compile Include="Assets/Scripts/PlayerSpawnPoint.cs" />
     <Compile Include="Assets/Scripts/InteractUIMarker.cs" />
     <Compile Include="Assets/Brick Project Studio/_BPS Basic Assets/Common/Scripts and Animations/First Person Player/PlayerMovement.cs" />

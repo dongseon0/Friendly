@@ -41,6 +41,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private List<NamedVideo> videos = new();
 
+    [Header("Speaker Portrait")]
+    [SerializeField] private Image portraitImage;
+    [SerializeField] private List<NamedPortrait> portraits = new(); 
+
     // Choice 지원 여부
     public bool SupportsChoiceUI => choiceRoot != null && choiceButtonPrefab != null;
 
@@ -62,11 +66,26 @@ public class UIController : MonoBehaviour
         public VideoClip clip;
     }
 
+    [Serializable]
+    public class NamedPortrait
+    {
+        public string speaker;
+        public Sprite sprite;
+    }
+
     private readonly Dictionary<string, AudioClip> _clipMap = new();
     private readonly Dictionary<string, VideoClip> _videoMap = new();
 
+    private Dictionary<string, Sprite> _portraitMap = new();
+
     private void Awake()
     {
+        _portraitMap.Clear();
+        foreach (var p in portraits)
+        {
+            if (!string.IsNullOrEmpty(p.speaker) && p.sprite)
+                _portraitMap[p.speaker] = p.sprite;
+        }
         // lookup
         _clipMap.Clear();
         foreach (var c in clips)
@@ -111,7 +130,10 @@ public class UIController : MonoBehaviour
 
         dialogueRoot.SetActive(true);
 
-        // speaker 처리 (없으면 숨김)
+        // Portrait
+        UpdatePortrait(speaker);
+
+        // speaker
         if (speakerText)
         {
             bool hasSpeaker = !string.IsNullOrWhiteSpace(speaker);
@@ -123,6 +145,27 @@ public class UIController : MonoBehaviour
 
         _onDialogueDone = onDone;
         _dialogueWaiting = true;
+    }
+
+    private void UpdatePortrait(string speaker)
+    {
+        if (portraitImage == null) return;
+
+        if (string.IsNullOrEmpty(speaker))
+        {
+            portraitImage.gameObject.SetActive(false);
+            return;
+        }
+
+        if (!_portraitMap.TryGetValue(speaker, out var sprite))
+        {
+            Debug.LogWarning($"[Portrait] Not found for speaker: {speaker}");
+            portraitImage.gameObject.SetActive(false);
+            return;
+        }
+
+        portraitImage.sprite = sprite;
+        portraitImage.gameObject.SetActive(true);
     }
 
     private void ContinueDialogue()

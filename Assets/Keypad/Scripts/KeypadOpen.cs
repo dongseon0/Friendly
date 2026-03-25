@@ -1,66 +1,129 @@
 using UnityEngine;
-using NavKeypad;   // KeypadModalController namespace
+using UnityEngine.SceneManagement;
+using NavKeypad;
 
 public class KeypadOpen : MonoBehaviour
 {
+    [Header("Only active in this scene")]
+    [SerializeField] private string keypadSceneName = "10_F1_Main";
+
+    [Header("Auto References")]
     [SerializeField] private KeypadModalController keypadModal;
     [SerializeField] private Transform keypadTransform;
-
     [SerializeField] private GameObject promptUI;
 
-    [SerializeField] private float openDistance = 1.5f; // Distance within which the player can open the keypad
+    [Header("Settings")]
+    [SerializeField] private float openDistance = 1.5f;
 
-    //Based on the distance to the keypad, you can decide to open the keypad or not.
-    //For simplicity, we will just open it when the player presses the "Z" key.
+    private bool isSceneWithKeypad;
 
-    private void Awake()
+    private void OnEnable()
     {
-        AutoAssignReferences();
-
-        if (promptUI != null) promptUI.SetActive(false); // Ensure the prompt is hidden at the start
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void AutoAssignReferences()
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        RefreshSceneState();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        RefreshSceneState();
+    }
+
+    private void RefreshSceneState()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        isSceneWithKeypad = currentScene == keypadSceneName;
+
+        // 씬 바뀔 때마다 초기화
+        keypadModal = null;
+        keypadTransform = null;
+
+        FindPromptUI();
+        SetPrompt(false);
+
+        // keypad가 없는 씬이면 여기서 끝
+        if (!isSceneWithKeypad)
+            return;
+
+        FindKeypadReferences();
+    }
+
+    private void FindPromptUI()
+    {
+        if (promptUI != null) return;
+
+        GameObject persistentRoot = GameObject.Find("[PersistentRoot]");
+        if (persistentRoot != null)
+        {
+            Transform t = persistentRoot.transform.Find("UICanvas/InteractText");
+            if (t != null)
+                promptUI = t.gameObject;
+        }
+
+        if (promptUI == null)
+            Debug.LogWarning("Prompt UI could not be found at [PersistentRoot]/UICanvas/InteractText");
+    }
+
+    private void FindKeypadReferences()
     {
         if (keypadModal == null)
-            keypadModal = FindFirstObjectByType<KeypadModalController>();
+        {
+            var modals = Object.FindObjectsByType<KeypadModalController>(
+                FindObjectsInactive.Include,
+                FindObjectsSortMode.None
+            );
+
+            if (modals.Length > 0)
+                keypadModal = modals[0];
+        }
+
         if (keypadTransform == null && keypadModal != null)
             keypadTransform = keypadModal.transform;
-        if (promptUI == null)
-        {
-            GameObject foundPrompt = GameObject.Find("KeypadOpen Z");
-            if (foundPrompt != null)
-                promptUI = foundPrompt;
-        }
+
         if (keypadModal == null)
-        {
-            Debug.LogError("KeypadModalController reference is missing and could not be found in the scene.");
-        }
+            Debug.LogWarning($"No KeypadModalController found in scene: {SceneManager.GetActiveScene().name}");
+
         if (keypadTransform == null)
-        {
-            Debug.LogError("Keypad Transform reference is missing and could not be found in the scene.");
-        }
-        if (promptUI == null)
-        {
-            Debug.LogError("Prompt UI reference is missing and could not be found in the scene.");
-        }
+            Debug.LogWarning($"No keypad transform found in scene: {SceneManager.GetActiveScene().name}");
     }
 
-    void Update()
+    private void Update()
     {
+        if (!isSceneWithKeypad)
+        {
+            SetPrompt(false);
+            return;
+        }
+
         if (keypadModal == null || keypadTransform == null || promptUI == null)
-            return; // Exit if any reference is missing
+            return;
 
         float dist = Vector3.Distance(transform.position, keypadTransform.position);
-        
+
         if (dist <= openDistance)
         {
-            promptUI.SetActive(true); // Show the prompt to the player
-            if(Input.GetKeyDown(KeyCode.Z)) keypadModal.Open();
+            SetPrompt(true);
+
+            if (Input.GetKeyDown(KeyCode.Z))
+                keypadModal.Open();
         }
         else
         {
-            promptUI.SetActive(false); // Hide the prompt when the player is too far
+            SetPrompt(false);
         }
+    }
+
+    private void SetPrompt(bool active)
+    {
+        if (promptUI != null && promptUI.activeSelf != active)
+            promptUI.SetActive(active);
     }
 }

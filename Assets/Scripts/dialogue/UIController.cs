@@ -46,8 +46,11 @@ public class UIController : MonoBehaviour
     [SerializeField] private Sprite defaultPortrait;
     [SerializeField] private List<NamedPortrait> portraits = new();
 
-    [SerializeField] private float dialogueAdvanceBlockSeconds = 0.3f;
+    [SerializeField] private float dialogueAdvanceBlockSeconds = 1f;
     private float _dialogueInputUnlockTime;
+
+    private bool _objectiveWasVisibleBeforeDialogue;
+    private bool _waitForAdvanceRelease;
 
     // Choice 지원 여부
     public bool SupportsChoiceUI => choiceRoot != null && choiceButtonPrefab != null;
@@ -121,6 +124,19 @@ public class UIController : MonoBehaviour
             if (Time.unscaledTime < _dialogueInputUnlockTime)
                 return;
 
+            bool anyAdvanceHeld =
+                Input.GetMouseButton(0) ||
+                Input.GetKey(KeyCode.Space) ||
+                Input.GetKey(KeyCode.Return);
+
+            if (_waitForAdvanceRelease)
+            {
+                if (!anyAdvanceHeld)
+                    _waitForAdvanceRelease = false;
+
+                return;
+            }
+
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
                 ContinueDialogue();
         }
@@ -143,6 +159,12 @@ public class UIController : MonoBehaviour
         // Portrait
         UpdatePortrait(speaker);
 
+        if (objectiveText != null)
+        {
+            _objectiveWasVisibleBeforeDialogue = objectiveText.gameObject.activeSelf;
+            objectiveText.gameObject.SetActive(false);
+        }
+
         // speaker
         if (speakerText)
         {
@@ -157,6 +179,7 @@ public class UIController : MonoBehaviour
         _dialogueWaiting = true;
 
         _dialogueInputUnlockTime = Time.unscaledTime + dialogueAdvanceBlockSeconds;
+        _waitForAdvanceRelease = true;
     }
 
     private void UpdatePortrait(string speaker)
@@ -204,8 +227,19 @@ public class UIController : MonoBehaviour
         dialogueRoot.SetActive(false);
 
         var cb = _onDialogueDone;
+        bool restoreObjective = _objectiveWasVisibleBeforeDialogue;
         _onDialogueDone = null;
+        StartCoroutine(FinishDialogueNextFrame(cb, restoreObjective));
+    }
+
+    private IEnumerator FinishDialogueNextFrame(Action cb, bool restoreObjective)
+    {
+        yield return null;
+
         cb?.Invoke();
+
+        if (!_dialogueWaiting && objectiveText != null && restoreObjective)
+            objectiveText.gameObject.SetActive(true);
     }
 
     // ---------------------------

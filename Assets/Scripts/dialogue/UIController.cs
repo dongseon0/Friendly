@@ -43,7 +43,14 @@ public class UIController : MonoBehaviour
 
     [Header("Speaker Portrait")]
     [SerializeField] private Image portraitImage;
-    [SerializeField] private List<NamedPortrait> portraits = new(); 
+    [SerializeField] private Sprite defaultPortrait;
+    [SerializeField] private List<NamedPortrait> portraits = new();
+
+    [SerializeField] private float dialogueAdvanceBlockSeconds = 1f;
+    private float _dialogueInputUnlockTime;
+
+    private bool _objectiveWasVisibleBeforeDialogue;
+    private bool _waitForAdvanceRelease;
 
     // Choice 지원 여부
     public bool SupportsChoiceUI => choiceRoot != null && choiceButtonPrefab != null;
@@ -76,15 +83,18 @@ public class UIController : MonoBehaviour
     private readonly Dictionary<string, AudioClip> _clipMap = new();
     private readonly Dictionary<string, VideoClip> _videoMap = new();
 
-    private Dictionary<string, Sprite> _portraitMap = new();
+    private Dictionary<string, Sprite> _portraitMap = new(StringComparer.OrdinalIgnoreCase);
 
     private void Awake()
     {
         _portraitMap.Clear();
         foreach (var p in portraits)
         {
-            if (!string.IsNullOrEmpty(p.speaker) && p.sprite)
-                _portraitMap[p.speaker] = p.sprite;
+            if (p == null) continue;
+
+            string key = NormalizeSpeakerKey(p.speaker);
+            if (!string.IsNullOrEmpty(key) && p.sprite != null)
+                _portraitMap[key] = p.sprite;
         }
         // lookup
         _clipMap.Clear();
@@ -111,6 +121,22 @@ public class UIController : MonoBehaviour
         // 대사 표시 중: 마우스 클릭/스페이스로 진행
         if (_dialogueWaiting)
         {
+            if (Time.unscaledTime < _dialogueInputUnlockTime)
+                return;
+
+            bool anyAdvanceHeld =
+                Input.GetMouseButton(0) ||
+                Input.GetKey(KeyCode.Space) ||
+                Input.GetKey(KeyCode.Return);
+
+            if (_waitForAdvanceRelease)
+            {
+                if (!anyAdvanceHeld)
+                    _waitForAdvanceRelease = false;
+
+                return;
+            }
+
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
                 ContinueDialogue();
         }
@@ -133,6 +159,12 @@ public class UIController : MonoBehaviour
         // Portrait
         UpdatePortrait(speaker);
 
+        if (objectiveText != null)
+        {
+            _objectiveWasVisibleBeforeDialogue = objectiveText.gameObject.activeSelf;
+            objectiveText.gameObject.SetActive(false);
+        }
+
         // speaker
         if (speakerText)
         {
@@ -145,6 +177,9 @@ public class UIController : MonoBehaviour
 
         _onDialogueDone = onDone;
         _dialogueWaiting = true;
+
+        _dialogueInputUnlockTime = Time.unscaledTime + dialogueAdvanceBlockSeconds;
+        _waitForAdvanceRelease = true;
     }
 
     private void UpdatePortrait(string speaker)
@@ -157,15 +192,31 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        if (!_portraitMap.TryGetValue(speaker, out var sprite))
+        string key = NormalizeSpeakerKey(speaker);
+
+        if (_portraitMap.TryGetValue(key, out var foundSprite) && foundSprite != null)
         {
-            Debug.LogWarning($"[Portrait] Not found for speaker: {speaker}");
-            portraitImage.gameObject.SetActive(false);
+            portraitImage.sprite = foundSprite;
+            portraitImage.gameObject.SetActive(true);
             return;
         }
 
-        portraitImage.sprite = sprite;
-        portraitImage.gameObject.SetActive(true);
+        if (defaultPortrait != null)
+        {
+            Debug.LogWarning($"[Portrait] Not found for speaker: {speaker}. Using default portrait.");
+            portraitImage.sprite = defaultPortrait;
+            portraitImage.gameObject.SetActive(true);
+            return;
+        }
+
+        Debug.LogWarning($"[Portrait] Not found for speaker: {speaker}, and no default portrait assigned.");
+        portraitImage.gameObject.SetActive(false);
+    }
+
+    private string NormalizeSpeakerKey(string speaker)
+    {
+        if (string.IsNullOrWhiteSpace(speaker)) return string.Empty;
+        return speaker.Trim();
     }
 
     private void ContinueDialogue()
@@ -176,8 +227,19 @@ public class UIController : MonoBehaviour
         dialogueRoot.SetActive(false);
 
         var cb = _onDialogueDone;
+        bool restoreObjective = _objectiveWasVisibleBeforeDialogue;
         _onDialogueDone = null;
+        StartCoroutine(FinishDialogueNextFrame(cb, restoreObjective));
+    }
+
+    private IEnumerator FinishDialogueNextFrame(Action cb, bool restoreObjective)
+    {
+        yield return null;
+
         cb?.Invoke();
+
+        if (!_dialogueWaiting && objectiveText != null && restoreObjective)
+            objectiveText.gameObject.SetActive(true);
     }
 
     // ---------------------------
@@ -194,7 +256,7 @@ public class UIController : MonoBehaviour
         StopCoroutine(nameof(ToastRoutine));
         toastRoot.SetActive(true);
         if (toastText) toastText.text = text ?? "";
-        StartCoroutine(ToastRoutine(Mathf.Max(0.1f, seconds)));
+        StartCoroutine(ToastRoutine(Mathf.Max(0.5f, seconds)));
     }
 
     private IEnumerator ToastRoutine(float seconds)
@@ -213,6 +275,7 @@ public class UIController : MonoBehaviour
             Debug.Log($"[OBJECTIVE] {text}");
             return;
         }
+        objectiveText.gameObject.SetActive(true);
         objectiveText.text = text ?? "";
     }
 
@@ -227,9 +290,9 @@ public class UIController : MonoBehaviour
         if (on && interactHintText)
         {
             if (string.IsNullOrWhiteSpace(target))
-                interactHintText.text = "Press E to interact";
+                interactHintText.text = "Press Z to interact";
             else
-                interactHintText.text = $"Press E to interact: {target}";
+                interactHintText.text = $"Press Z to interact: {target}";
         }
     }
 

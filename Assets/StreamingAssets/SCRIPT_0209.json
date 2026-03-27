@@ -17,7 +17,7 @@
     "state":{
         "flags":{
             "npc_missing": false,
-            "hospital_lock_checked": false,
+            "hospital_locked_checked": false,
             "found_business_card": false,
             "found_magazine": false,
             "found_protest_photo": false,
@@ -262,7 +262,7 @@
                     "id": "S01_N4",
                     "type": "dialogue",
                     "speaker": "{PC_NAME}",
-                    "text": "{NPC_FirstName}... are you okay?",
+                    "text": "{NPC_FIRSTNAME}... are you okay?",
                     "next": "S01_N5"
                 },
                 {
@@ -782,7 +782,7 @@
                     "id": "S11_GOOD_0",
                     "type": "dialogue",
                     "speaker": "{PC_NAME}",
-                    "text": "{NPC_FirstName}, look. {PAST_DATE}. Not 'priority surgery'-but 'full support for the next patient.'",
+                    "text": "{NPC_FIRSTNAME}, look. {PAST_DATE}. Not 'priority surgery'-but 'full support for the next patient.'",
                     "next": "S11_GOOD_1"
                 },
                 {

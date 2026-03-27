@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using NavKeypad;    //Asset > Keypad > Scripts > KeypadModalController.cs
 using nodedef;
 using Newtonsoft.Json;
@@ -20,7 +21,27 @@ public class dialog : MonoBehaviour
     [SerializeField] private NavKeypad.KeypadModalController modal;
 
     [Header("Input")]
-    [SerializeField] private KeyCode interactKey = KeyCode.E;
+    [SerializeField] private KeyCode interactKey = KeyCode.Z;
+
+    //scene binding (optional, for external scene load requests)
+    [Serializable]
+    private class StoryUnitySceneBinding
+    {
+        public string storySceneId;
+        public string unitySceneName;
+    }
+
+    [SerializeField] private List<StoryUnitySceneBinding> storyUnitySceneBindings = new();
+
+    //Scene binding lookup
+    private readonly Dictionary<string, string> _unitySceneNameByStorySceneId = new();
+    private string _waitingStorySceneId;
+    private string _waitingStoryStartNodeId;
+
+    //State Allow nodes to check/modify these during flow
+    private bool _interactionRequested;
+    private string _interactionTarget;
+    private bool _interactionWaiting;
 
     //Loaded Data
     public StoryData data { get; private set; }
@@ -39,8 +60,10 @@ public class dialog : MonoBehaviour
 
     private void Awake()
     {
-        if (jsonFileName != null)
-        LoadFromStreamingAssets(jsonFileName);
+        if (jsonFileName != null) LoadFromStreamingAssets(jsonFileName);
+
+        BuildStoryUnitySceneBindings();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
@@ -96,6 +119,45 @@ public class dialog : MonoBehaviour
         {
             if (string.IsNullOrEmpty(s.id)) continue;
             _scenesById[s.id] = s;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void BuildStoryUnitySceneBindings()
+    {
+        _unitySceneNameByStorySceneId.Clear();
+
+        if (storyUnitySceneBindings == null) return;
+
+        foreach (var b in storyUnitySceneBindings)
+        {
+            if (b == null) continue;
+            if (string.IsNullOrWhiteSpace(b.storySceneId)) continue;
+            if (string.IsNullOrWhiteSpace(b.unitySceneName)) continue;
+
+            _unitySceneNameByStorySceneId[b.storySceneId] = b.unitySceneName;
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (string.IsNullOrEmpty(_waitingStorySceneId))
+            return;
+
+        if (_unitySceneNameByStorySceneId.TryGetValue(_waitingStorySceneId, out var expectedUnitySceneName) &&
+            string.Equals(scene.name, expectedUnitySceneName, StringComparison.Ordinal))
+        {
+            string nextStorySceneId = _waitingStorySceneId;
+            string nextStoryStartNodeId = _waitingStoryStartNodeId;
+
+            _waitingStorySceneId = null;
+            _waitingStoryStartNodeId = null;
+
+            StartScene(nextStorySceneId, nextStoryStartNodeId);
         }
     }
 
@@ -217,6 +279,20 @@ public class dialog : MonoBehaviour
 
     private void GotoScene(string sceneId, string startNodeId = null)
     {
+        if (_unitySceneNameByStorySceneId.TryGetValue(sceneId, out var unitySceneName) &&
+            !string.IsNullOrWhiteSpace(unitySceneName))
+        {
+            _waitingStorySceneId = sceneId;
+            _waitingStoryStartNodeId = startNodeId;
+
+            _pendingSceneId = null;
+            _pendingSceneStartNodeId = null;
+            _nextNodeId = null;
+
+            SceneManager.LoadScene(unitySceneName);
+            return;
+        }
+
         _pendingSceneId = sceneId;
         _pendingSceneStartNodeId = startNodeId;
         _nextNodeId = null;
@@ -226,6 +302,19 @@ public class dialog : MonoBehaviour
 
     #region node dispatcher
 
+    //helper for nodes that can trigger scene transition (e.g. uiObjective)
+    private bool TryGotoScene(NodeDef node)
+    {
+        string ns = GetNextScene(node);
+        if (!string.IsNullOrEmpty(ns))
+        {
+            GotoScene(ns, node.nextNode);
+            return true;
+        }
+
+        return false;
+    }
+
     private IEnumerator RunNode(NodeDef node)
     {
         switch (node.Type)
@@ -234,6 +323,12 @@ public class dialog : MonoBehaviour
             {
                 var n = (NarrationNode)node;
                 yield return RunDialogueLike(null, Template(n.text));
+
+                if (node.effects != null && node.effects.Count > 0)
+                    yield return RunCommands(node.effects);
+
+                if (TryGotoScene(node)) break;
+
                 Goto(string.IsNullOrEmpty(node.next) ? NextIdOrNull(node.id) : node.next);
                 break;
             }
@@ -241,6 +336,12 @@ public class dialog : MonoBehaviour
             {
                 var d = (DialogueNode)node;
                 yield return RunDialogueLike(Template(d.speaker), Template(d.text));
+
+                if (node.effects != null && node.effects.Count > 0)
+                    yield return RunCommands(node.effects);
+
+                if (TryGotoScene(node)) break;
+
                 Goto(string.IsNullOrEmpty(node.next) ? NextIdOrNull(node.id) : node.next);
                 break;
             }
@@ -271,6 +372,11 @@ public class dialog : MonoBehaviour
                 if (a.Do != null && a.Do.Count > 0)
                     yield return RunCommands(a.Do);
 
+                if (node.effects != null && node.effects.Count > 0)
+                    yield return RunCommands(node.effects);
+
+                if (TryGotoScene(node)) break;
+
                 if (!string.IsNullOrEmpty(node.next)) Goto(node.next);
                 else GotoNextInScene(node.id);
                 break;
@@ -285,11 +391,17 @@ public class dialog : MonoBehaviour
             case NodeType.timeSkip:
             {
                 var t = (TimeSkipNode)node;
+
                 if (!string.IsNullOrEmpty(t.text))
                     yield return RunDialogueLike(null, Template(t.text));
 
+                if (node.effects != null && node.effects.Count > 0)
+                    yield return RunCommands(node.effects);
+
                 if (t.seconds > 0f)
                     yield return new WaitForSeconds(t.seconds);
+
+                if (TryGotoScene(node)) break;
 
                 if (!string.IsNullOrEmpty(node.next)) Goto(node.next);
                 else GotoNextInScene(node.id);
@@ -301,12 +413,9 @@ public class dialog : MonoBehaviour
                 if (ui != null) ui.ShowObjective(Template(u.text));
                 else Debug.Log($"[Objective] {Template(u.text)}");
 
-                // nextScene 필드는 NodeDef.cs에서 정확히 매핑돼 있어야 함 (아래 수정 목록 참고)
-                var ns = GetNextScene(node);
-                if (!string.IsNullOrEmpty(ns))
-                    GotoScene(ns, node.nextNode);
-                else
-                    Goto(node.next); // fallback
+                if (TryGotoScene(node)) break;
+
+                Goto(string.IsNullOrEmpty(node.next) ? NextIdOrNull(node.id) : node.next);
                 break;
             }
             case NodeType.ending:
@@ -413,19 +522,46 @@ public class dialog : MonoBehaviour
         Debug.Log($"Picked Up : {itemId}");
     }
 
+    public void RequestInteraction(string target = null)
+    {
+        if (!_interactionWaiting) return;
+
+        string requestedTarget = string.IsNullOrWhiteSpace(target) ? null : Template(target);
+        string waitingTarget = string.IsNullOrWhiteSpace(_interactionTarget) ? null : Template(_interactionTarget);
+
+        if (string.IsNullOrEmpty(target) ||
+            string.IsNullOrEmpty(waitingTarget) ||
+            string.Equals(requestedTarget, waitingTarget, StringComparison.OrdinalIgnoreCase))
+        {
+            _interactionRequested = true;
+        }
+    }
+
+    public bool IsFlagTrue(string flag)
+    {
+        if (data == null || data.state == null || data.state.flags == null) return false;
+        if (string.IsNullOrEmpty(flag)) return false;
+
+        data.state.flags.TryGetValue(flag, out bool value);
+        return value;
+    }
+
     private IEnumerator RunInteraction(InteractionNode node)
     {
-        if (ui!=null) ui.ShowInteractHint(true, Template(node.target));
+        _interactionWaiting = true;
+        _interactionRequested = false;
+        _interactionTarget = Template(node.target);
 
-        while (true)
-        {
-            if(Input.GetKeyDown(interactKey) || Input.GetMouseButtonDown(0)) break;
+        if (ui != null) ui.ShowInteractHint(true, _interactionTarget);
+
+        while (!_interactionRequested)
             yield return null;
-        }
 
-        if (ui != null) ui.ShowInteractHint(false, Template(node.target));
+        _interactionWaiting = false;
 
-        if(node.whenInteract != null && node.whenInteract.Count > 0)
+        if (ui != null) ui.ShowInteractHint(false, _interactionTarget);
+
+        if (node.whenInteract != null && node.whenInteract.Count > 0)
             yield return RunCommands(node.whenInteract);
     }
 
@@ -540,6 +676,12 @@ public class dialog : MonoBehaviour
                 case "goto":
                     Goto(cmd.next);
                     yield break;
+                case "uiObjective":
+                    {
+                        if (ui != null) ui.ShowObjective(Template(cmd.text));
+                        else Debug.Log($"[OBJECTIVE] {Template(cmd.text)}");
+                        break;
+                    }
                 default:
                     Debug.LogWarning($"Unknown command type: {cmd.type}");
                     break;
@@ -646,16 +788,8 @@ public class dialog : MonoBehaviour
 
     private string GetNextScene(NodeDef node)
     {
-        var prop = node.GetType().GetProperty("nextScene");
-        if (prop != null)
-            return prop.GetValue(node) as string;
-
-        // fallback
-        var prop2 = node.GetType().GetProperty("nextScene");
-        if (prop2 != null)
-            return prop2.GetValue(node) as string;
-
-        return null;
+        if (node == null) return null;
+        return node.nextScene;
     }
 
     #endregion

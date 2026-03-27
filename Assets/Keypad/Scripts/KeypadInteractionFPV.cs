@@ -11,12 +11,27 @@ namespace NavKeypad {
         [SerializeField] private KeypadModalController modal;
         [SerializeField] private Keypad keypad;
 
-        private void Awake() => cam = Camera.main;
+        private void Awake()
+        {
+            cam = Camera.main;
+        }
+
+        private void OnEnable()
+        {
+            if (cam == null)
+                cam = Camera.main;
+        }
 
         private void Update()
         {
+            if (cam == null)
+            {
+                cam = Camera.main;
+                if (cam == null) return;
+            }
+
             //1) when the keypad is open, pressing 'esc' to return
-            if(modal != null && modal.IsOpen)
+            if (modal != null && modal.IsOpen)
             {
                 if(Input.GetKeyDown(KeyCode.Escape)){   //press esc
                     if(keypad !=null) keypad.RequestCancel();

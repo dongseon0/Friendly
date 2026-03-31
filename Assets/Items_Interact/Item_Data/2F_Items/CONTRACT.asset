@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a371ca6ea555945f6be7963a6176a285, type: 3}
+  m_Name: CONTRACT
+  m_EditorClassIdentifier: 
+  itemId: CONTRACT
+  displayName: Sponsorship Agreement (Copy)
+  description: "'Party A ({RICH_PATIENT_NAME}) will fully cover the cost of Party
+    B ({NPC_DAD_NAME})'s surgery scheduled for the following day. However, Party
+    A\u2019s surgery will be performed first.\u201D"
+  icon: {fileID: 0}

@@ -222,8 +222,7 @@
                 {
                     "id": "S00_N4",
                     "type": "uiObjective",
-                    "text": "Head to the ossuary",
-                    "nextScene": "S01_OSSUARY_INSIDE"
+                    "text": "Head to the ossuary"
                 }
             ]
         },
@@ -286,8 +285,7 @@
                     "id": "S01_N7",
                     "type": "dialogue",
                     "speaker": "{PC_NAME}",
-                    "text": "Why is he taking so long...? I should go look for him.",
-                    "nextScene": "S02_HOSPITAL_LOBBY"
+                    "text": "Why is he taking so long...? I should go look for him."
                 }
             ]
         },

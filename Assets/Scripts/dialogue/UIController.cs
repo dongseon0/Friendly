@@ -46,6 +46,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private Sprite defaultPortrait;
     [SerializeField] private List<NamedPortrait> portraits = new();
 
+    [SerializeField] private float objectiveVisibleSeconds = 3f;
+    private Coroutine _objectiveHideRoutine;
+    private bool _objectiveAutoVisible;
+
     [SerializeField] private float dialogueAdvanceBlockSeconds = 1f;
     private float _dialogueInputUnlockTime;
 
@@ -161,7 +165,7 @@ public class UIController : MonoBehaviour
 
         if (objectiveText != null)
         {
-            _objectiveWasVisibleBeforeDialogue = objectiveText.gameObject.activeSelf;
+            _objectiveWasVisibleBeforeDialogue = objectiveText.gameObject.activeSelf && _objectiveAutoVisible;
             objectiveText.gameObject.SetActive(false);
         }
 
@@ -275,8 +279,26 @@ public class UIController : MonoBehaviour
             Debug.Log($"[OBJECTIVE] {text}");
             return;
         }
+
         objectiveText.gameObject.SetActive(true);
         objectiveText.text = text ?? "";
+        _objectiveAutoVisible = true;
+
+        if (_objectiveHideRoutine != null)
+            StopCoroutine(_objectiveHideRoutine);
+
+        if (objectiveVisibleSeconds > 0f)
+            _objectiveHideRoutine = StartCoroutine(HideObjectiveAfterSeconds(objectiveVisibleSeconds));
+    }
+
+    private IEnumerator HideObjectiveAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        _objectiveAutoVisible = false;
+
+        if (!_dialogueWaiting && objectiveText != null)
+            objectiveText.gameObject.SetActive(false);
     }
 
     // ---------------------------

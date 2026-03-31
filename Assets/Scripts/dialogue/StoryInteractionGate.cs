@@ -7,9 +7,6 @@ public class StoryInteractionGate : MonoBehaviour
     [SerializeField] private string flagName = "hospital_locked_checked";
     [SerializeField] private KeyCode interactKey = KeyCode.Z;
 
-    [Header("Enable after story gate opens")]
-    [SerializeField] private MonoBehaviour[] componentsToEnable;
-
     [Header("Optional self refs")]
     [SerializeField] private Collider gateCollider;
     [SerializeField] private GameObject[] objectsToDisable;
@@ -18,6 +15,8 @@ public class StoryInteractionGate : MonoBehaviour
 
     private bool _playerInside;
     private bool _unlocked;
+
+    public bool IsUnlocked => _unlocked;
 
     private void Awake()
     {
@@ -70,15 +69,6 @@ public class StoryInteractionGate : MonoBehaviour
     {
         if (_unlocked) return;
         _unlocked = true;
-
-        if (componentsToEnable != null)
-        {
-            foreach (var comp in componentsToEnable)
-            {
-                if (comp != null)
-                    comp.enabled = true;
-            }
-        }
 
         if (objectsToDisable != null)
         {

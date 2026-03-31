@@ -713,6 +713,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 6d6e18892cab2944daaea4f3703f8749, type: 3}
   - speaker: Jackie Stevens
     sprite: {fileID: 21300000, guid: ae513f7a453aa8a419580208cf040b4a, type: 3}
+  objectiveVisibleSeconds: 3
   dialogueAdvanceBlockSeconds: 0.3
 --- !u!114 &707774690 stripped
 MonoBehaviour:
@@ -1932,8 +1933,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jsonFileName: SCRIPT_0209.json
-  startSceneId: S00_CAR_OUTSIDE
-  startNodeId: S00_N0
+  startSceneId: 
+  startNodeId: 
   ui: {fileID: 707774689}
   keypad: {fileID: 0}
   modal: {fileID: 0}

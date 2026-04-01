@@ -53,6 +53,11 @@ public class dialog : MonoBehaviour
     private List<NodeDef> _currentNodes;
     private SceneDef _currentScene;
 
+    //Item pickup flow control
+    private bool _pickupWaiting;
+    private readonly HashSet<string> _pendingPickupItemIds = new();
+    private string _pickupResumeNodeId;
+
     //Flow control
     private string _nextNodeId;
     private string _pendingSceneId;
@@ -347,11 +352,7 @@ public class dialog : MonoBehaviour
             }
             case NodeType.pickup:
             {
-                var p = (PickupNode)node;
-                yield return PickupItemRoutine(p.itemId, true);
-                // pickup은 JSON에 next가 없을 때가 많아서 “배열상 다음 노드”로 진행
-                if (!string.IsNullOrEmpty(node.next)) Goto(node.next);
-                else GotoNextInScene(node.id);
+                yield return WaitForPickupBlock(node.id);
                 break;
             }
             case NodeType.interaction:
@@ -457,6 +458,32 @@ public class dialog : MonoBehaviour
         while (!done) yield return null;
     }
 
+    private IEnumerator WaitForPickupBlock(string startNodeId)
+    {
+        BuildPickupBlock(startNodeId, out var requiredItemIds, out var resumeNodeId);
+
+        _pendingPickupItemIds.Clear();
+        foreach (var itemId in requiredItemIds)
+        {
+            if (!HasItemInStoryState(itemId))
+                _pendingPickupItemIds.Add(itemId);
+        }
+
+        _pickupResumeNodeId = resumeNodeId;
+
+        // 이미 다 주운 상태면 바로 다음으로
+        if (_pendingPickupItemIds.Count == 0)
+        {
+            Goto(_pickupResumeNodeId);
+            yield break;
+        }
+
+        _pickupWaiting = true;
+
+        while (_pickupWaiting)
+            yield return null;
+    }
+
     public void PickupItemById_FromWorld(string itemId, bool showInspectLine = false)
     {
         if (string.IsNullOrEmpty(itemId))
@@ -464,7 +491,27 @@ public class dialog : MonoBehaviour
             Debug.LogWarning("[dialog] PickupItemById_FromWorld: itemId is null/empty");
             return;
         }
-        StartCoroutine(PickupItemRoutine(itemId, showInspectLine));
+        StartCoroutine(HandleWorldPickupRoutine(itemId, showInspectLine));
+    }
+
+    private IEnumerator HandleWorldPickupRoutine(string itemId, bool showInspectLine)
+    {
+        // 이미 story state에 있으면 중복 처리 방지
+        if (HasItemInStoryState(itemId))
+            yield break;
+
+        yield return PickupItemRoutine(itemId, showInspectLine);
+
+        if (_pickupWaiting && _pendingPickupItemIds.Contains(itemId))
+        {
+            _pendingPickupItemIds.Remove(itemId);
+
+            if (_pendingPickupItemIds.Count == 0)
+            {
+                _pickupWaiting = false;
+                Goto(_pickupResumeNodeId);
+            }
+        }
     }
 
     private IEnumerator PickupItemRoutine(string itemId, bool showInspectLine)
@@ -775,6 +822,37 @@ public class dialog : MonoBehaviour
         }
 
         return s;
+    }
+
+    private bool HasItemInStoryState(string itemId)
+    {
+        return data?.state?.inventory != null && data.state.inventory.Contains(itemId);
+    }
+
+    private void BuildPickupBlock(string startNodeId, out List<string> requiredItemIds, out string resumeNodeId)
+    {
+        requiredItemIds = new List<string>();
+        resumeNodeId = null;
+
+        if (!_nodeIndexById.TryGetValue(startNodeId, out var startIdx))
+            return;
+
+        for (int i = startIdx; i < _currentNodes.Count; i++)
+        {
+            var node = _currentNodes[i];
+            if (node is PickupNode p)
+            {
+                if (!string.IsNullOrEmpty(p.itemId))
+                    requiredItemIds.Add(p.itemId);
+            }
+            else
+            {
+                resumeNodeId = node.id;
+                return;
+            }
+        }
+
+        resumeNodeId = null;
     }
 
     private string PickRandomInspectLine(ItemDef item)

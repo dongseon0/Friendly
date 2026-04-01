@@ -10,19 +10,35 @@ public class ItemPickup : MonoBehaviour, IInteractable
     [SerializeField] private dialog story;          // 씬에 있는 dialog 오브젝트를 드래그
     [SerializeField] private bool showInspectLine = true;
 
+    private bool _picked;
+
+    private void OnValidate()
+    {
+        if (item != null && !string.IsNullOrEmpty(item.itemId))
+        {
+            gameObject.name = item.itemId;
+        }
+    }
+
     public void Interact()
     {
+        if (_picked) return;
+        _picked = true;
+
         if (item == null)
         {
             Debug.LogError("[ItemPickup] ItemData is empty. Need to distribute the item");
+            _picked = false;
             return;
         }
 
         // 1) add item to inventory using ItemData
-        InventoryManager.Instance.AddItem(item);  // ✅ ItemData로 추가
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.AddItem(item);  // ✅ ItemData로 추가
 
         // 2) Json
         if (story == null) story = FindFirstObjectByType<dialog>();
+
         if (story != null && !string.IsNullOrEmpty(item.itemId))
         {
             story.PickupItemById_FromWorld(item.itemId, showInspectLine);

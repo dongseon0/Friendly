@@ -287,6 +287,8 @@ public class dialog : MonoBehaviour
         if (_unitySceneNameByStorySceneId.TryGetValue(sceneId, out var unitySceneName) &&
             !string.IsNullOrWhiteSpace(unitySceneName))
         {
+            Debug.Log($"[dialog] Story scene '{sceneId}' -> Load Unity scene '{unitySceneName}'");
+
             _waitingStorySceneId = sceneId;
             _waitingStoryStartNodeId = startNodeId;
 
@@ -297,6 +299,8 @@ public class dialog : MonoBehaviour
             SceneManager.LoadScene(unitySceneName);
             return;
         }
+
+        Debug.Log($"[dialog] Story scene '{sceneId}' has no Unity scene binding. Stay in current Unity scene.");
 
         _pendingSceneId = sceneId;
         _pendingSceneStartNodeId = startNodeId;
@@ -947,9 +951,13 @@ public class dialog : MonoBehaviour
             return;
         }
 
+        string nextStartNodeId = null;
+        if (nextScene.nodes != null && nextScene.nodes.Count > 0)
+            nextStartNodeId = nextScene.nodes[0]?.id;
+
         Debug.Log($"[CMD] Force move to scene: {nextScene.id}");
 
         StopAllCoroutines();
-        StartScene(nextScene.id);
+        GotoScene(nextScene.id, nextStartNodeId);
     }
 }

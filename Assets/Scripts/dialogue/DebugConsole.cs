@@ -69,6 +69,14 @@ public class DebugConsole : MonoBehaviour
         ExecuteCommand(cmd);
     }
 
+    private void CloseConsole()
+    {
+        isOpen = false;
+
+        if (consoleRoot)
+            consoleRoot.SetActive(false);
+    }
+
     private void ExecuteCommand(string cmd)
     {
         if (string.IsNullOrEmpty(cmd)) return;
@@ -97,6 +105,10 @@ public class DebugConsole : MonoBehaviour
 
             case "/showlog":
                 ShowLogs();
+                break;
+
+            case "/closethis":
+                CloseConsole();
                 break;
 
             default:

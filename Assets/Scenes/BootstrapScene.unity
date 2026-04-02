@@ -385,6 +385,22 @@ PrefabInstance:
       propertyPath: m_Value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1898629393430319096, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: logText
+      value: 
+      objectReference: {fileID: 1883517760}
+    - target: {fileID: 1898629393430319096, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: inputField
+      value: 
+      objectReference: {fileID: 75573103}
+    - target: {fileID: 1898629393430319096, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: consoleRoot
+      value: 
+      objectReference: {fileID: 1226527956}
+    - target: {fileID: 1898629393430319096, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: dialogSystem
+      value: 
+      objectReference: {fileID: 1860894110}
     - target: {fileID: 2589060054216596973, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
       propertyPath: m_ChildControlWidth
       value: 1
@@ -487,11 +503,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4652988241139558345, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.0000076293945
       objectReference: {fileID: 0}
     - target: {fileID: 4652988241139558345, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00034026246
+      value: -0.000043457785
       objectReference: {fileID: 0}
     - target: {fileID: 5113491799585695662, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
       propertyPath: m_fontColor.b
@@ -561,6 +577,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -619
       objectReference: {fileID: 0}
+    - target: {fileID: 7101888245158381526, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 707774689}
     - target: {fileID: 7287880827752560424, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -688,13 +708,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7151cfd5ae0214e449bca7a2debb4761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueRoot: {fileID: 1374070177}
-  speakerText: {fileID: 1392406447}
-  bodyText: {fileID: 950178157}
+  dialogueRoot: {fileID: 0}
+  speakerText: {fileID: 0}
+  bodyText: {fileID: 0}
   dialogueContinueBtn: {fileID: 0}
   toastRoot: {fileID: 0}
   toastText: {fileID: 0}
-  objectiveText: {fileID: 1841003312}
+  objectiveText: {fileID: 0}
   interactHintRoot: {fileID: 707774691}
   interactHintText: {fileID: 707774690}
   choiceRoot: {fileID: 0}
@@ -706,7 +726,7 @@ MonoBehaviour:
   videoRoot: {fileID: 0}
   videoPlayer: {fileID: 0}
   videos: []
-  portraitImage: {fileID: 2103669394}
+  portraitImage: {fileID: 0}
   defaultPortrait: {fileID: 21300000, guid: 7dedd89e742762c46b495d7234e4fc0f, type: 3}
   portraits:
   - speaker: Yujin Mogan

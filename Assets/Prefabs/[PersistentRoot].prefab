@@ -661,7 +661,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.00001335144, y: -0.00004005432}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2589060054216596973
@@ -2210,10 +2210,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3844739995517779316}
-  - {fileID: 9007046943309222791}
   - {fileID: 4149660224022554931}
   - {fileID: 2468446161837832064}
+  - {fileID: 3844739995517779316}
+  - {fileID: 9007046943309222791}
   m_Father: {fileID: 8826099302664070563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4389594202459284657
@@ -2741,6 +2741,7 @@ GameObject:
   - component: {fileID: 2127016534789430940}
   - component: {fileID: 7561060493785136880}
   - component: {fileID: 5423422343395145199}
+  - component: {fileID: 5330095504032017540}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -2760,14 +2761,14 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3002353819900006264}
-  - {fileID: 2400770171535772035}
-  - {fileID: 1534058381552090773}
   - {fileID: 8988592095119695683}
   - {fileID: 907006454580248588}
   - {fileID: 3849681713381531654}
   - {fileID: 2793109927041308272}
   - {fileID: 237000423597748971}
+  - {fileID: 3002353819900006264}
+  - {fileID: 2400770171535772035}
+  - {fileID: 1534058381552090773}
   m_Father: {fileID: 8826099302664070563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2852,6 +2853,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootPanel: {fileID: 6773929960616046829}
   documentImage: {fileID: 2544148088928106850}
+--- !u!114 &5330095504032017540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062794385496323327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7151cfd5ae0214e449bca7a2debb4761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueRoot: {fileID: 0}
+  speakerText: {fileID: 0}
+  bodyText: {fileID: 0}
+  dialogueContinueBtn: {fileID: 0}
+  toastRoot: {fileID: 0}
+  toastText: {fileID: 0}
+  objectiveText: {fileID: 0}
+  interactHintRoot: {fileID: 4720626814142188225}
+  interactHintText: {fileID: 7440439243086860950}
+  choiceRoot: {fileID: 0}
+  choicePromptText: {fileID: 0}
+  choiceButtonParent: {fileID: 0}
+  choiceButtonPrefab: {fileID: 0}
+  sfxSource: {fileID: 0}
+  clips: []
+  videoRoot: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  videos: []
+  portraitImage: {fileID: 0}
+  defaultPortrait: {fileID: 21300000, guid: 7dedd89e742762c46b495d7234e4fc0f, type: 3}
+  portraits:
+  - speaker: Yujin Mogan
+    sprite: {fileID: 21300000, guid: 6d6e18892cab2944daaea4f3703f8749, type: 3}
+  - speaker: Jackie Stevens
+    sprite: {fileID: 21300000, guid: ae513f7a453aa8a419580208cf040b4a, type: 3}
+  objectiveVisibleSeconds: 3
+  dialogueAdvanceBlockSeconds: 0.3
 --- !u!1 &6369716827977677782
 GameObject:
   m_ObjectHideFlags: 0
@@ -3977,7 +4017,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5324437592908027161}
   m_HandleRect: {fileID: 4474668236697533678}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4563,7 +4603,7 @@ MonoBehaviour:
   jsonFileName: SCRIPT_0209.json
   startSceneId: 
   startNodeId: 
-  ui: {fileID: 0}
+  ui: {fileID: 5330095504032017540}
   keypad: {fileID: 0}
   modal: {fileID: 0}
   interactKey: 122

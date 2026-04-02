@@ -50,7 +50,6 @@ public class InteractiveRadio : MonoBehaviour
             if (jumpScareManager != null)
             {
                 jumpScareManager.TriggerMonsterEvent();
-                Debug.Log("<color=red>주파수 일치! 점프스케어 발동</color>");
             }
         }
 

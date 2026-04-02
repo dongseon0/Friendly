@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-public class PhoneInteract : MonoBehaviour
+public class PhoneInteract : MonoBehaviour, IInteractable
 {
     private AudioSource audioSource;
-    private bool isPlayerNearby = false;
 
     void Start()
     {
@@ -11,13 +10,9 @@ public class PhoneInteract : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    void Update()
+    public void Interact()
     {
-        // 플레이어가 근처에 있고, Z 키를 눌렀으며, 현재 소리가 재생 중이 아닐 때
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.Z))
-        {
-            PlayPhoneAudio();
-        }
+        PlayPhoneAudio();
     }
 
     void PlayPhoneAudio()
@@ -29,21 +24,4 @@ public class PhoneInteract : MonoBehaviour
         }
     }
 
-    // 플레이어가 감지 영역에 들어왔을 때
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNearby = true;
-        }
-    }
-
-    // 플레이어가 영역을 벗어났을 때
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNearby = false;
-        }
-    }
 }

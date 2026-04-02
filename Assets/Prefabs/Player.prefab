@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4
-  runSpeed: 6
+  runSpeed: 8
   jumpForce: 250
   animator: {fileID: 101965062335304370}
   cameraTransform: {fileID: 8057708308483150517}
@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc27507da365f0c43b1e8eb2bbdbd7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keypadSceneName: 10_F1_Main
   keypadModal: {fileID: 0}
   keypadTransform: {fileID: 0}
   promptUI: {fileID: 0}

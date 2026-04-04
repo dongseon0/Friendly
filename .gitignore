@@ -109,3 +109,4 @@ Thumbs.db
 testfile.tmp
 
 Assembly-CSharp-Editor.csproj
+*.csproj

@@ -143,13 +143,32 @@ public class PlayerController : MonoBehaviour
     public void OnInventory(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed) return;
+        if (InventoryManager.Instance == null) return;
 
-        if (!_inventoryBound || inventory == null)
-            BindInventoryIfNeeded();
+        var input = GetComponent<PlayerInput>();
+        string currentMap = input != null && input.currentActionMap != null
+            ? input.currentActionMap.name
+            : "";
 
-        if (inventory == null) return; // 인벤 매니저가 아직 없으면 스킵
+        Debug.Log($"[PlayerController] OnInventory performed map={currentMap}");
 
-        inventory.ToggleInventory();
+        // Player 맵에서는 "닫혀 있을 때만" 열기 허용
+        if (currentMap == "Player")
+        {
+            if (!InventoryManager.Instance.IsOpen)
+                InventoryManager.Instance.SetOpen(true);
+
+            return;
+        }
+
+        // UI 맵에서는 "열려 있을 때만" 닫기 허용
+        if (currentMap == "UI")
+        {
+            if (InventoryManager.Instance.IsOpen)
+                InventoryManager.Instance.SetOpen(false);
+
+            return;
+        }
     }
 
     // ========== Core Logic ==========

@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class InventoryManager : MonoBehaviour
 {
-    [Header("UI Root (Panel)")]
+    [Header("UI")]
     public GameObject inventoryPanel;
 
     [Header("Input")]
-    public PlayerInput playerInput;                 
+    [SerializeField] private PlayerInput playerInput;             
     [SerializeField] private string playerMap = "Player";
     [SerializeField] private string uiMap = "UI";
 
@@ -48,11 +48,17 @@ public class InventoryManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 매 씬마다 PlayerInput 다시 연결 (DDOL 필수)
-        var player = GameObject.FindGameObjectWithTag("Player");
-        if (player) playerInput = player.GetComponent<PlayerInput>();
+        var player = FindFirstObjectByType<PlayerInput>();
+        if (player != null)
+        {
+            playerInput = player;
+            Debug.Log($"[Inventory] rebound PlayerInput={playerInput.name}");
+        }
+        else
+        {
+            Debug.LogWarning("[Inventory] PlayerInput not found on scene load");
+        }
 
-        // 씬 로드 직후 인벤이 열려있으면 UI맵 유지, 닫혀있으면 Player맵
         if (playerInput)
             playerInput.SwitchCurrentActionMap(IsOpen ? uiMap : playerMap);
     }
@@ -74,18 +80,19 @@ public class InventoryManager : MonoBehaviour
         SetOpen(!inventoryPanel.activeSelf);
     }
 
-    public void SetOpen(bool open)
+   public void SetOpen(bool open)
     {
+        Debug.Log($"[Inventory] REQUEST open={open} beforeActive={inventoryPanel.activeSelf} map={playerInput?.currentActionMap?.name}");
+
         inventoryPanel.SetActive(open);
-        
-        Debug.Log($"[Inventory] open={open} map={playerInput?.currentActionMap?.name}");
-        // 인벤 열면 멈추고 커서 풀기
+
         Time.timeScale = open ? 0f : 1f;
         Cursor.visible = open;
         Cursor.lockState = open ? CursorLockMode.None : CursorLockMode.Locked;
 
-        // Look/Move 입력 차단 = UI맵으로 스왑
         if (playerInput)
             playerInput.SwitchCurrentActionMap(open ? uiMap : playerMap);
+
+        Debug.Log($"[Inventory] DONE open={open} afterActive={inventoryPanel.activeSelf} map={playerInput?.currentActionMap?.name}");
     }
 }

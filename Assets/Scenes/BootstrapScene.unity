@@ -127,6 +127,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 203262722699785072, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 203262722699785072, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283315759816052212, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283315759816052212, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283315759816052212, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283315759816052212, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4380909589223392694, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -432
@@ -178,6 +202,14 @@ PrefabInstance:
     - target: {fileID: 6763504097536602957, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -38
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292152128614341353, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8292152128614341353, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8363026113518124096, guid: 895b3540e4ca14c29b89a5feb19df7af, type: 3}
       propertyPath: m_AnchorMax.x

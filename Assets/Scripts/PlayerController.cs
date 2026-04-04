@@ -143,13 +143,18 @@ public class PlayerController : MonoBehaviour
     public void OnInventory(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed) return;
+        if (InventoryManager.Instance == null) return;
 
-        if (!_inventoryBound || inventory == null)
-            BindInventoryIfNeeded();
+        var input = GetComponent<PlayerInput>();
+        if (input == null) return;
 
-        if (inventory == null) return; // 인벤 매니저가 아직 없으면 스킵
+        bool open = !InventoryManager.Instance.IsOpen;
 
-        inventory.ToggleInventory();
+        InventoryManager.Instance.SetOpen(open);
+
+        input.SwitchCurrentActionMap(open ? "UI" : "Player");
+
+        Debug.Log($"[PlayerController] OnInventory performed -> open={open}, switched to {(open ? "UI" : "Player")}");
     }
 
     // ========== Core Logic ==========

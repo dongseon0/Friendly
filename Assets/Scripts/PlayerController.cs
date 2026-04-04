@@ -146,29 +146,15 @@ public class PlayerController : MonoBehaviour
         if (InventoryManager.Instance == null) return;
 
         var input = GetComponent<PlayerInput>();
-        string currentMap = input != null && input.currentActionMap != null
-            ? input.currentActionMap.name
-            : "";
+        if (input == null) return;
 
-        Debug.Log($"[PlayerController] OnInventory performed map={currentMap}");
+        bool open = !InventoryManager.Instance.IsOpen;
 
-        // Player 맵에서는 "닫혀 있을 때만" 열기 허용
-        if (currentMap == "Player")
-        {
-            if (!InventoryManager.Instance.IsOpen)
-                InventoryManager.Instance.SetOpen(true);
+        InventoryManager.Instance.SetOpen(open);
 
-            return;
-        }
+        input.SwitchCurrentActionMap(open ? "UI" : "Player");
 
-        // UI 맵에서는 "열려 있을 때만" 닫기 허용
-        if (currentMap == "UI")
-        {
-            if (InventoryManager.Instance.IsOpen)
-                InventoryManager.Instance.SetOpen(false);
-
-            return;
-        }
+        Debug.Log($"[PlayerController] OnInventory performed -> open={open}, switched to {(open ? "UI" : "Player")}");
     }
 
     // ========== Core Logic ==========

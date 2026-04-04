@@ -173,28 +173,31 @@ public class PlayerController : MonoBehaviour
 
     void CheckInteractable()
     {
-        // interactUI가 비어 있으면 자동 바인딩 재시도
         if (!_uiBound || interactUI == null)
             BindInteractUIIfNeeded();
 
-        // 아직도 없으면 폭주 없이 스킵
         if (interactUI == null) return;
 
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
         {
+            Debug.Log($"[InteractUI] Hit: {hit.collider.name}");
+
             if (hit.collider.GetComponent<IInteractable>() != null)
             {
+                Debug.Log($"[InteractUI] SHOW -> {interactUI.name}, activeSelf(before)={interactUI.activeSelf}");
                 if (!interactUI.activeSelf) interactUI.SetActive(true);
+                Debug.Log($"[InteractUI] activeSelf(after)={interactUI.activeSelf}");
                 return;
             }
         }
 
+        Debug.Log($"[InteractUI] HIDE -> {interactUI.name}, activeSelf(before)={interactUI.activeSelf}");
         if (interactUI.activeSelf) interactUI.SetActive(false);
     }
 
-    // ========== Dependency Binding (정석) ==========
+    // Dependency Binding 
 
     void BindDependenciesIfNeeded()
     {
@@ -206,21 +209,34 @@ public class PlayerController : MonoBehaviour
     {
         if (_uiBound && interactUI != null) return;
 
-        // 비활성 포함해서 마커 탐색 (DDOL UICanvas 아래 InteractText에 InteractUIMarker 붙어 있어야 함)
         var marker = FindInteractUIMarkerEvenIfInactive();
         if (marker != null)
         {
             interactUI = marker.gameObject;
             _uiBound = true;
+
+            Debug.Log($"[InteractUI] Bound to: {interactUI.name}");
+            Debug.Log($"[InteractUI] Path: {GetPath(interactUI.transform)}");
             return;
         }
 
-        // 못 찾으면 1회만 로그(폭주 금지)
         if (!_loggedMissingInteractUI)
         {
-            Debug.LogError("[PlayerController] InteractUIMarker not found. Add InteractUIMarker to PersistentRoot/UICanvas/InteractText.");
+            Debug.LogError("[PlayerController] InteractUIMarker not found.");
             _loggedMissingInteractUI = true;
         }
+    }
+
+    string GetPath(Transform t)
+    {
+        if (t == null) return "null";
+        string path = t.name;
+        while (t.parent != null)
+        {
+            t = t.parent;
+            path = t.name + "/" + path;
+        }
+        return path;
     }
 
     // 핵심: Resources.FindObjectsOfTypeAll => 비활성/HideInHierarchy 포함해서 찾음
@@ -246,7 +262,6 @@ public class PlayerController : MonoBehaviour
     {
         if (_inventoryBound && inventory != null) return;
 
-        // 네 프로젝트에 InventoryManager 싱글톤이 있으면 Instance로 바꿔도 됨
         inventory = FindFirstObjectByType<InventoryManager>();
         _inventoryBound = inventory != null;
     }

@@ -72,6 +72,7 @@
     <Compile Include="Assets\Speech Bubble\Scripts\SpeechBubbleType.cs" />
     <Compile Include="Assets\Scripts\dialogue\StoryInteractionGate.cs" />
     <Compile Include="Assets\Speech Bubble\Scripts\SpeechBubble_Legacy.cs" />
+    <Compile Include="Assets\Scripts\SceneLoaderInteraction.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipR.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Drawer\X Axis\Drawer_Pull_X.cs" />
@@ -138,7 +139,6 @@
     <Compile Include="Assets\Keypad\Scripts\KeypadOpen.cs" />
     <Compile Include="Assets\Scripts\dialogue\DebugConsole.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Closet\ClosetopencloseDoor.cs" />
-    <Compile Include="Assets\Scripts\TestInteraction.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Windows\opencloseWindowApt.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />

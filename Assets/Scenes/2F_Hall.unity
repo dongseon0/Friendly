@@ -13524,7 +13524,7 @@ GameObject:
   - component: {fileID: 1052472245}
   - component: {fileID: 1052472244}
   - component: {fileID: 1052472243}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: F1MainSceneLoader
   m_TagString: door
   m_Icon: {fileID: 0}
@@ -13576,8 +13576,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2142618, y: 1, z: 1}
-  m_Center: {x: 0.00077986746, y: 0, z: 0}
+  m_Size: {x: 1.2142618, y: 1, z: 0.48375258}
+  m_Center: {x: 0.0007798869, y: 0, z: -0.37546203}
 --- !u!23 &1052472246
 MeshRenderer:
   m_ObjectHideFlags: 0

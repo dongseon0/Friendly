@@ -6,10 +6,10 @@ public class SceneLoader : MonoBehaviour
     [Header("이동할 씬 이름")]
     public string sceneName;
 
-    [Header("스폰 지점의 ID")]
+    [Header("도착씬의 스폰 지점ID")]
     public string targetSpawnID;
 
-    //씬이 넘어가도 지워지지 않는 공용 메모지
+    //씬이 넘어가도 지워지지 않는(static) 공용 메모지
     public static string nextSpawnID = "";
 
     public void LoadScene()

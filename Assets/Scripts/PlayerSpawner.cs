@@ -5,6 +5,11 @@ public class PlayerSpawner : MonoBehaviour
     private GameObject _playerPrefab;
     private GameObject _playerInstance;
 
+    private void Start()
+    {
+        SpawnOrMoveToSceneSpawn();
+    }
+
     public void Configure(GameObject playerPrefab)
     {
         _playerPrefab = playerPrefab;
@@ -34,12 +39,6 @@ public class PlayerSpawner : MonoBehaviour
                     }
                 }
             }
-
-            // 3. targetSpawn이 없다면 그냥 첫 번째 걸 쓰기
-            if (targetSpawn == null)
-            {
-                targetSpawn = allSpawns[0];
-            }
         }
 
         if (_playerInstance == null)
@@ -48,7 +47,7 @@ public class PlayerSpawner : MonoBehaviour
             Object.DontDestroyOnLoad(_playerInstance);
         }
 
-        // 4. 찾은 스폰 포인트 위치로 플레이어를 순간이동
+        // 찾은 스폰위치로 플레이어를 이동
         if (targetSpawn != null)
         {
             _playerInstance.transform.SetPositionAndRotation(targetSpawn.transform.position, targetSpawn.transform.rotation);

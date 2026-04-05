@@ -59,8 +59,11 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
+    <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Library\PackageCache\com.unity.dt.app-ui@874541faca7e\Runtime\SourceGenerators\netstandard2.0\EnumToLowerCase.dll" />
+    <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Library\PackageCache\com.unity.ai.inference@e760aa121ec7\Runtime\Core\SourceGenerator\SourceGenerators.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\SojinAsset\HorrorDirector.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Scenes\Quitgame.cs" />
     <Compile Include="Assets\SojinAsset\Office building\scripts\DoorAction.cs" />
     <Compile Include="Assets\Scripts\PhotoFrameSimple.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="Assets\Keypad\Scripts\KeypadInteractionFPV.cs" />
     <Compile Include="Assets\Scripts\DocumentInteractable.cs" />
     <Compile Include="Assets\Speech Bubble\Example\ScriptExample\Scripts\SpeechBubbleExample.cs" />
+    <Compile Include="Assets\SojinAsset\ScareManager.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\InteractUIMarker.cs" />
     <Compile Include="Assets\Speech Bubble\Scripts\SpeechBubbleStyle.cs" />
@@ -140,6 +144,7 @@
     <Compile Include="Assets\Scripts\dialogue\DebugConsole.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Closet\ClosetopencloseDoor.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
+    <Compile Include="Assets\SojinAsset\SignalCollector.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Windows\opencloseWindowApt.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\OvenOpen\OvenFlip.cs" />
@@ -655,7 +660,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Abstractions">
-      <HintPath>Library\PackageCache\com.unity.ml-agents@592fae96fab2\Plugins\System.IO.Abstractions.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.ml-agents@0f918b8a6271\Plugins\System.IO.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
@@ -671,7 +676,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Google.Protobuf_Packed">
-      <HintPath>Library\PackageCache\com.unity.ml-agents@592fae96fab2\Plugins\Google.Protobuf_Packed.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.ml-agents@0f918b8a6271\Plugins\Google.Protobuf_Packed.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Hashing">
@@ -683,7 +688,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Grpc.Core">
-      <HintPath>Library\PackageCache\com.unity.ml-agents@592fae96fab2\Plugins\ProtoBuffer\Grpc.Core.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.ml-agents@0f918b8a6271\Plugins\ProtoBuffer\Grpc.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -695,7 +700,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Abstractions.TestingHelpers">
-      <HintPath>Library\PackageCache\com.unity.ml-agents@592fae96fab2\Plugins\System.IO.Abstractions.TestingHelpers.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.ml-agents@0f918b8a6271\Plugins\System.IO.Abstractions.TestingHelpers.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
@@ -1218,6 +1223,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.AppUI.Navigation.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.AppUI.Navigation.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.AI.Navigation">
       <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.dll</HintPath>
       <Private>False</Private>
@@ -1302,6 +1311,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.FilmInternalUtilities.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.AppUI.Redux">
+      <HintPath>Library\ScriptAssemblies\Unity.AppUI.Redux.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
       <Private>False</Private>
@@ -1334,6 +1347,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.AppUI">
+      <HintPath>Library\ScriptAssemblies\Unity.AppUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Collections.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Collections.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1358,6 +1375,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.InferenceEngine.Tokenization">
+      <HintPath>Library\ScriptAssemblies\Unity.InferenceEngine.Tokenization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Toonshader">
       <HintPath>Library\ScriptAssemblies\Unity.Toonshader.dll</HintPath>
       <Private>False</Private>
@@ -1366,16 +1387,16 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.AppUI.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.AppUI.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.ML-Agents.Input">
       <HintPath>Library\ScriptAssemblies\Unity.ML-Agents.Input.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.InferenceEngine.ONNX.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.InferenceEngine.ONNX.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.InferenceEngine.MacBLAS">
@@ -1390,20 +1411,20 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.AI.Navigation.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Cinemachine">
       <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
@@ -1452,6 +1473,10 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.InferenceEngine.ONNX.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.InferenceEngine.ONNX.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Runtime">

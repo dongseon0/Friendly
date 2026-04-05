@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1775426203",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\swu\\miniconda3\\envs\\mlagents\\Scripts\\mlagents-learn Assets/ML-Agents/Config/HorrorDirector.yaml --run-id=HorrorTest2",
+        "mlagents_version": "1.2.0.dev0",
+        "mlagents_envs_version": "1.2.0.dev0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.13.1+cpu",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1775426292"
+    },
+    "total": 88.67509489999793,
+    "count": 1,
+    "self": 0.020059599995875033,
+    "children": {
+        "run_training.setup": {
+            "total": 0.07598499999949127,
+            "count": 1,
+            "self": 0.07598499999949127
+        },
+        "TrainerController.start_learning": {
+            "total": 88.57905030000256,
+            "count": 1,
+            "self": 0.0001474999990023207,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 88.57886790000339,
+                    "count": 1,
+                    "self": 88.57886790000339
+                },
+                "TrainerController._save_models": {
+                    "total": 3.49000001733657e-05,
+                    "count": 1,
+                    "self": 3.49000001733657e-05
+                }
+            }
+        }
+    }
+}

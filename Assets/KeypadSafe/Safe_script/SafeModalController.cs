@@ -38,6 +38,8 @@ public class SafeModalController : MonoBehaviour
 
     private void Awake()
     {
+        AutoBindPanelRefs();
+
         if (panelRoot != null)
             panelRoot.SetActive(false);
 
@@ -89,7 +91,7 @@ public class SafeModalController : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Escape))
         {
             Cancel();
             return;
@@ -98,6 +100,9 @@ public class SafeModalController : MonoBehaviour
 
     public void Open(string expectedCode, Action onSuccess, Action onFail, Action onCancel)
     {
+        if(_isOpen) return;
+
+        AutoBindPanelRefs();
         AutoBindRuntimeRefs();
 
         _expectedCode = NormalizeCode(expectedCode);
@@ -233,6 +238,90 @@ public class SafeModalController : MonoBehaviour
             {
                 if (digitHighlights[i] == null) continue;
                 digitHighlights[i].enabled = _selectedDigits.Contains(i);
+            }
+        }
+    }
+
+    private void AutoBindPanelRefs()
+    {
+        if (panelRoot != null &&
+            backgroundCloseButton != null &&
+            selectedText != null &&
+            digitButtons != null && digitButtons.Length > 0)
+            return;
+
+        var persistentRoot = GameObject.Find("[PersistentRoot]");
+        if (persistentRoot == null)
+        {
+            Debug.LogWarning("[SafeModalController] [PersistentRoot] not found.");
+            return;
+        }
+
+        var uiCanvas = persistentRoot.transform.Find("UICanvas");
+        if (uiCanvas == null)
+        {
+            Debug.LogWarning("[SafeModalController] UICanvas not found under [PersistentRoot].");
+            return;
+        }
+
+        var safePanelRootTf = uiCanvas.Find("SafePanelRoot");
+        if (safePanelRootTf == null)
+        {
+            Debug.LogWarning("[SafeModalController] SafePanelRoot not found under UICanvas.");
+            return;
+        }
+
+        panelRoot = safePanelRootTf.gameObject;
+
+        var panelTf = safePanelRootTf.Find("Panel");
+        if (panelTf == null)
+        {
+            Debug.LogWarning("[SafeModalController] Panel not found under SafePanelRoot.");
+            return;
+        }
+
+        if (backgroundCloseButton == null)
+        {
+            var bgTf = safePanelRootTf.Find("DimBackground");
+            if (bgTf != null)
+                backgroundCloseButton = bgTf.GetComponent<Button>();
+        }
+
+        if (selectedText == null)
+        {
+            var selectedTf = panelTf.Find("SelectedCodeText");
+            if (selectedTf != null)
+                selectedText = selectedTf.GetComponent<TMP_Text>();
+        }
+
+        if (digitButtons == null || digitButtons.Length == 0)
+        {
+            var digitsTf = panelTf.Find("Digits");
+            if (digitsTf != null)
+            {
+                digitButtons = digitsTf.GetComponentsInChildren<Button>(true);
+            }
+        }
+
+        if (digitHighlights == null || digitHighlights.Length == 0)
+        {
+            var digitsTf = panelTf.Find("Digits");
+            if (digitsTf != null)
+            {
+                var highlights = new List<Image>();
+                for (int i = 1; i <= 9; i++)
+                {
+                    var btnTf = digitsTf.Find($"Btn{i}");
+                    if (btnTf == null) continue;
+
+                    var hlTf = btnTf.Find($"Highlight{i}");
+                    if (hlTf != null)
+                    {
+                        var img = hlTf.GetComponent<Image>();
+                        if (img != null) highlights.Add(img);
+                    }
+                }
+                digitHighlights = highlights.ToArray();
             }
         }
     }

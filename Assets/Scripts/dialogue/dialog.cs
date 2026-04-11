@@ -74,6 +74,10 @@ public class dialog : MonoBehaviour
     private string _pendingSceneId;
     private string _pendingSceneStartNodeId;
 
+    //Special Interaction Item
+    private const string KeypadTargetName = "Keypad";
+    private const string SafeTargetName = "Locked Safe";
+
     private void Awake()
     {
         if (jsonFileName != null) LoadFromStreamingAssets(jsonFileName);
@@ -593,7 +597,11 @@ public class dialog : MonoBehaviour
 
     public void RequestInteraction(string target = null)
     {
-        if (!_interactionWaiting) return;
+        if (!_interactionWaiting)
+        {
+            Debug.LogWarning($"[dialog] Interaction requested while not waiting. target={target}");
+            return;
+        }
 
         string requestedTarget = string.IsNullOrWhiteSpace(target) ? null : Template(target);
         string waitingTarget = string.IsNullOrWhiteSpace(_interactionTarget) ? null : Template(_interactionTarget);
@@ -798,75 +806,134 @@ public class dialog : MonoBehaviour
     {
         ResolveSceneRuntimeRefs();
 
-        bool useSafeModal =
-            !string.IsNullOrEmpty(_interactionTarget) &&
-            string.Equals(_interactionTarget, "Locked Safe", StringComparison.OrdinalIgnoreCase);
+        string currentTarget = string.IsNullOrWhiteSpace(_interactionTarget)
+            ? string.Empty
+            : Template(_interactionTarget);
+
+        bool useSafeModal = string.Equals(
+            currentTarget,
+            SafeTargetName,
+            StringComparison.OrdinalIgnoreCase
+        );
+
+        bool useKeypad = string.Equals(
+            currentTarget,
+            KeypadTargetName,
+            StringComparison.OrdinalIgnoreCase
+        );
 
         if (useSafeModal)
         {
-            if (safeModal == null)
-            {
-                Debug.LogError("Safe modal not assigned.");
-                if (!string.IsNullOrEmpty(cmd.onCancel)) Goto(cmd.onCancel);
-                yield break;
-            }
-
-            bool done = false;
-            string next = null;
-
-            safeModal.Open(
-                cmd.expected,
-                onSuccess: () => { done = true; next = cmd.onSuccess; },
-                onFail: () => { done = true; next = cmd.onFail; },
-                onCancel: () => { done = true; next = cmd.onCancel; }
-            );
-
-            while (!done)
-                yield return null;
-
-            if (!string.IsNullOrEmpty(next))
-                Goto(next);
-
+            yield return RunSafeInputCode(cmd);
             yield break;
         }
 
-        // 기존 keypad 처리
+        if (useKeypad)
+        {
+            yield return RunKeypadInputCode(cmd);
+            yield break;
+        }
+
+        Debug.LogError($"[dialog] Unsupported inputCode target: '{currentTarget}'");
+
+        if (!string.IsNullOrEmpty(cmd.onCancel))
+            Goto(cmd.onCancel);
+    }
+
+    private IEnumerator RunSafeInputCode(Command cmd)
+    {
+        if (safeModal == null)
+        {
+            Debug.LogError("[dialog] SafeModalController not assigned.");
+            if (!string.IsNullOrEmpty(cmd.onCancel))
+                Goto(cmd.onCancel);
+            yield break;
+        }
+
+        bool done = false;
+        string nextNode = null;
+
+        safeModal.Open(
+            cmd.expected,
+            onSuccess: () =>
+            {
+                done = true;
+                nextNode = cmd.onSuccess;
+            },
+            onFail: () =>
+            {
+                done = true;
+                nextNode = cmd.onFail;
+            },
+            onCancel: () =>
+            {
+                done = true;
+                nextNode = cmd.onCancel;
+            }
+        );
+
+        while (!done)
+            yield return null;
+
+        if (!string.IsNullOrEmpty(nextNode))
+            Goto(nextNode);
+    }
+
+    private IEnumerator RunKeypadInputCode(Command cmd)
+    {
         if (keypad == null || modal == null)
         {
-            Debug.LogError("Keypad/modal not assigned.");
-            if (!string.IsNullOrEmpty(cmd.onCancel)) Goto(cmd.onCancel);
+            Debug.LogError("[dialog] Keypad or KeypadModalController not assigned.");
+            if (!string.IsNullOrEmpty(cmd.onCancel))
+                Goto(cmd.onCancel);
             yield break;
         }
 
         if (!int.TryParse(cmd.expected, out var combo))
         {
-            Debug.LogError($"Invalid expected code: {cmd.expected}");
-            if (!string.IsNullOrEmpty(cmd.onCancel)) Goto(cmd.onCancel);
+            Debug.LogError($"[dialog] Invalid keypad expected code: {cmd.expected}");
+            if (!string.IsNullOrEmpty(cmd.onCancel))
+                Goto(cmd.onCancel);
             yield break;
         }
 
         keypad.SetCombo(combo);
         modal.Open();
 
-        bool keypadDone = false;
-        string keypadNext = null;
+        bool done = false;
+        string nextNode = null;
 
-        UnityEngine.Events.UnityAction granted = () => { keypadDone = true; keypadNext = cmd.onSuccess; };
-        UnityEngine.Events.UnityAction denied = () => { keypadDone = true; keypadNext = cmd.onFail; };
-        UnityEngine.Events.UnityAction cancel = () => { keypadDone = true; keypadNext = cmd.onCancel; };
+        UnityAction granted = () =>
+        {
+            done = true;
+            nextNode = cmd.onSuccess;
+        };
+
+        UnityAction denied = () =>
+        {
+            done = true;
+            nextNode = cmd.onFail;
+        };
+
+        UnityAction canceled = () =>
+        {
+            done = true;
+            nextNode = cmd.onCancel;
+        };
 
         keypad.OnAccessGranted.AddListener(granted);
         keypad.OnAccessDenied.AddListener(denied);
-        keypad.OnCanceled.AddListener(cancel);
+        keypad.OnCanceled.AddListener(canceled);
 
-        while (!keypadDone) yield return null;
+        while (!done)
+            yield return null;
 
         keypad.OnAccessGranted.RemoveListener(granted);
         keypad.OnAccessDenied.RemoveListener(denied);
-        keypad.OnCanceled.RemoveListener(cancel);
+        keypad.OnCanceled.RemoveListener(canceled);
 
-        if (!string.IsNullOrEmpty(keypadNext))
-            Goto(keypadNext);
+        if (!string.IsNullOrEmpty(nextNode))
+            Goto(nextNode);
     }
 
     #endregion

@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     bool _loggedMissingInteractUI;
     bool _loggedMissingCamera;
 
+    private Outline _lastOutline; //outline 켜져 있는 오브젝트 저장용 
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -184,14 +186,32 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
         {
-            if (hit.collider.GetComponent<IInteractable>() != null)
+            Debug.Log("레이캐스트 감지됨: " + hit.collider.name);
+            if (hit.collider.GetComponent<IInteractable>() != null) //상호작용한 컴포넌트가 있다면
             {
                 if (!interactUI.activeSelf) interactUI.SetActive(true);
+                Outline outline = hit.collider.GetComponent<Outline>();
+
+                if (outline != null)
+                {
+                    // null 체크 && 이전에 켜둔 게 있다면 끄고 지금 거를 킴
+                    // _lastOutline 업데이트
+                    if(_lastOutline != null && _lastOutline != outline) _lastOutline.enabled=false;
+                    outline.enabled=true; 
+                    _lastOutline = outline;
+                }
                 return;
             }
         }
 
         if (interactUI.activeSelf) interactUI.SetActive(false);
+        
+        // 아무것도 안 가리키면 _lastOutline 끔 
+        if(_lastOutline != null)
+        {
+            _lastOutline.enabled=false;
+            _lastOutline = null;
+        }
     }
 
     // ========== Dependency Binding (정석) ==========

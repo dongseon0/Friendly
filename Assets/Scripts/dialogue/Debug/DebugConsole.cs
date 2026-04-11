@@ -186,6 +186,9 @@ public class DebugConsole : MonoBehaviour
                     Debug.LogError("[CMD] dialogSystem not assigned");
                     return;
                 }
+
+                PrepareDebugSpawnOverrideForNextScene();
+
                 _sceneJumpRequested = true;
                 CloseConsole();
                 dialogSystem.SkipToNextScene();
@@ -203,6 +206,52 @@ public class DebugConsole : MonoBehaviour
                 Debug.LogWarning($"[CMD] Unknown command: {cmd}");
                 break;
         }
+    }
+
+    private void PrepareDebugSpawnOverrideForNextScene()
+    {
+        if (dialogSystem == null || dialogSystem.data == null || dialogSystem.data.scenes == null)
+        {
+            SceneLoader.nextSpawnID = null;
+            return;
+        }
+
+        var currentScene = dialogSystem.data.scenes.FindIndex(s => s.id == dialogSystem.CurrentStorySceneId);
+        if (currentScene < 0 || currentScene + 1 >= dialogSystem.data.scenes.Count)
+        {
+            SceneLoader.nextSpawnID = null;
+            return;
+        }
+
+        var nextStoryScene = dialogSystem.data.scenes[currentScene + 1];
+        if (nextStoryScene == null)
+        {
+            SceneLoader.nextSpawnID = null;
+            return;
+        }
+
+        string nextUnitySceneName = dialogSystem.GetUnitySceneNameForStoryScene(nextStoryScene.id);
+
+        switch (nextUnitySceneName)
+        {
+            case "10_F1_Main":
+                SceneLoader.nextSpawnID = "Hospital_Ent";
+                break;
+
+            case "2F_Hall":
+                SceneLoader.nextSpawnID = "2F_Ent";
+                break;
+
+            case "OssuaryIndoorScene":
+                SceneLoader.nextSpawnID = "Ossuary_Ent";
+                break;
+
+            default:
+                SceneLoader.nextSpawnID = null;
+                break;
+        }
+
+        Debug.Log($"[DebugConsole] next unity scene = {nextUnitySceneName}, nextSpawnID = {SceneLoader.nextSpawnID}");
     }
 
     private void HandleLog(string logString, string stackTrace, LogType type)

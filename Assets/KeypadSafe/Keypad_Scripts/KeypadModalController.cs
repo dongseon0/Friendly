@@ -12,10 +12,13 @@ namespace NavKeypad
         [SerializeField] private GameObject keypadRoot; // connect keypad root(parent) prefab
         //Open/Close the Keypad(make it Visible/Invisible)
         [SerializeField] private KeypadInteractionFPV interaction; // connect FPV scripts
+
+        [Header("Pause / Disable")]
         //handling the validity of clicking(true/false)
         [SerializeField] private MonoBehaviour[] disableInKeypadMode; // connect disable scripts
                                                                       //managing on/off state
 
+        [Header("Camera - Auto(Optional)")]
         //adjust the camera
         [SerializeField] private Transform viewTarget;      // keypad 앞 카메라 위치
         [SerializeField] private Transform playerCamera;    // 플레이어 카메라
@@ -28,15 +31,23 @@ namespace NavKeypad
 
         private void Awake()
         {
-            AutoBindRuntimeRefs();
+            if (interaction != null)
+                interaction.enabled = false;
         }
 
         private void AutoBindRuntimeRefs()
         {
             if (playerCamera == null)
             {
-                if (Camera.main != null) playerCamera = Camera.main.transform;
-                else Debug.LogWarning("Player Camera not found");
+                var cam = Camera.main;
+                if (cam != null)
+                {
+                    playerCamera = cam.transform;
+                }
+                else
+                {
+                    Debug.LogWarning("[KeypadModalController] Player camera not found.");
+                }
             }
 
             if (disableInKeypadMode == null || disableInKeypadMode.Length == 0)
@@ -49,9 +60,6 @@ namespace NavKeypad
                 var inputBridge = FindFirstObjectByType<PlayerInputBridge>();
                 if (inputBridge != null) list.Add(inputBridge);
 
-                var camLook = FindFirstObjectByType<Camera>(); // 또는 CameraController
-                if (camLook != null) list.Add(camLook.GetComponent<MonoBehaviour>());
-
                 disableInKeypadMode = list.ToArray();
             }
         }
@@ -59,9 +67,9 @@ namespace NavKeypad
         private void OnEnable()
         {
             if(!keypad) return;
+
             keypad.OnAccessGranted.AddListener(Close); 
-            //When entering valid pw : closing the keypad
-            keypad.OnAccessDenied.AddListener(()=>{}); 
+            //When entering valid pw : closing the keypad 
             // managing when entering invalid pw
             keypad.OnCanceled.AddListener(Close);
             //On KeypadInteractionFPV.cs, entering the esc button, return the state before.
@@ -71,13 +79,14 @@ namespace NavKeypad
         {
             if(!keypad) return;
             keypad.OnAccessGranted.RemoveListener(Close);
-            keypad.OnAccessDenied.RemoveListener(Close);
             keypad.OnCanceled.RemoveListener(Close);
             //Preventing overlapping Watching, Memory/Reference Problem
         }
 
         public void Open()  //open the keypad
         {
+            AutoBindRuntimeRefs();
+
             IsOpen = true;
 
             // save the camera location
@@ -91,15 +100,12 @@ namespace NavKeypad
                 playerCamera.rotation = viewTarget.rotation;
             }
 
-            if (keypadRoot != null)
-                keypadRoot.SetActive(true);
-
             if (interaction) interaction.enabled = true;
 
             if (disableInKeypadMode != null)
             {
                 foreach (var mb in disableInKeypadMode)
-                    if (mb) mb.enabled = false;
+                    if(mb != null) mb.enabled = false;
             }
 
             Cursor.lockState = CursorLockMode.None;
@@ -109,9 +115,6 @@ namespace NavKeypad
         public void Close()
         {
             IsOpen = false;
-
-            if (keypadRoot != null)
-                keypadRoot.SetActive(false);
 
             if (interaction) interaction.enabled = false;
 

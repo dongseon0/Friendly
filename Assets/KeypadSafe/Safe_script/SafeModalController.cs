@@ -38,8 +38,6 @@ public class SafeModalController : MonoBehaviour
 
     private void Awake()
     {
-        AutoBindRuntimeRefs();
-
         if (panelRoot != null)
             panelRoot.SetActive(false);
 
@@ -53,9 +51,10 @@ public class SafeModalController : MonoBehaviour
     {
         if (playerCamera == null)
         {
-            if (Camera.main != null)
+            var cam = Camera.main;
+            if (cam != null)
             {
-                playerCamera = Camera.main.transform;
+                playerCamera = cam.transform;
             }
             else
             {
@@ -74,11 +73,6 @@ public class SafeModalController : MonoBehaviour
             var inputBridge = FindFirstObjectByType<PlayerInputBridge>();
             if (inputBridge != null)
                 list.Add(inputBridge);
-
-            // 카메라 회전/마우스 룩 스크립트가 따로 있으면 여기에 추가
-            // 예:
-            // var cameraLook = FindFirstObjectByType<CameraLook>();
-            // if (cameraLook != null) list.Add(cameraLook);
 
             // 현재 오브젝트 자신은 넣지 않음
             disableWhileOpen = list.ToArray();
@@ -104,6 +98,8 @@ public class SafeModalController : MonoBehaviour
 
     public void Open(string expectedCode, Action onSuccess, Action onFail, Action onCancel)
     {
+        AutoBindRuntimeRefs();
+
         _expectedCode = NormalizeCode(expectedCode);
         _onSuccess = onSuccess;
         _onFail = onFail;

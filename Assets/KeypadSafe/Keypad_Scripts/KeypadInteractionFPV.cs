@@ -30,21 +30,22 @@ namespace NavKeypad {
                 if (cam == null) return;
             }
 
+            if (modal == null || !modal.IsOpen) return;
+
             //1) when the keypad is open, pressing 'esc' to return
-            if (modal != null && modal.IsOpen)
-            {
-                if(Input.GetKeyDown(KeyCode.Escape)){   //press esc
-                    if(keypad !=null) keypad.RequestCancel();
-                    //json S06_N3 분기 연결 위해 cancel event -> RequestCancel()
-                    else modal.Close(); //return to the state before
-                    return; //end the scripts.
-                }
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {   //press esc
+                if(keypad !=null) keypad.RequestCancel();
+                //json S06_N3 분기 연결 위해 cancel event -> RequestCancel()
+                else modal.Close(); //return to the state before
+                return; //end the scripts.
             }
-            //2) by left mouse clicking, keypad numbers are entered
-            var ray = cam.ScreenPointToRay(Input.mousePosition);
 
             if (Input.GetMouseButtonDown(0))
             {
+                //2) by left mouse clicking, keypad numbers are entered
+                var ray = cam.ScreenPointToRay(Input.mousePosition);
+
                 if (Physics.Raycast(ray, out var hit))
                 {
                     if (hit.collider.TryGetComponent(out KeypadButton keypadButton))

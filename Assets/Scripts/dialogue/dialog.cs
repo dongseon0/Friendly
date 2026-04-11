@@ -21,9 +21,6 @@ public class dialog : MonoBehaviour
     [SerializeField] private NavKeypad.KeypadModalController modal;
     [SerializeField] private SafeModalController safeModal;
 
-    [Header("Input")]
-    [SerializeField] private KeyCode interactKey = KeyCode.Z;
-
     //scene binding (optional, for external scene load requests)
     [Serializable]
     private class StoryUnitySceneBinding
@@ -33,6 +30,19 @@ public class dialog : MonoBehaviour
     }
 
     [SerializeField] private List<StoryUnitySceneBinding> storyUnitySceneBindings = new();
+
+    //Public API for external callers (DebugConsole, etc.)
+    public string CurrentStorySceneId => _currentScene != null ? _currentScene.id : null;
+
+    public string GetUnitySceneNameForStoryScene(string storySceneId)
+    {
+        if (string.IsNullOrWhiteSpace(storySceneId))
+            return null;
+
+        return _unitySceneNameByStorySceneId.TryGetValue(storySceneId, out var unitySceneName)
+            ? unitySceneName
+            : null;
+    }
 
     //Scene binding lookup
     private readonly Dictionary<string, string> _unitySceneNameByStorySceneId = new();

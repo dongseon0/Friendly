@@ -39,6 +39,13 @@ public class PlayerSpawner : MonoBehaviour
                     }
                 }
             }
+
+            // fallback: 못 찾았으면 첫 번째 스폰 포인트라도 사용
+            if (targetSpawn == null)
+            {
+                targetSpawn = allSpawns[0];
+                Debug.LogWarning($"[PlayerSpawner] SpawnID '{SceneLoader.nextSpawnID}' not found. Fallback to '{targetSpawn.spawnID}'.");
+            }
         }
 
         if (_playerInstance == null)
@@ -50,7 +57,16 @@ public class PlayerSpawner : MonoBehaviour
         // 찾은 스폰위치로 플레이어를 이동
         if (targetSpawn != null)
         {
-            _playerInstance.transform.SetPositionAndRotation(targetSpawn.transform.position, targetSpawn.transform.rotation);
+            _playerInstance.transform.SetPositionAndRotation(
+                targetSpawn.transform.position, 
+                targetSpawn.transform.rotation
+                );
         }
+        else
+        {
+            Debug.LogWarning("[PlayerSpawner] No PlayerSpawnPoint found in this scene.");
+        }
+
+        SceneLoader.nextSpawnID = null;
     }
 }

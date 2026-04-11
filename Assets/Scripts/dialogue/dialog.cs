@@ -958,6 +958,21 @@ public class dialog : MonoBehaviour
         Debug.Log($"[CMD] Force move to scene: {nextScene.id}");
 
         StopAllCoroutines();
-        GotoScene(nextScene.id, nextStartNodeId);
+        if (_unitySceneNameByStorySceneId.TryGetValue(nextScene.id, out var unitySceneName) &&
+            !string.IsNullOrWhiteSpace(unitySceneName))
+        {
+            Debug.Log($"[dialog] Force loading Unity scene: {unitySceneName}");
+
+            _waitingStorySceneId = nextScene.id;
+            _waitingStoryStartNodeId = nextStartNodeId;
+
+            SceneManager.LoadScene(unitySceneName);
+        }
+        else
+        {
+            Debug.Log($"[dialog] No Unity scene binding for {nextScene.id}. Staying in current Unity scene.");
+
+            StartScene(nextScene.id, nextStartNodeId);
+        }
     }
 }

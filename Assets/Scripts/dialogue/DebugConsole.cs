@@ -1,7 +1,9 @@
 using UnityEngine;
 using TMPro;
-using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class DebugConsole : MonoBehaviour
 {
@@ -13,24 +15,31 @@ public class DebugConsole : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private dialog dialogSystem;
 
+    [Header("Optional Refs")]
+    [SerializeField] private PlayerInput playerInput;
+
     private bool isOpen = false;
-    private List<string> logs = new();
+    private bool _sceneJumpRequested = false;
+    private readonly List<string> logs = new();
 
     private void Awake()
     {
         if (consoleRoot) consoleRoot.SetActive(false);
 
         Application.logMessageReceived += HandleLog;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        RebindPlayerInputIfNeeded();
     }
 
     private void OnDestroy()
     {
         Application.logMessageReceived -= HandleLog;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Update()
     {
-        // Alt + Shift 토글
         if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.LeftShift))
         {
             ToggleConsole();
@@ -38,24 +47,108 @@ public class DebugConsole : MonoBehaviour
 
         if (!isOpen) return;
 
-        // Enter 입력
         if (Input.GetKeyDown(KeyCode.Return))
         {
             SubmitCommand();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseConsole();
         }
     }
 
     private void ToggleConsole()
     {
-        isOpen = !isOpen;
+        if (isOpen) CloseConsole();
+        else OpenConsole();
+    }
+
+    private void OpenConsole()
+    {
+        isOpen = true;
 
         if (consoleRoot)
-            consoleRoot.SetActive(isOpen);
+            consoleRoot.SetActive(true);
 
-        if (isOpen && inputField)
+        Time.timeScale = 0f;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        RebindPlayerInputIfNeeded();
+        if (playerInput != null)
+            playerInput.SwitchCurrentActionMap("UI");
+
+        if (inputField)
         {
             inputField.text = "";
             inputField.ActivateInputField();
+            inputField.Select();
+        }
+    }
+
+    private void CloseConsole()
+    {
+        isOpen = false;
+
+        if (inputField != null)
+            inputField.DeactivateInputField();
+
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
+
+        if (consoleRoot)
+            consoleRoot.SetActive(false);
+
+        RestoreGameplayState();
+    }
+
+    private void RestoreGameplayState()
+    {
+        Time.timeScale = 1f;
+
+        bool gameplay = IsGameplayScene();
+
+        if (gameplay)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        RebindPlayerInputIfNeeded();
+
+        if (playerInput != null)
+            playerInput.SwitchCurrentActionMap(gameplay ? "Player" : "UI");
+    }
+
+    private bool IsGameplayScene()
+    {
+        var n = SceneManager.GetActiveScene().name;
+        return n != "TitleScene" && n != "BootstrapScene";
+    }
+
+    private void RebindPlayerInputIfNeeded()
+    {
+        if (playerInput != null) return;
+
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            playerInput = player.GetComponent<PlayerInput>();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        RebindPlayerInputIfNeeded();
+
+        if (_sceneJumpRequested)
+        {
+            _sceneJumpRequested = false;
+            RestoreGameplayState();
         }
     }
 
@@ -67,14 +160,6 @@ public class DebugConsole : MonoBehaviour
         inputField.text = "";
 
         ExecuteCommand(cmd);
-    }
-
-    private void CloseConsole()
-    {
-        isOpen = false;
-
-        if (consoleRoot)
-            consoleRoot.SetActive(false);
     }
 
     private void ExecuteCommand(string cmd)
@@ -91,6 +176,7 @@ public class DebugConsole : MonoBehaviour
                     Debug.LogError("[CMD] dialogSystem not assigned");
                     return;
                 }
+                CloseConsole();
                 dialogSystem.SkipToNextNode();
                 break;
 
@@ -100,6 +186,8 @@ public class DebugConsole : MonoBehaviour
                     Debug.LogError("[CMD] dialogSystem not assigned");
                     return;
                 }
+                _sceneJumpRequested = true;
+                CloseConsole();
                 dialogSystem.SkipToNextScene();
                 break;
 
@@ -117,9 +205,6 @@ public class DebugConsole : MonoBehaviour
         }
     }
 
-    // -------------------------
-    // 로그 수집
-    // -------------------------
     private void HandleLog(string logString, string stackTrace, LogType type)
     {
         logs.Add(logString);

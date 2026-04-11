@@ -95,7 +95,7 @@
         },
         "NPCDAD_CHART": {
             "name": "Diagnostic Record of Patient {NPC_DAD_NAME}",
-            "desc": "Diagonstic record. At the bottom, it is faintly written : 'Security PW needed. Two-digit personal access code + 985 (as the last three digits)'.",
+            "desc": "Diagonstic record. At the bottom, it is faintly written : 'Security PW needed. Two-digit personal access code + 98 (as the last two digits)'.",
             "onInspectLines": [
                 "{NPC_DAD_NAME}... Wait, isn't it the name of {NPC_FIRSTNAME}'s dad?",
                 "...It has some hints for security passwords on it. Where's the rest..."
@@ -140,7 +140,7 @@
         },
         "PHOTO_BABY": {
             "name": "Photo (Entrance Ceremony)",
-            "desc": "{NPC_NAME}'s entrance ceremony. {PC_DAD_NAME} and {NPC_DAD_NAME} are smiling together. It is circled on 1.1 birthday.",
+            "desc": "{NPC_NAME}'s entrance ceremony. {PC_DAD_NAME} and {NPC_DAD_NAME} are smiling together. It is circled on 1.2 birthday.",
             "onInspectLines": [
                 "They look like they completely trusted each other."
             ],
@@ -708,8 +708,8 @@
                         "type": "branch",
                         "conditions": [{ "flag": "ending_ready" }],
                         "then": [
-                            { "type": "narration", "text": "On the medical chart, last three digit was 985... And there were two digit on your item..." },
-                            { "type": "inputCode", "expected": "11985", "onSuccess": "S10_N1", "onFail": "S10_N2" }
+                            { "type": "narration", "text": "On the medical chart, last two digit was 98... And there were two digit on your item..." },
+                            { "type": "inputCode", "expected": "1298", "onSuccess": "S10_N1", "onFail": "S10_N2" }
                         ],
                         "else": [
                             { "type": "dialogue", "speaker": "{PC_NAME}", "text": "I'm still not sure... I need more clues.", "next": "S10_N2" }

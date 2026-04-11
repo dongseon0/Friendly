@@ -1,56 +1,36 @@
 using UnityEngine;
 
-public class SafeStoryInteractable : MonoBehaviour
+public class SafeStoryInteractable : MonoBehaviour, IInteractable
 {
+    [Header("Story")]
     [SerializeField] private dialog story;
     [SerializeField] private string targetName = "Locked Safe";
-    [SerializeField] private KeyCode interactKey = KeyCode.Z;
-    [SerializeField] private GameObject promptUI;
-
-    private bool _playerInside;
 
     private void Awake()
     {
+        AutoBindStory();
+    }
+
+    private void AutoBindStory()
+    {
+        if (story != null) return;
+
+        story = FindFirstObjectByType<dialog>(FindObjectsInactive.Include);
+
         if (story == null)
-            story = FindFirstObjectByType<dialog>();
+            Debug.LogWarning("[SafeStoryInteractable] dialog not found.");
     }
 
-    private void OnEnable()
+    public void Interact()
     {
-        SetPrompt(false);
-    }
+        AutoBindStory();
 
-    private void OnDisable()
-    {
-        SetPrompt(false);
-    }
+        if (story == null)
+        {
+            Debug.LogWarning("[SafeStoryInteractable] dialog not found on interact.");
+            return;
+        }
 
-    private void Update()
-    {
-        SetPrompt(_playerInside);
-
-        if (!_playerInside) return;
-        if (story == null) return;
-
-        if (Input.GetKeyDown(interactKey))
-            story.RequestInteraction(targetName);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-        _playerInside = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-        _playerInside = false;
-    }
-
-    private void SetPrompt(bool active)
-    {
-        if (promptUI != null && promptUI.activeSelf != active)
-            promptUI.SetActive(active);
+        story.RequestInteraction(targetName);
     }
 }

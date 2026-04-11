@@ -85,6 +85,13 @@ namespace NavKeypad
 
         public void Open()  //open the keypad
         {
+            if(IsOpen) return;
+            if (keypad == null)
+            {
+                Debug.LogWarning("[KeypadModalController] Keypad reference missing.");
+                return;
+            }
+
             AutoBindRuntimeRefs();
 
             IsOpen = true;
@@ -136,5 +143,6 @@ namespace NavKeypad
 
             if (keypad) keypad.ClearAndResetVisual();
         }
+
     }
 }

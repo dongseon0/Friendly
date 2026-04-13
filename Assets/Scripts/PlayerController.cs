@@ -136,7 +136,8 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
         {
-            var interactable = hit.collider.GetComponent<IInteractable>();
+            var interactable = hit.collider.GetComponent<IInteractable>()
+                 ?? hit.collider.GetComponentInParent<IInteractable>(); // 자식 collider를 맞아도 부모의 IInteractable까지 찾도록
             if (interactable != null)
                 interactable.Interact();
         }
@@ -179,7 +180,7 @@ public class PlayerController : MonoBehaviour
         if (!_uiBound || interactUI == null)
             BindInteractUIIfNeeded();
 
-        // 아직도 없으면 폭주 없이 스킵
+        // 아직도 없으면 스킵
         if (interactUI == null) return;
 
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
@@ -187,17 +188,26 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
         {
             Debug.Log("레이캐스트 감지됨: " + hit.collider.name);
-            if (hit.collider.GetComponent<IInteractable>() != null) //상호작용한 컴포넌트가 있다면
-            {
+
+            // 자식 collider를 맞아도 부모의 IInteractable까지 찾도록 변경
+            var interactable = hit.collider.GetComponent<IInteractable>()
+                            ?? hit.collider.GetComponentInParent<IInteractable>();
+
+            if (interactable != null) // 상호작용 가능한 오브젝트면
+            {   // interactUI 켜기
                 if (!interactUI.activeSelf) interactUI.SetActive(true);
-                Outline outline = hit.collider.GetComponent<Outline>();
+
+                // Outline도 자식/부모 구조 대응 위해 부모까지 탐색하도록 변경
+                Outline outline = hit.collider.GetComponent<Outline>()
+                            ?? hit.collider.GetComponentInParent<Outline>();
 
                 if (outline != null)
                 {
                     // null 체크 && 이전에 켜둔 게 있다면 끄고 지금 거를 킴
-                    // _lastOutline 업데이트
-                    if(_lastOutline != null && _lastOutline != outline) _lastOutline.enabled=false;
-                    outline.enabled=true; 
+                    if (_lastOutline != null && _lastOutline != outline)
+                        _lastOutline.enabled = false;
+
+                    outline.enabled = true;
                     _lastOutline = outline;
                 }
                 return;
@@ -205,11 +215,11 @@ public class PlayerController : MonoBehaviour
         }
 
         if (interactUI.activeSelf) interactUI.SetActive(false);
-        
-        // 아무것도 안 가리키면 _lastOutline 끔 
-        if(_lastOutline != null)
+
+        // 아무것도 안 가리키면 _lastOutline 끔
+        if (_lastOutline != null)
         {
-            _lastOutline.enabled=false;
+            _lastOutline.enabled = false;
             _lastOutline = null;
         }
     }

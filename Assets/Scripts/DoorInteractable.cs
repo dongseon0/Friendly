@@ -4,19 +4,18 @@ using System.Collections;
 public class DoorInteractable : MonoBehaviour, IInteractable
 {
     [Header("Door Parts")]
-    [SerializeField] private Transform hingePivot; // 실제 회전할 축
-    [SerializeField] private Transform player;     // 플레이어 자동 바인딩
+    [SerializeField] private Transform hingePivot;
+    [SerializeField] private Transform player; // 자동 바인딩 대상
 
     [Header("Open Settings")]
     [SerializeField] private float openAngle = 100f;
-    [SerializeField] private float openCloseDuration = 0.25f;   // 문 열리고 대기 시간
-
-    [Header("State")]
-    [SerializeField] private bool isOpen = false;
-    [SerializeField] private bool isMoving = false;
+    [SerializeField] private float openCloseDuration = 0.25f;
 
     private Quaternion closedRotation;
     private Quaternion openedRotation;
+
+    private bool isOpen = false;
+    private bool isMoving = false;
 
     private void Awake()
     {
@@ -24,23 +23,33 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             hingePivot = transform;
 
         closedRotation = hingePivot.localRotation;
-
-        if (player == null)
-        {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-                player = playerObj.transform;
-        }
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        // 씬 전환 후 플레이어 재스폰 대비
-        if (player == null)
+        // 부트스트랩/플레이어 스폰 타이밍 때문에 한 프레임 뒤 자동 바인딩
+        StartCoroutine(BindPlayerNextFrame());
+    }
+
+    private IEnumerator BindPlayerNextFrame()
+    {
+        yield return null;
+        BindPlayerIfNeeded();
+    }
+
+    private void BindPlayerIfNeeded()
+    {
+        if (player != null) return;
+
+        PlayerController pc = FindFirstObjectByType<PlayerController>();
+        if (pc != null)
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-                player = playerObj.transform;
+            player = pc.transform;
+            Debug.Log($"[Door] Player bound: {player.name}");
+        }
+        else
+        {
+            Debug.LogWarning("[Door] Player not found for auto-bind.");
         }
     }
 
@@ -48,12 +57,8 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     {
         if (isMoving) return;
 
-        if (player == null)
-        {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
-                player = playerObj.transform;
-        }
+        // 혹시 시작 타이밍에 못 잡았으면 여기서 한 번 더 보정
+        BindPlayerIfNeeded();
 
         if (!isOpen)
             OpenDoorAwayFromPlayer();
@@ -63,19 +68,19 @@ public class DoorInteractable : MonoBehaviour, IInteractable
 
     private void OpenDoorAwayFromPlayer()
     {
-        if (player == null) return;
+        if (player == null)
+        {
+            Debug.LogWarning("[Door] Cannot open: player is null.");
+            return;
+        }
 
-        // 플레이어가 문 기준 어느 쪽에 있는지 판단
         Vector3 toPlayer = (player.position - hingePivot.position).normalized;
-
-        // 문의 오른쪽 방향 기준으로 부호 결정
         float side = Vector3.Dot(hingePivot.right, toPlayer);
 
-        // 플레이어 쪽으로 안 열리게, 반대 방향으로 회전
+        // 플레이어 반대 방향으로 열기
         float targetAngle = (side >= 0f) ? -openAngle : openAngle;
 
         openedRotation = closedRotation * Quaternion.Euler(0f, targetAngle, 0f);
-
         StartCoroutine(RotateDoor(openedRotation, true));
     }
 

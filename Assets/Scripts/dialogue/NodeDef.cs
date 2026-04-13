@@ -21,7 +21,6 @@ namespace nodedef{
 
     #region Root
 
-    [Serializable]
     public class StoryData
     {
         public Meta meta;
@@ -30,7 +29,6 @@ namespace nodedef{
         public List<SceneDef> scenes;
     }
 
-    [Serializable]
     public class Meta{
         public string title;
         public string language;
@@ -44,7 +42,6 @@ namespace nodedef{
 
     #region State / Items
 
-    [Serializable]
     public class GameState
     {
         public Dictionary<string, bool> flags;
@@ -52,7 +49,6 @@ namespace nodedef{
         public List<string> inventory;
     }
 
-    [Serializable]
     public class ItemDef
     {
         public string name;
@@ -68,7 +64,6 @@ namespace nodedef{
 
     #region Scenes
 
-    [Serializable]
     public class SceneDef
     {
         public string id;
@@ -98,7 +93,6 @@ namespace nodedef{
         ending
     }
 
-    [Serializable]
     [JsonConverter(typeof(NodeConverter))]
     public abstract class NodeDef
     {
@@ -117,14 +111,12 @@ namespace nodedef{
         public List<Command> effects;
     }
 
-    [Serializable]
     public sealed class NarrationNode : NodeDef
     {
         public override NodeType Type => NodeType.narration;
         public string text;
     }
 
-    [Serializable]
     public sealed class DialogueNode : NodeDef
     {
         public override NodeType Type => NodeType.dialogue;
@@ -132,7 +124,6 @@ namespace nodedef{
         public string text;
     }
 
-    [Serializable]
     public sealed class PickupNode : NodeDef
     {
         public override NodeType Type => NodeType.pickup;
@@ -142,7 +133,6 @@ namespace nodedef{
         public List<Command> whenPicked;
     }
 
-    [Serializable]
     public sealed class InteractionNode : NodeDef
     {
         public override NodeType Type => NodeType.interaction;
@@ -152,7 +142,6 @@ namespace nodedef{
         public List<Command> whenInteract;
     }
 
-    [Serializable]
     public sealed class ChoiceNode : NodeDef
     {
         public override NodeType Type => NodeType.choice;
@@ -160,7 +149,6 @@ namespace nodedef{
         public List<ChoiceOption> choices;
     }
 
-    [Serializable]
     public sealed class ChoiceOption
     {
         public string text;
@@ -173,7 +161,6 @@ namespace nodedef{
         public string nextNode;
     }
 
-    [Serializable]
     public sealed class ActionNode : NodeDef
     {
         public override NodeType Type => NodeType.action;
@@ -184,7 +171,6 @@ namespace nodedef{
         public List<Command> Do;
     }
 
-    [Serializable]
     public sealed class TimeSkipNode : NodeDef
     {
         public override NodeType Type => NodeType.timeSkip;
@@ -192,14 +178,12 @@ namespace nodedef{
         public string text;
     }
 
-    [Serializable]
     public sealed class UiObjectiveNode : NodeDef
     {
         public override NodeType Type => NodeType.uiObjective;
         public string text;
     }
 
-    [Serializable]
     public sealed class EndingNode : NodeDef
     {
         public override NodeType Type => NodeType.ending;
@@ -217,7 +201,6 @@ namespace nodedef{
     /// This keeps your format extensible without creating 20+ command classes.
     /// You can switch on cmd.type and read the fields you need.
     /// </summary>
-    [Serializable]
     [JsonConverter(typeof(CommandConverter))]
     public sealed class Command
     {
@@ -259,7 +242,6 @@ namespace nodedef{
         public Dictionary<string, JToken> extra;
     }
 
-    [Serializable]
     public sealed class Condition
     {
         public string flag;

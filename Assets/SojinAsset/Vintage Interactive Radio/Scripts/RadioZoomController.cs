@@ -4,6 +4,7 @@ public class RadioZoomController : MonoBehaviour, IInteractable
 {
     private Camera mainCamera;
     public GameObject radioZoomCamera;
+    private PlayerController playerController;
 
     [Header("Settings")]
     private bool isZoomed = false;
@@ -23,9 +24,18 @@ public class RadioZoomController : MonoBehaviour, IInteractable
         }
     }
 
+    // 줌 아웃 처리
+    void Update()
+    {
+        if (isZoomed && Input.GetKeyDown(KeyCode.Z))
+        {
+            ToggleZoom();
+        }
+    }
+
     void ToggleZoom()
     {
-        isZoomed = !isZoomed;
+        isZoomed = !isZoomed; //토글
 
         if (isZoomed)
         {
@@ -33,12 +43,12 @@ public class RadioZoomController : MonoBehaviour, IInteractable
             mainCamera.gameObject.SetActive(false);
             radioZoomCamera.SetActive(true);
 
-            // 마우스 커서 해제
+            // 마우스 커서 보임
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            // [추가] 줌 상태에서 플레이어가 움직이지 못하게 PlayerController를 잠시 끌 수도 있습니다.
-            // 필요하다면: mainCamera.GetComponentInParent<PlayerController>().enabled = false;
+            // 플레이어 조작 끄기
+            if (playerController != null) playerController.enabled = false;
         }
         else
         {
@@ -54,9 +64,12 @@ public class RadioZoomController : MonoBehaviour, IInteractable
                 mainCamera.gameObject.SetActive(true);
             }
 
-            // 마우스 커서 다시 고정
+            // 마우스 커서 다시 고정(lock)
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            // 플레이어 조작 다시 켜기
+            if (playerController != null) playerController.enabled = true;
         }
     }
 
@@ -66,8 +79,6 @@ public class RadioZoomController : MonoBehaviour, IInteractable
         Camera[] allCameras = Object.FindObjectsByType<Camera>(FindObjectsSortMode.None);
         foreach (Camera cam in allCameras)
         {
-            // 라디오 카메라가 아니고, 플레이어 시스템에서 사용될만한 카메라 찾기
-            // (보통 부트스트랩 카메라는 이름에 'Camera'가 들어있거나 특정 태그를 가짐)
             if (cam.gameObject != radioZoomCamera)
             {
                 mainCamera = cam;

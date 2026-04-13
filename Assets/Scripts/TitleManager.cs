@@ -9,6 +9,7 @@ public class TitleManager : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(startSceneName))
         {
+            SceneLoader.nextSpawnID = "GameStartPoint";
             SceneManager.LoadScene(startSceneName);
         }
     }

@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     bool _loggedMissingInteractUI;
     bool _loggedMissingCamera;
 
+    private Outline _lastOutline; //outline 켜져 있는 오브젝트 저장용 
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -173,31 +175,46 @@ public class PlayerController : MonoBehaviour
 
     void CheckInteractable()
     {
+        // interactUI가 비어 있으면 자동 바인딩 재시도
         if (!_uiBound || interactUI == null)
             BindInteractUIIfNeeded();
 
+        // 아직도 없으면 폭주 없이 스킵
         if (interactUI == null) return;
 
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactLayer))
         {
-            Debug.Log($"[InteractUI] Hit: {hit.collider.name}");
-
-            if (hit.collider.GetComponent<IInteractable>() != null)
+            Debug.Log("레이캐스트 감지됨: " + hit.collider.name);
+            if (hit.collider.GetComponent<IInteractable>() != null) //상호작용한 컴포넌트가 있다면
             {
-                Debug.Log($"[InteractUI] SHOW -> {interactUI.name}, activeSelf(before)={interactUI.activeSelf}");
                 if (!interactUI.activeSelf) interactUI.SetActive(true);
-                Debug.Log($"[InteractUI] activeSelf(after)={interactUI.activeSelf}");
+                Outline outline = hit.collider.GetComponent<Outline>();
+
+                if (outline != null)
+                {
+                    // null 체크 && 이전에 켜둔 게 있다면 끄고 지금 거를 킴
+                    // _lastOutline 업데이트
+                    if(_lastOutline != null && _lastOutline != outline) _lastOutline.enabled=false;
+                    outline.enabled=true; 
+                    _lastOutline = outline;
+                }
                 return;
             }
         }
 
-        Debug.Log($"[InteractUI] HIDE -> {interactUI.name}, activeSelf(before)={interactUI.activeSelf}");
         if (interactUI.activeSelf) interactUI.SetActive(false);
+        
+        // 아무것도 안 가리키면 _lastOutline 끔 
+        if(_lastOutline != null)
+        {
+            _lastOutline.enabled=false;
+            _lastOutline = null;
+        }
     }
 
-    // Dependency Binding 
+    // ========== Dependency Binding (정석) ==========
 
     void BindDependenciesIfNeeded()
     {
@@ -209,34 +226,21 @@ public class PlayerController : MonoBehaviour
     {
         if (_uiBound && interactUI != null) return;
 
+        // 비활성 포함해서 마커 탐색 (DDOL UICanvas 아래 InteractText에 InteractUIMarker 붙어 있어야 함)
         var marker = FindInteractUIMarkerEvenIfInactive();
         if (marker != null)
         {
             interactUI = marker.gameObject;
             _uiBound = true;
-
-            Debug.Log($"[InteractUI] Bound to: {interactUI.name}");
-            Debug.Log($"[InteractUI] Path: {GetPath(interactUI.transform)}");
             return;
         }
 
+        // 못 찾으면 1회만 로그(폭주 금지)
         if (!_loggedMissingInteractUI)
         {
-            Debug.LogError("[PlayerController] InteractUIMarker not found.");
+            Debug.LogError("[PlayerController] InteractUIMarker not found. Add InteractUIMarker to PersistentRoot/UICanvas/InteractText.");
             _loggedMissingInteractUI = true;
         }
-    }
-
-    string GetPath(Transform t)
-    {
-        if (t == null) return "null";
-        string path = t.name;
-        while (t.parent != null)
-        {
-            t = t.parent;
-            path = t.name + "/" + path;
-        }
-        return path;
     }
 
     // 핵심: Resources.FindObjectsOfTypeAll => 비활성/HideInHierarchy 포함해서 찾음
@@ -262,6 +266,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_inventoryBound && inventory != null) return;
 
+        // 네 프로젝트에 InventoryManager 싱글톤이 있으면 Instance로 바꿔도 됨
         inventory = FindFirstObjectByType<InventoryManager>();
         _inventoryBound = inventory != null;
     }

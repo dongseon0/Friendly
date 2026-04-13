@@ -41,6 +41,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     {
         if (player != null) return;
 
+        // 씬에서 PlayerController 타입을 찾아 자동 바인딩 시도
         PlayerController pc = FindFirstObjectByType<PlayerController>();
         if (pc != null)
         {
@@ -66,6 +67,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             StartCoroutine(RotateDoor(closedRotation, false));
     }
 
+    // 플레이어 반대 방향으로 문 여는 함수 (방향 계산)
     private void OpenDoorAwayFromPlayer()
     {
         if (player == null)
@@ -74,6 +76,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             return;
         }
 
+        // 문 힌지 기준 오른쪽/왼쪽 어디에 있는지 계산
         Vector3 toPlayer = (player.position - hingePivot.position).normalized;
         float side = Vector3.Dot(hingePivot.right, toPlayer);
 
@@ -84,6 +87,8 @@ public class DoorInteractable : MonoBehaviour, IInteractable
         StartCoroutine(RotateDoor(openedRotation, true));
     }
 
+
+    // 문 닫기
     public void CloseDoor()
     {
         if (isMoving) return;
@@ -112,5 +117,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
         isMoving = false;
     }
 
+    // 바깥 스크립트가 문 상태를 확인할 수 있도록 프로퍼티 제공
     public bool IsOpen => isOpen;
+    public bool IsMoving => isMoving;
 }

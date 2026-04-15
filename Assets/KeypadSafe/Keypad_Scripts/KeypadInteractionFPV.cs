@@ -13,20 +13,44 @@ namespace NavKeypad {
 
         private void Awake()
         {
-            cam = Camera.main;
+            cam = FindRuntimeCamera();
+        }
+
+        private Camera FindRuntimeCamera()
+        {
+            if (cam != null && cam.isActiveAndEnabled)
+                return cam;
+
+            var playerController = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
+            if (playerController != null && playerController.cameraTransform != null)
+            {
+                var pcCam = playerController.cameraTransform.GetComponent<Camera>();
+                if (pcCam != null) return pcCam;
+            }
+
+            var cameras = FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var c in cameras)
+            {
+                if (c == null) continue;
+                if (!c.gameObject.scene.isLoaded) continue;
+                if (!c.isActiveAndEnabled) continue;
+                return c;
+            }
+
+            return Camera.main;
         }
 
         private void OnEnable()
         {
             if (cam == null)
-                cam = Camera.main;
+                cam = FindRuntimeCamera();
         }
 
         private void Update()
         {
-            if (cam == null)
+            if (cam == null || !cam.isActiveAndEnabled)
             {
-                cam = Camera.main;
+                cam = FindRuntimeCamera();
                 if (cam == null) return;
             }
 

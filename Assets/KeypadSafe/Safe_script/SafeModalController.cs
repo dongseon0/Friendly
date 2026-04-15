@@ -53,15 +53,10 @@ public class SafeModalController : MonoBehaviour
     {
         if (playerCamera == null)
         {
-            var cam = Camera.main;
-            if (cam != null)
-            {
-                playerCamera = cam.transform;
-            }
-            else
-            {
+            playerCamera = FindRuntimePlayerCamera();
+
+            if (playerCamera == null)
                 Debug.LogWarning("[SafeModalController] Player camera not found.");
-            }
         }
 
         if (disableWhileOpen == null || disableWhileOpen.Length == 0)
@@ -79,6 +74,30 @@ public class SafeModalController : MonoBehaviour
             // 현재 오브젝트 자신은 넣지 않음
             disableWhileOpen = list.ToArray();
         }
+    }
+
+    private Transform FindRuntimePlayerCamera()
+    {
+        if (playerCamera != null)
+            return playerCamera;
+
+        var playerController = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
+        if (playerController != null && playerController.cameraTransform != null)
+            return playerController.cameraTransform;
+
+        var cameras = FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var c in cameras)
+        {
+            if (c == null) continue;
+            if (!c.gameObject.scene.isLoaded) continue;
+            if (!c.isActiveAndEnabled) continue;
+            return c.transform;
+        }
+
+        if (Camera.main != null)
+            return Camera.main.transform;
+
+        return null;
     }
 
     private void Update()
@@ -117,6 +136,8 @@ public class SafeModalController : MonoBehaviour
         {
             _savedPos = playerCamera.position;
             _savedRot = playerCamera.rotation;
+
+            Debug.Log($"[SafeModalController] Open -> playerCamera={playerCamera}, viewTarget={viewTarget}");
 
             playerCamera.position = viewTarget.position;
             playerCamera.rotation = viewTarget.rotation;

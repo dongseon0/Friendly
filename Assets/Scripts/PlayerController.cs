@@ -44,7 +44,12 @@ public class PlayerController : MonoBehaviour
         if (cameraTransform == null)
         {
             var cam = GetComponentInChildren<Camera>(true);
-            if (cam != null) cameraTransform = cam.transform;
+
+            if (cam != null)
+            {
+                cameraTransform = cam.transform;
+                Debug.Log($"[PlayerController] cameraTransform auto-bound: {cameraTransform.name}");
+            }
         }
 
         // UI/인벤 자동 바인딩 시도

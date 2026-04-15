@@ -31,6 +31,9 @@ public class SafeStoryInteractable : MonoBehaviour, IInteractable
             return;
         }
 
-        story.RequestInteraction(targetName);
+        if (story.IsWaitingForInteractionTarget(targetName))
+            story.RequestInteraction(targetName);
+        else
+            story.TriggerOptionalInteractionNow(targetName);
     }
 }

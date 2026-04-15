@@ -61,7 +61,9 @@ public class dialog : MonoBehaviour
     private readonly Dictionary<string, SceneDef> _scenesById = new();
     private readonly Dictionary<string, NodeDef> _nodesById = new();
     private readonly Dictionary<string, int> _nodeIndexById = new();
+    private readonly Dictionary<string, string> _sceneResumeNodeById = new();
     private List<NodeDef> _currentNodes;
+    private void Goto(string nextId) => _nextNodeId = nextId;
     private SceneDef _currentScene;
 
     //Item pickup flow control
@@ -193,10 +195,17 @@ public class dialog : MonoBehaviour
     #region scene entry
     public void StartScene(string sceneId, string nodeId = null)
     {
-        if(!_scenesById.TryGetValue(sceneId, out var scene))
+        if (!_scenesById.TryGetValue(sceneId, out var scene))
         {
             Debug.LogError($"Scene not found: {sceneId}");
             return;
+        }
+
+        if (string.IsNullOrEmpty(nodeId) &&
+            _sceneResumeNodeById.TryGetValue(sceneId, out var resumeNodeId) &&
+            !string.IsNullOrEmpty(resumeNodeId))
+        {
+            nodeId = resumeNodeId;
         }
 
         StopAllCoroutines();
@@ -249,7 +258,7 @@ public class dialog : MonoBehaviour
     #region core flow loof
     private IEnumerator RunFlow(string nodeId)
     {
-        while(!string.IsNullOrEmpty(nodeId))
+        while (!string.IsNullOrEmpty(nodeId))
         {
             if (!_nodesById.TryGetValue(nodeId, out var node) || node == null)
             {
@@ -261,7 +270,18 @@ public class dialog : MonoBehaviour
 
             yield return RunNode(node);
 
-            // scene transition requested?
+            // 현재 scene의 resume 지점 저장
+            if (_currentScene != null)
+            {
+                string resumeNode = _nextNodeId;
+
+                if (string.IsNullOrEmpty(resumeNode) && string.IsNullOrEmpty(_pendingSceneId))
+                    resumeNode = NextIdOrNull(node.id);
+
+                if (!string.IsNullOrEmpty(resumeNode))
+                    _sceneResumeNodeById[_currentScene.id] = resumeNode;
+            }
+
             if (!string.IsNullOrEmpty(_pendingSceneId))
             {
                 var nextSceneId = _pendingSceneId;
@@ -273,7 +293,7 @@ public class dialog : MonoBehaviour
                 if (_scenesById.TryGetValue(nextSceneId, out var nextScene))
                 {
                     yield return RunScene(nextScene, nextStartNode);
-                    yield break; // RunScene 내부에서 다시 RunFlow를 시작하므로 여기서 종료
+                    yield break;
                 }
                 else
                 {
@@ -284,9 +304,7 @@ public class dialog : MonoBehaviour
 
             nodeId = _nextNodeId;
         }
-    } 
-
-    private void Goto(string nextId) => _nextNodeId = nextId;
+    }
 
     private void GotoNextInScene(string currentNodeId)
     {
@@ -327,6 +345,53 @@ public class dialog : MonoBehaviour
         _pendingSceneId = sceneId;
         _pendingSceneStartNodeId = startNodeId;
         _nextNodeId = null;
+    }
+
+    public bool IsWaitingForInteractionTarget(string target)
+    {
+        if (!_interactionWaiting) return false;
+
+        string requestedTarget = string.IsNullOrWhiteSpace(target) ? null : Template(target);
+        string waitingTarget = string.IsNullOrWhiteSpace(_interactionTarget) ? null : Template(_interactionTarget);
+
+        return !string.IsNullOrEmpty(requestedTarget) &&
+               !string.IsNullOrEmpty(waitingTarget) &&
+               string.Equals(requestedTarget, waitingTarget, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public void TriggerOptionalInteractionNow(string target)
+    {
+        if (_currentScene == null || _currentNodes == null) return;
+        StartCoroutine(TriggerOptionalInteractionRoutine(target));
+    }
+
+    private IEnumerator TriggerOptionalInteractionRoutine(string target)
+    {
+        string resolvedTarget = Template(target);
+
+        InteractionNode found = null;
+
+        foreach (var node in _currentNodes)
+        {
+            if (node is InteractionNode interactionNode)
+            {
+                string nodeTarget = Template(interactionNode.target);
+                if (string.Equals(nodeTarget, resolvedTarget, StringComparison.OrdinalIgnoreCase))
+                {
+                    found = interactionNode;
+                    break;
+                }
+            }
+        }
+
+        if (found == null)
+        {
+            Debug.LogWarning($"[dialog] Optional interaction target not found in current scene: {resolvedTarget}");
+            yield break;
+        }
+
+        if (found.whenInteract != null && found.whenInteract.Count > 0)
+            yield return RunCommands(found.whenInteract);
     }
 
     #endregion
@@ -384,7 +449,16 @@ public class dialog : MonoBehaviour
             case NodeType.interaction:
             {
                 var it = (InteractionNode)node;
+
+                if (it.optional)
+                {
+                    if (!string.IsNullOrEmpty(node.next)) Goto(node.next);
+                    else GotoNextInScene(node.id);
+                    break;
+                }
+
                 yield return RunInteraction(it);
+
                 // whenInteract 안에서 dialogue next/goto 등이 발생하면 _nextNodeId가 설정될 것
                 if (string.IsNullOrEmpty(_nextNodeId))
                 {
@@ -1009,6 +1083,7 @@ public class dialog : MonoBehaviour
 
     #endregion
 
+    #region Debug / Dev Tools
     public void SkipToNextNode()
     {
         if (_currentScene == null)
@@ -1108,4 +1183,5 @@ public class dialog : MonoBehaviour
             StartScene(nextScene.id, nextStartNodeId);
         }
     }
+    #endregion
 }

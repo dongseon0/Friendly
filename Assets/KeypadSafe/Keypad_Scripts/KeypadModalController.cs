@@ -39,15 +39,10 @@ namespace NavKeypad
         {
             if (playerCamera == null)
             {
-                var cam = Camera.main;
-                if (cam != null)
-                {
-                    playerCamera = cam.transform;
-                }
-                else
-                {
+                playerCamera = FindRuntimePlayerCamera();
+
+                if (playerCamera == null)
                     Debug.LogWarning("[KeypadModalController] Player camera not found.");
-                }
             }
 
             if (disableInKeypadMode == null || disableInKeypadMode.Length == 0)
@@ -62,6 +57,30 @@ namespace NavKeypad
 
                 disableInKeypadMode = list.ToArray();
             }
+        }
+
+        private Transform FindRuntimePlayerCamera()
+        {
+            if (playerCamera != null)
+                return playerCamera;
+
+            var playerController = FindFirstObjectByType<PlayerController>(FindObjectsInactive.Include);
+            if (playerController != null && playerController.cameraTransform != null)
+                return playerController.cameraTransform;
+
+            var cameras = FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var c in cameras)
+            {
+                if (c == null) continue;
+                if (!c.gameObject.scene.isLoaded) continue;
+                if (!c.isActiveAndEnabled) continue;
+                return c.transform;
+            }
+
+            if (Camera.main != null)
+                return Camera.main.transform;
+
+            return null;
         }
 
         private void OnEnable()
@@ -101,6 +120,8 @@ namespace NavKeypad
             {
                 _savedPos = playerCamera.position;
                 _savedRot = playerCamera.rotation;
+
+                Debug.Log($"[KeypadModalController] Open -> playerCamera={playerCamera}, viewTarget={viewTarget}");
 
                 // move forward to camera
                 playerCamera.position = viewTarget.position;

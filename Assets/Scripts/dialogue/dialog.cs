@@ -800,6 +800,8 @@ public class dialog : MonoBehaviour
         // safe modal
         if (safeModal == null)
             safeModal = FindFirstObjectByType<SafeModalController>(FindObjectsInactive.Include);
+
+        Debug.Log($"[dialog] keypad={keypad}, keypadModal={modal}, safeModal={safeModal}");
     }
 
     private IEnumerator RunInputCode(Command cmd)

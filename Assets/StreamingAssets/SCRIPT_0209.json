@@ -36,7 +36,9 @@
             "truth_relationship": false,
             "truth_contract": false,
             "truth_hippocratic": false,
-            "ending_ready": false
+            "ending_ready": false,
+            "npc_move_outdoor": false,
+            "npc_move_ossuary": false
         },
         "vars":{
             "suspicion" : 0,
@@ -198,6 +200,22 @@
                 },
                 {
                     "id": "S00_N3",
+                    "type": "dialogue",
+                    "speaker": "{PC_NAME}",
+                    "text": "Do you wanna go first? I would look around here."
+                },
+                {
+                    "id": "S00_N4",
+                    "type": "dialogue",
+                    "speaker": "{NPC_NAME}",
+                    "text": "Sure.",
+                    "next": "S00_N4",
+                    "effects": [
+                        { "type": "setFlag", "flag": "npc_move_outdoor", "value": true }
+                    ]
+                },
+                {
+                    "id": "S00_N5",
                     "type": "interaction",
                     "target": "Abandoned Hospital : Main Entrance",
                     "whenInteract": [
@@ -210,17 +228,17 @@
                                 "type": "narration",
                                 "text": "The doorknob doesn't budge. A rusty padlock is hanging from it."
                                 },
-                                { "type": "dialogue", "speaker": "{PC_NAME}", "text": "It's locked... Let's check it later.", "next": "S00_N4" }
+                                { "type": "dialogue", "speaker": "{PC_NAME}", "text": "It's locked... Let's check it later.", "next": "S00_N6" }
                             ],
                             "else": [
                                 { "type": "narration", "text": "It's still locked." },
-                                { "type": "dialogue", "speaker": "{PC_NAME}", "text": "Not right now.", "next": "S00_N4" }
+                                { "type": "dialogue", "speaker": "{PC_NAME}", "text": "Not right now.", "next": "S00_N6" }
                             ]
                         }
                     ]
                 },
                 {
-                    "id": "S00_N4",
+                    "id": "S00_N6",
                     "type": "uiObjective",
                     "text": "Head to the ossuary"
                 }
@@ -270,14 +288,15 @@
                     "speaker": "{NPC_NAME}",
                     "text": "...I'm going to step outside for some air. I'll be right back.",
                     "effects": [
-                        { "type": "setFlag", "flag": "npc_missing", "value": true }
+                        { "type": "setFlag", "flag": "npc_missing", "value": true },
+                        { "type": "setFlag", "flag": "npc_move_ossuary", "value": true }
                     ],
                     "next": "S01_N6"
                 },
                 {
                     "id": "S01_N6",
                     "type": "timeSkip",
-                    "seconds": 6,
+                    "seconds": 4,
                     "text": "A little time passes...",
                     "next": "S01_N7"
                 },

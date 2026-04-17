@@ -377,6 +377,7 @@
                     "id": "S05_N4",
                     "type": "interaction",
                     "target": "Locked Safe",
+                    "optional": true,
                     "whenInteract": [
                         {
                         "type": "branch",
@@ -420,6 +421,7 @@
                     "id": "S06_N0",
                     "type": "interaction",
                     "target": "Keypad",
+                    "optional": true,
                     "whenInteract": [
                         {
                             "type": "branch",
@@ -460,7 +462,7 @@
                     "speaker": "{PC_NAME}",
                     "text": "Not now. I should look around first.",
                     "nextScene": "S04_CORRIDOR",
-                    "nextNode": "S04_N1"
+                    "nextNode": "S06_N0"
                 }
             ]
         },

@@ -137,6 +137,7 @@ namespace nodedef{
     {
         public override NodeType Type => NodeType.interaction;
         public string target;
+        public bool optional;
 
         [JsonConverter(typeof(CommandListConverter))]
         public List<Command> whenInteract;

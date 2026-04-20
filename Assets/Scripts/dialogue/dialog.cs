@@ -31,6 +31,8 @@ public class dialog : MonoBehaviour
 
     [SerializeField] private List<StoryUnitySceneBinding> storyUnitySceneBindings = new();
 
+    private bool _keypadOptionalFallbackRunning;
+
     //Public API for external callers (DebugConsole, etc.)
     public string CurrentStorySceneId => _currentScene != null ? _currentScene.id : null;
 
@@ -920,6 +922,28 @@ public class dialog : MonoBehaviour
 
         if (!string.IsNullOrEmpty(cmd.onCancel))
             Goto(cmd.onCancel);
+    }
+
+    public void TriggerKeypadOptionalFallback()
+    {
+        StartCoroutine(TriggerKeypadOptionalFallbackRoutine());
+    }
+
+    private IEnumerator TriggerKeypadOptionalFallbackRoutine()
+    {
+        _keypadOptionalFallbackRunning = true;
+
+        // 이미 keypad 메인 interaction을 기다리는 상황이면 fallback을 쓰지 않음
+        if (IsWaitingForInteractionTarget(KeypadTargetName))
+        {
+            RequestInteraction(KeypadTargetName);
+            _keypadOptionalFallbackRunning = false;
+            yield break;
+        }
+
+        // S06_N3의 의미를 hard-coded로 실행
+        yield return RunDialogueLike(Template("{PC_NAME}"), "Not now. I should look around first.");
+        _keypadOptionalFallbackRunning = false;
     }
 
     private IEnumerator RunSafeInputCode(Command cmd)

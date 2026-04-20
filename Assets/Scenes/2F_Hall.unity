@@ -2134,6 +2134,9 @@ MonoBehaviour:
   amount: 1
   story: {fileID: 0}
   showInspectLine: 1
+  unlockIdOnPickup: 
+  pickupSound: {fileID: 8300000, guid: 64e674b5f9ad55e43bb5e2ec1adeb0ba, type: 3}
+  pickupSoundVolume: 1
 --- !u!65 &195353361
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10339,6 +10342,9 @@ MonoBehaviour:
   amount: 1
   story: {fileID: 0}
   showInspectLine: 1
+  unlockIdOnPickup: 
+  pickupSound: {fileID: 8300000, guid: 64e674b5f9ad55e43bb5e2ec1adeb0ba, type: 3}
+  pickupSoundVolume: 1
 --- !u!65 &863041241
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12301,6 +12307,9 @@ MonoBehaviour:
   amount: 1
   story: {fileID: 0}
   showInspectLine: 1
+  unlockIdOnPickup: 
+  pickupSound: {fileID: 8300000, guid: 64e674b5f9ad55e43bb5e2ec1adeb0ba, type: 3}
+  pickupSoundVolume: 1
 --- !u!65 &979202703
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13625,6 +13634,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneName: 10_F1_Main
   targetSpawnID: 2F_Ent
+  audioSource: {fileID: 0}
+  loadSceneSound: {fileID: 0}
+  waitForSoundBeforeLoad: 1
 --- !u!65 &1052472245
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14320,6 +14332,9 @@ MonoBehaviour:
   amount: 1
   story: {fileID: 0}
   showInspectLine: 1
+  unlockIdOnPickup: 
+  pickupSound: {fileID: 8300000, guid: 64e674b5f9ad55e43bb5e2ec1adeb0ba, type: 3}
+  pickupSoundVolume: 1
 --- !u!65 &1107144971
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19287,6 +19302,9 @@ MonoBehaviour:
   amount: 1
   story: {fileID: 0}
   showInspectLine: 1
+  unlockIdOnPickup: 
+  pickupSound: {fileID: 8300000, guid: 64e674b5f9ad55e43bb5e2ec1adeb0ba, type: 3}
+  pickupSoundVolume: 1
 --- !u!1 &1527143930
 GameObject:
   m_ObjectHideFlags: 0
@@ -24494,6 +24512,9 @@ MonoBehaviour:
   amount: 1
   story: {fileID: 0}
   showInspectLine: 1
+  unlockIdOnPickup: 
+  pickupSound: {fileID: 8300000, guid: 64e674b5f9ad55e43bb5e2ec1adeb0ba, type: 3}
+  pickupSoundVolume: 1
 --- !u!65 &1972320682
 BoxCollider:
   m_ObjectHideFlags: 0

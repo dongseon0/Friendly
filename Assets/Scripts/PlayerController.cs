@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,6 +22,20 @@ public class PlayerController : MonoBehaviour
     public GameObject interactUI;          // InteractText(DDOL) 자동 바인딩 대상
     public InventoryManager inventory;     // 자동 바인딩 대상(없으면 인벤 입력 스킵)
 
+    [Header("Footstep Audio")]
+    [SerializeField] private AudioSource walkAudioSource;
+    [SerializeField] private AudioSource runAudioSource;
+    [SerializeField] private float movementThreshold = 0.1f;
+
+    [Header("Default Footstep Clips")]
+    [SerializeField] private AudioClip defaultWalkClip;
+    [SerializeField] private AudioClip defaultRunClip;
+
+    [Header("Outdoor Footstep Clips")]
+    [SerializeField] private string outdoorSceneName = "OutdoorScene";
+    [SerializeField] private AudioClip outdoorWalkClip;
+    [SerializeField] private AudioClip outdoorRunClip;
+
     Rigidbody rb;
     Vector2 moveInput;
     Vector2 lookInput;
@@ -35,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
     private Outline _lastOutline; //outline 켜져 있는 오브젝트 저장용 
 
+    #region start & update
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -57,6 +73,14 @@ public class PlayerController : MonoBehaviour
 
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
+
+        if (defaultWalkClip == null && walkAudioSource != null)
+            defaultWalkClip = walkAudioSource.clip;
+
+        if (defaultRunClip == null && runAudioSource != null)
+            defaultRunClip = runAudioSource.clip;
+
+        ApplyFootstepClipsForCurrentScene();
     }
 
     void FixedUpdate()
@@ -68,7 +92,7 @@ public class PlayerController : MonoBehaviour
         float currentSpeed = isSprinting ? runSpeed : moveSpeed;
 
         rb.linearVelocity = new Vector3(
-            move.x * moveSpeed,
+            move.x * currentSpeed,
             rb.linearVelocity.y,
             move.z * currentSpeed
         );
@@ -84,6 +108,8 @@ public class PlayerController : MonoBehaviour
             }
             animator.SetFloat("Speed", animSpeed);
         }
+
+        UpdateFootstepAudio();
     }
 
     void Update()
@@ -102,7 +128,9 @@ public class PlayerController : MonoBehaviour
         CheckInteractable();
     }
 
-    // ========== Input Events ==========
+    #endregion
+
+    #region input handlers
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -126,6 +154,8 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isGrounded = false;
 
+        StopFootstepAudio();
+
         if (animator != null)
         {
             animator.SetTrigger("JumpTrigger");
@@ -148,6 +178,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        StopFootstepAudio();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ApplyFootstepClipsForCurrentScene();
+    }
+
     public void OnInventory(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed) return;
@@ -165,7 +211,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"[PlayerController] OnInventory performed -> open={open}, switched to {(open ? "UI" : "Player")}");
     }
 
-    // ========== Core Logic ==========
+    #endregion
+
+    #region core logic
 
     void HandleLook()
     {
@@ -229,7 +277,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ========== Dependency Binding (정석) ==========
+    #endregion
+
+    #region dependency binding
 
     void BindDependenciesIfNeeded()
     {
@@ -286,7 +336,9 @@ public class PlayerController : MonoBehaviour
         _inventoryBound = inventory != null;
     }
 
-    // ========== Ground Check ==========
+    #endregion
+
+    #region ground check
 
     void OnCollisionEnter(Collision col)
     {
@@ -302,4 +354,76 @@ public class PlayerController : MonoBehaviour
     {
         if (col.collider.CompareTag("Ground")) isGrounded = false;
     }
+
+    #endregion
+
+    #region Footstep Audio
+    private void UpdateFootstepAudio()
+    {
+        bool hasMoveInput = moveInput.magnitude > movementThreshold;
+        bool shouldPlayFootstep = hasMoveInput && isGrounded;
+
+        if (!shouldPlayFootstep)
+        {
+            StopFootstepAudio();
+            return;
+        }
+
+        if (isSprinting)
+        {
+            if (walkAudioSource != null && walkAudioSource.isPlaying)
+                walkAudioSource.Stop();
+
+            if (runAudioSource != null && !runAudioSource.isPlaying)
+                runAudioSource.Play();
+        }
+        else
+        {
+            if (runAudioSource != null && runAudioSource.isPlaying)
+                runAudioSource.Stop();
+
+            if (walkAudioSource != null && !walkAudioSource.isPlaying)
+                walkAudioSource.Play();
+        }
+    }
+
+    private void StopFootstepAudio()
+    {
+        if (walkAudioSource != null && walkAudioSource.isPlaying)
+            walkAudioSource.Stop();
+
+        if (runAudioSource != null && runAudioSource.isPlaying)
+            runAudioSource.Stop();
+    }
+
+    private void ApplyFootstepClipsForCurrentScene()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        bool isOutdoorScene = sceneName == outdoorSceneName;
+
+        AudioClip targetWalk = isOutdoorScene && outdoorWalkClip != null
+            ? outdoorWalkClip
+            : defaultWalkClip;
+
+        AudioClip targetRun = isOutdoorScene && outdoorRunClip != null
+            ? outdoorRunClip
+            : defaultRunClip;
+
+        bool walkWasPlaying = walkAudioSource != null && walkAudioSource.isPlaying;
+        bool runWasPlaying = runAudioSource != null && runAudioSource.isPlaying;
+
+        StopFootstepAudio();
+
+        if (walkAudioSource != null)
+            walkAudioSource.clip = targetWalk;
+
+        if (runAudioSource != null)
+            runAudioSource.clip = targetRun;
+
+        // 필요하면 현재 이동 상태에 맞춰 다시 재생
+        if (walkWasPlaying || runWasPlaying)
+            UpdateFootstepAudio();
+    }
+
+    #endregion
 }

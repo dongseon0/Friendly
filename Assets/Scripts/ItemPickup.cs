@@ -13,6 +13,10 @@ public class ItemPickup : MonoBehaviour, IInteractable
     [Header("Door Unlock (optional)")]
     [SerializeField] private string unlockIdOnPickup;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip pickupSound;
+    [SerializeField] private float pickupSoundVolume = 1f;
+
     private bool _picked;
 
     private void OnValidate()
@@ -21,6 +25,12 @@ public class ItemPickup : MonoBehaviour, IInteractable
         {
             gameObject.name = item.itemId;
         }
+    }
+
+    private void PlayPickupSound()
+    {
+        if (pickupSound != null)
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position, pickupSoundVolume);
     }
 
     public void Interact()
@@ -50,6 +60,8 @@ public class ItemPickup : MonoBehaviour, IInteractable
         {
             Debug.LogWarning("Cannot Find Json of [ItemPickUp] or itemId is invalid.");
         }
+
+        PlayPickupSound();
 
         // 3) Door unlock logic (optional)
         if (!string.IsNullOrWhiteSpace(unlockIdOnPickup))

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
@@ -9,16 +10,52 @@ public class SceneLoader : MonoBehaviour
     [Header("도착씬의 스폰 지점ID")]
     public string targetSpawnID;
 
+    [Header("Optional transition sound")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip loadSceneSound;
+    [SerializeField] private bool waitForSoundBeforeLoad = true;
+
     //씬이 넘어가도 지워지지 않는(static) 공용 메모지
     public static string nextSpawnID = "";
 
+    private bool _isLoading;
+
+    private void Awake()
+    {
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+    }
+
     public void LoadScene()
     {
-        if (!string.IsNullOrEmpty(sceneName))
+        if (_isLoading) return;
+        if (string.IsNullOrEmpty(sceneName)) return;
+
+        if (loadSceneSound == null || audioSource == null || !waitForSoundBeforeLoad)
         {
-            // 씬을 넘어가기 직전에 도착할 ID를 nextSpawnID에 
-            nextSpawnID = targetSpawnID;
-            SceneManager.LoadScene(sceneName);
+            if (audioSource != null && loadSceneSound != null)
+                audioSource.PlayOneShot(loadSceneSound);
+
+            DoSceneLoad();
+            return;
         }
+
+        StartCoroutine(LoadSceneAfterSound());
+    }
+
+    private IEnumerator LoadSceneAfterSound()
+    {
+        _isLoading = true;
+
+        audioSource.PlayOneShot(loadSceneSound);
+        yield return new WaitForSeconds(loadSceneSound.length);
+
+        DoSceneLoad();
+    }
+
+    private void DoSceneLoad()
+    {
+        nextSpawnID = targetSpawnID;
+        SceneManager.LoadScene(sceneName);
     }
 }

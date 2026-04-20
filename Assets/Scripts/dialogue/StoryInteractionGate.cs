@@ -13,6 +13,10 @@ public class StoryInteractionGate : MonoBehaviour
 
     [SerializeField] private bool destroyAfterUnlock = true;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip lockedSound;
+
     private bool _playerInside;
     private bool _unlocked;
 
@@ -25,6 +29,9 @@ public class StoryInteractionGate : MonoBehaviour
 
         if (gateCollider == null)
             gateCollider = GetComponent<Collider>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -38,6 +45,8 @@ public class StoryInteractionGate : MonoBehaviour
 
         if (_playerInside && Input.GetKeyDown(interactKey))
         {
+            PlayLockedSound();
+
             if (story != null)
                 story.RequestInteraction(targetName);
         }
@@ -86,5 +95,11 @@ public class StoryInteractionGate : MonoBehaviour
             Destroy(gameObject);
         else
             gameObject.SetActive(false);
+    }
+
+    private void PlayLockedSound()
+    {
+        if (audioSource != null && lockedSound != null)
+            audioSource.PlayOneShot(lockedSound);
     }
 }

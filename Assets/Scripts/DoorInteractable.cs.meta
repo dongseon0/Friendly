@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: a139d5081d05b4d87adf254d561062de
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - hingePivot: {instanceID: 0}
+  - player: {instanceID: 0}
+  - audioSource: {instanceID: 0}
+  - lockedSound: {fileID: 8300000, guid: 132ec35e1afce0e428a484841fe573f0, type: 3}
+  - openSound: {fileID: 8300000, guid: 61ac2bdd430d3fa46a6318b58a1fdd08, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

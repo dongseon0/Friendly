@@ -15,6 +15,12 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     [SerializeField] private string requiredUnlockId;   // 예: "door1"
     [SerializeField] private bool startsLocked = true;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private AudioClip lockedSound;   // optional
+    [SerializeField] private AudioClip openSound;     // optional
+
     private Quaternion closedRotation;
     private Quaternion openedRotation;
 
@@ -25,6 +31,9 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     {
         if (hingePivot == null)
             hingePivot = transform;
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
 
         closedRotation = hingePivot.localRotation;
     }
@@ -67,6 +76,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
 
         if (IsLocked())
         {
+            PlayLockedSound();
             Debug.Log($"[Door] Locked. Required unlock id: {requiredUnlockId}");
             DoorFeedbackUI.Instance?.ShowLockedUI();
             return;
@@ -84,7 +94,7 @@ public class DoorInteractable : MonoBehaviour, IInteractable
         return !unlockingItem.IsUnlocked(requiredUnlockId);
     }
 
-
+    #region door opening&closing logic
     // 플레이어 반대 방향으로 문 여는 함수 (방향 계산)
     private void OpenDoorAwayFromPlayer()
     {
@@ -99,6 +109,8 @@ public class DoorInteractable : MonoBehaviour, IInteractable
         float side = Vector3.Dot(hingePivot.right, toPlayer);
 
         // 플레이어 반대 방향으로 열기
+        PlayOpenSound();
+
         float targetAngle = (side >= 0f) ? -openAngle : openAngle;
 
         openedRotation = closedRotation * Quaternion.Euler(0f, targetAngle, 0f);
@@ -134,6 +146,21 @@ public class DoorInteractable : MonoBehaviour, IInteractable
         isOpen = openState;
         isMoving = false;
     }
+    #endregion
+
+    #region sound
+    private void PlayLockedSound()
+    {
+        if (audioSource != null && lockedSound != null)
+            audioSource.PlayOneShot(lockedSound);
+    }
+
+    private void PlayOpenSound()
+    {
+        if (audioSource != null && openSound != null)
+            audioSource.PlayOneShot(openSound);
+    }
+    #endregion
 
     // 바깥 스크립트가 문 상태를 확인할 수 있도록 프로퍼티 제공
     public bool IsOpen => isOpen;

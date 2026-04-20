@@ -201,6 +201,9 @@ public class dialog : MonoBehaviour
             return;
         }
 
+        if (ui != null)
+            ui.HideDialogueImmediate();
+
         if (string.IsNullOrEmpty(nodeId) &&
             _sceneResumeNodeById.TryGetValue(sceneId, out var resumeNodeId) &&
             !string.IsNullOrEmpty(resumeNodeId))
@@ -304,6 +307,9 @@ public class dialog : MonoBehaviour
 
             nodeId = _nextNodeId;
         }
+
+        if (ui != null)
+            ui.HideDialogueImmediate();
     }
 
     private void GotoNextInScene(string currentNodeId)
@@ -1080,6 +1086,8 @@ public class dialog : MonoBehaviour
         if (node == null) return null;
         return node.nextScene;
     }
+
+
 
     #endregion
 

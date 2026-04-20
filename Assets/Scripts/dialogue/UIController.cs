@@ -246,6 +246,16 @@ public class UIController : MonoBehaviour
             objectiveText.gameObject.SetActive(true);
     }
 
+    public void HideDialogueImmediate()
+    {
+        _dialogueWaiting = false;
+        _waitForAdvanceRelease = false;
+        _onDialogueDone = null;
+
+        if (dialogueRoot != null)
+            dialogueRoot.SetActive(false);
+    }
+
     // ---------------------------
     // 2) Toast
     // ---------------------------
@@ -410,4 +420,5 @@ public class UIController : MonoBehaviour
     {
         Debug.Log($"[UI] SetVignette mode={mode}, strength={strength}");
     }
+
 }

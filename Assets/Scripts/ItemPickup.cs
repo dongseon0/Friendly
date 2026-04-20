@@ -10,6 +10,9 @@ public class ItemPickup : MonoBehaviour, IInteractable
     [SerializeField] private dialog story;          // 씬에 있는 dialog 오브젝트를 드래그
     [SerializeField] private bool showInspectLine = true;
 
+    [Header("Door Unlock (optional)")]
+    [SerializeField] private string unlockIdOnPickup;
+
     private bool _picked;
 
     private void OnValidate()
@@ -46,6 +49,13 @@ public class ItemPickup : MonoBehaviour, IInteractable
         else
         {
             Debug.LogWarning("Cannot Find Json of [ItemPickUp] or itemId is invalid.");
+        }
+
+        // 3) Door unlock logic (optional)
+        if (!string.IsNullOrWhiteSpace(unlockIdOnPickup))
+        {
+            unlockingItem.Unlock(unlockIdOnPickup);
+            DoorFeedbackUI.Instance?.ShowUnlockingFeedback();
         }
 
         Destroy(gameObject);

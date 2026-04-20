@@ -5,6 +5,8 @@ using System.Collections;
 
 public class NPCStoryLoader : MonoBehaviour
 {
+    [SerializeField] private Transform persistentRootTransform;
+
     [Header("Refs")]
     [SerializeField] private dialog story;
     [SerializeField] private GameObject npcPrefab;
@@ -35,17 +37,12 @@ public class NPCStoryLoader : MonoBehaviour
     private bool ossuaryMoveFinished = false;
 
     private bool outdoorScenePhaseEnded = false; // outdoor 복귀 시 다시 안 나오게
-    private bool initialized = false;
+    private bool initialized = false;       //line 138에서 쓰고 있음(Warning 무시)
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-
         if (story == null)
             story = FindFirstObjectByType<dialog>();
-
-        CreateNpcIfNeeded();
-        HideNpcImmediate();
     }
 
     private void OnEnable()
@@ -133,9 +130,11 @@ public class NPCStoryLoader : MonoBehaviour
             Transform loc1 = FindMarker(outdoorLocation1Name);
             if (loc1 != null)
             {
-                PlaceNpcAt(loc1);
-                ShowNpc();
-                initialized = true;
+                if (loc1 != null)
+                {
+                    ShowNpc();
+                    PlaceNpcAt(loc1);
+                }
             }
             else
             {
@@ -156,8 +155,11 @@ public class NPCStoryLoader : MonoBehaviour
             Transform loc3 = FindMarker(ossuaryLocation3Name);
             if (loc3 != null)
             {
-                PlaceNpcAt(loc3);
-                ShowNpc();
+                if (loc3 != null)
+                {
+                    ShowNpc();
+                    PlaceNpcAt(loc3);
+                }
             }
             else
             {
@@ -176,9 +178,8 @@ public class NPCStoryLoader : MonoBehaviour
     {
         if (npcInstance != null) return;
 
-        npcInstance = Instantiate(npcPrefab);
+        npcInstance = Instantiate(npcPrefab, persistentRootTransform);
         npcInstance.name = npcPrefab.name + "_PersistentNPC";
-        DontDestroyOnLoad(npcInstance);
 
         agent = npcInstance.GetComponent<NavMeshAgent>();
         animator = npcInstance.GetComponent<Animator>();
@@ -196,22 +197,35 @@ public class NPCStoryLoader : MonoBehaviour
         return go != null ? go.transform : null;
     }
 
-    private void PlaceNpcAt(Transform marker)
+    private bool PlaceNpcAt(Transform marker)
     {
-        if (npcInstance == null || marker == null) return;
+        if (npcInstance == null || marker == null || agent == null)
+            return false;
 
-        if (agent != null)
+        NavMeshHit hit;
+        bool found = NavMesh.SamplePosition(marker.position, out hit, 2.0f, NavMesh.AllAreas);
+
+        if (!found)
         {
-            agent.enabled = false;
+            Debug.LogWarning("[NPCstoryloader] No NavMesh found near marker: " + marker.name);
+            npcInstance.transform.SetPositionAndRotation(marker.position, marker.rotation);
+            return false;
         }
 
-        npcInstance.transform.SetPositionAndRotation(marker.position, marker.rotation);
-
-        if (agent != null)
-        {
+        if (!agent.enabled)
             agent.enabled = true;
-            agent.ResetPath();
+
+        bool warped = agent.Warp(hit.position);
+        npcInstance.transform.rotation = marker.rotation;
+
+        if (!warped)
+        {
+            Debug.LogWarning("[NPCstoryloader] Warp failed at marker: " + marker.name);
+            return false;
         }
+
+        Debug.Log("[NPCstoryloader] NPC placed on NavMesh at: " + hit.position);
+        return true;
     }
 
     private void ShowNpc()
@@ -228,25 +242,49 @@ public class NPCStoryLoader : MonoBehaviour
 
     private IEnumerator MoveNpcAndHide(Transform target, System.Action onArrived)
     {
-        if (npcInstance == null || target == null)
+        if (npcInstance == null || target == null || agent == null)
             yield break;
 
         ShowNpc();
 
-        if (agent == null)
-        {
-            Debug.LogError("[NPCstoryloader] NavMeshAgent missing.");
-            yield break;
-        }
-
         if (!agent.enabled)
             agent.enabled = true;
 
+        // target도 NavMesh 위 점으로 보정
+        NavMeshHit targetHit;
+        bool found = NavMesh.SamplePosition(target.position, out targetHit, 2.0f, NavMesh.AllAreas);
+
+        if (!found)
+        {
+            Debug.LogWarning("[NPCstoryloader] Target is not near NavMesh: " + target.name);
+            yield break;
+        }
+
+        // agent가 현재 NavMesh 위에 없으면 현재 위치도 보정
+        if (!agent.isOnNavMesh)
+        {
+            NavMeshHit currentHit;
+            bool currentFound = NavMesh.SamplePosition(npcInstance.transform.position, out currentHit, 2.0f, NavMesh.AllAreas);
+
+            if (currentFound)
+            {
+                agent.Warp(currentHit.position);
+            }
+            else
+            {
+                Debug.LogError("[NPCstoryloader] NPC is not on NavMesh and could not be corrected.");
+                yield break;
+            }
+        }
+
         agent.isStopped = false;
-        agent.SetDestination(target.position);
+        agent.SetDestination(targetHit.position);
 
         while (true)
         {
+            if (!agent.enabled || !agent.isOnNavMesh)
+                yield break;
+
             if (!agent.pathPending)
             {
                 if (agent.remainingDistance <= agent.stoppingDistance)

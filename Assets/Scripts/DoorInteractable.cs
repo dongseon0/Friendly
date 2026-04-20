@@ -11,6 +11,10 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     [SerializeField] private float openAngle = 100f;
     [SerializeField] private float openCloseDuration = 0.25f;
 
+    [Header("Lock Settings")]
+    [SerializeField] private string requiredUnlockId;   // 예: "door1"
+    [SerializeField] private bool startsLocked = true;
+
     private Quaternion closedRotation;
     private Quaternion openedRotation;
 
@@ -61,11 +65,25 @@ public class DoorInteractable : MonoBehaviour, IInteractable
         // 혹시 시작 타이밍에 못 잡았으면 여기서 한 번 더 보정
         BindPlayerIfNeeded();
 
+        if (IsLocked())
+        {
+            Debug.Log($"[Door] Locked. Required unlock id: {requiredUnlockId}");
+            DoorFeedbackUI.Instance?.ShowLockedUI();
+            return;
+        }
+
         if (!isOpen)
             OpenDoorAwayFromPlayer();
         else
             StartCoroutine(RotateDoor(closedRotation, false));
     }
+
+    private bool IsLocked()
+    {
+        if (!startsLocked) return false;
+        return !unlockingItem.IsUnlocked(requiredUnlockId);
+    }
+
 
     // 플레이어 반대 방향으로 문 여는 함수 (방향 계산)
     private void OpenDoorAwayFromPlayer()

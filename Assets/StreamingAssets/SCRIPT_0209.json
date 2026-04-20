@@ -296,7 +296,7 @@
                 {
                     "id": "S01_N6",
                     "type": "timeSkip",
-                    "seconds": 4,
+                    "seconds": 6,
                     "text": "A little time passes...",
                     "next": "S01_N7"
                 },
@@ -440,7 +440,6 @@
                     "id": "S06_N0",
                     "type": "interaction",
                     "target": "Keypad",
-                    "optional": true,
                     "whenInteract": [
                         {
                             "type": "branch",
@@ -480,8 +479,7 @@
                     "type": "dialogue",
                     "speaker": "{PC_NAME}",
                     "text": "Not now. I should look around first.",
-                    "nextScene": "S04_CORRIDOR",
-                    "nextNode": "S06_N0"
+                    "next": "S06_N0"
                 }
             ]
         },

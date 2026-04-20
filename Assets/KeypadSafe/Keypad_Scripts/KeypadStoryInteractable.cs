@@ -31,9 +31,14 @@ public class KeypadStoryInteractable : MonoBehaviour, IInteractable
             return;
         }
 
+        // 1) 스토리 메인 흐름이 지금 Keypad를 기다리는 중이면 정상 진행
         if (story.IsWaitingForInteractionTarget(targetName))
+        {
             story.RequestInteraction(targetName);
-        else
-            story.TriggerOptionalInteractionNow(targetName);
+            return;
+        }
+
+        // 2) 그 외 언제든지 누르면 hard-coded optional fallback
+        story.TriggerKeypadOptionalFallback();
     }
 }

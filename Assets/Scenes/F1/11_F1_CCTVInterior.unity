@@ -3626,6 +3626,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneName: 10_F1_Main
   targetSpawnID: 
+  audioSource: {fileID: 0}
+  loadSceneSound: {fileID: 0}
+  waitForSoundBeforeLoad: 1
 --- !u!65 &1090599518
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6784,6 +6787,9 @@ MonoBehaviour:
   amount: 1
   story: {fileID: 0}
   showInspectLine: 1
+  unlockIdOnPickup: 
+  pickupSound: {fileID: 0}
+  pickupSoundVolume: 1
 --- !u!65 &2033939120
 BoxCollider:
   m_ObjectHideFlags: 0

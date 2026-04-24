@@ -37,6 +37,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private List<NamedClip> clips = new();
 
     [Header("Video (Optional)")]
+    [SerializeField] private GameObject videoBlackOverlay;
     [SerializeField] private GameObject videoRoot;
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private List<NamedVideo> videos = new();
@@ -321,10 +322,7 @@ public class UIController : MonoBehaviour
         interactHintRoot.SetActive(on);
         if (on && interactHintText)
         {
-            if (string.IsNullOrWhiteSpace(target))
-                interactHintText.text = "Press Z to interact";
-            else
-                interactHintText.text = $"Press Z to interact: {target}";
+            interactHintText.text = "Press Z to interact";
         }
     }
 
@@ -365,15 +363,30 @@ public class UIController : MonoBehaviour
             yield break;
         }
 
+        if (videoBlackOverlay != null)
+            videoBlackOverlay.SetActive(true);
+
         videoRoot.SetActive(true);
+
+        videoPlayer.Stop();
         videoPlayer.clip = clip;
+        videoPlayer.isLooping = false;
+
+        videoPlayer.Prepare();
+
+        while (!videoPlayer.isPrepared)
+            yield return null;
+
         videoPlayer.Play();
 
-        // 끝까지 대기
         while (videoPlayer.isPlaying)
             yield return null;
 
+        videoPlayer.Stop();
         videoRoot.SetActive(false);
+
+        if (videoBlackOverlay != null)
+            videoBlackOverlay.SetActive(false);
     }
 
     // ---------------------------

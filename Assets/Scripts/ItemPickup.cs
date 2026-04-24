@@ -17,6 +17,9 @@ public class ItemPickup : MonoBehaviour, IInteractable
     [SerializeField] private AudioClip pickupSound;
     [SerializeField] private float pickupSoundVolume = 1f;
 
+    [Header("Pickup Object")]
+    [SerializeField] private bool destroyObjectOnPickup = true;
+
     private bool _picked;
 
     private void OnValidate()
@@ -25,12 +28,6 @@ public class ItemPickup : MonoBehaviour, IInteractable
         {
             gameObject.name = item.itemId;
         }
-    }
-
-    private void PlayPickupSound()
-    {
-        if (pickupSound != null)
-            AudioSource.PlayClipAtPoint(pickupSound, transform.position, pickupSoundVolume);
     }
 
     public void Interact()
@@ -47,7 +44,7 @@ public class ItemPickup : MonoBehaviour, IInteractable
 
         // 1) add item to inventory using ItemData
         if (InventoryManager.Instance != null)
-            InventoryManager.Instance.AddItem(item);  // ✅ ItemData로 추가
+            InventoryManager.Instance.AddItem(item);  // ItemData로 추가
 
         // 2) Json
         if (story == null) story = FindFirstObjectByType<dialog>();
@@ -70,6 +67,20 @@ public class ItemPickup : MonoBehaviour, IInteractable
             DoorFeedbackUI.Instance?.ShowUnlockingFeedback();
         }
 
-        Destroy(gameObject);
+        OnPickupSuccess();
+
+        if (destroyObjectOnPickup)
+            Destroy(gameObject);
+    }
+
+    protected virtual void OnPickupSuccess()
+    {
+    }
+
+
+    private void PlayPickupSound()
+    {
+        if (pickupSound != null)
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position, pickupSoundVolume);
     }
 }

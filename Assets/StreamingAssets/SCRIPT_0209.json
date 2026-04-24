@@ -489,18 +489,36 @@
             "name": "Transition - CCTV Room",
             "nodes": [
                 {
-                    "id": "S07_N0",
+                    "id": "S07_N0_1",
                     "type": "pickup",
-                    "itemId": "DVD_RICH_SURGERY"
+                    "itemId": "DVD_RICH_SURGERY",
+                    "next":"S07_N0_2"
                 },
                 {
-                    "id": "S07_N1",
-                    "type": "interaction",
+                    "id": "S07_N0_2",
+                    "type": "narration",
+                    "text": "Date on screen: {PAST_DATE}. Lead surgeon: {PC_DAD_NAME}.",
+                    "next":"S07_N0_3"
+                },
+                {
+                   "id": "S07_N0_3",
+                    "type": "dialogue",
                     "target": "{PC_NAME}",
-                    "whenInteract": [
+                    "text": "In here, maybe I can see this video.",
+                    "next":"S07_N1_0"
+                },
+                {
+                    "id": "S07_N1_0",
+                    "type": "interaction",
+                    "target": "CCTV_PC",
+                    "next": "S07_N1_1"
+                },
+                {
+                    "id": "S07_N1_1",
+                    "type": "action",
+                    "do": [
                         { "type": "setFlag", "flag": "watched_dvd", "value": true },
                         { "type": "video", "id": "RICH_SURGERY_FOOTAGE" },
-                        { "type": "narration", "text": "Date on screen: {PAST_DATE}. Lead surgeon: {PC_DAD_NAME}." },
                         { "type": "sound", "name": "footsteps_slow" },
                         { "type": "narration", "text": "Behind you... the sound of step..." },
                         { "type": "setFlag", "flag": "npc_confronted", "value": true },
@@ -653,8 +671,7 @@
                 {
                     "id": "S08_N2",
                     "type": "uiObjective",
-                    "text": "Go up to the annex's second floor and gather clues.",
-                    "nextScene": "S09_ANNEX_2F"
+                    "text": "Go up to the annex's second floor and gather clues."
                 }
             ]
         },

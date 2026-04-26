@@ -10,7 +10,7 @@ public class FlashlightRuntimeController : MonoBehaviour
     [SerializeField] private KeyCode toggleKey = KeyCode.Q;
     [SerializeField] private float range = 18f;
     [SerializeField] private float spotAngle = 70f;
-    [SerializeField] private float intensity = 6f;
+    [SerializeField] private float intensity = 3f;
 
     private Light _flashlight;
     private Transform _cameraTransform;

@@ -69,12 +69,14 @@
     <Compile Include="Assets\SojinAsset\Office building\scripts\DoorAction.cs" />
     <Compile Include="Assets\Scripts\PhotoFrameSimple.cs" />
     <Compile Include="Assets\Scripts\dialogue\Debug\DebugConsole.cs" />
+    <Compile Include="Assets\Scripts\dialogue\LoadingUIController.cs" />
     <Compile Include="Assets\Scripts\DoorInteractable.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\SceneSwitchGen.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\MouseLook.cs" />
     <Compile Include="Assets\Scripts\Editor(Don&apos;t Remove-DS)\ItemDataAutoFillOnCreate.cs" />
     <Compile Include="Assets\QuickOutline\Scripts\Outline.cs" />
+    <Compile Include="Assets\Scripts\dialogue\12 Scene\FlashlightPickup.cs" />
     <Compile Include="Assets\Scripts\dialogue\Debug\DebugSceneSpawnOverride.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Z Axis -1\Drawer_Pull_Zopp.cs" />
     <Compile Include="Assets\Speech Bubble\Scripts\SpeechBubbleType.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Assets\Scripts\dialogue\NPC\NPCStoryLoader.cs" />
     <Compile Include="Assets\Scripts\CommandListConverter.cs" />
     <Compile Include="Assets\Scripts\TitleManager.cs" />
+    <Compile Include="Assets\Scripts\dialogue\12 Scene\FlickerLight.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor1.cs" />
     <Compile Include="Assets\KeypadSafe\Keypad_Scripts\KeypadStoryInteractable.cs" />
     <Compile Include="Assets\Scripts\dialogue\NodeDef.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="Assets\Scripts\ItemPickup.cs" />
     <Compile Include="Assets\Models\MonsterModel\MannequinTrigger.cs" />
     <Compile Include="Assets\SojinAsset\Vintage Interactive Radio\Scripts\RadioZoomController.cs" />
+    <Compile Include="Assets\Scripts\dialogue\Annex2FSceneStoryStarter.cs" />
     <Compile Include="Assets\Scripts\dialogue\UIController.cs" />
     <Compile Include="Assets\Scripts\dialogue\GateOpener.cs" />
     <Compile Include="Assets\Speech Bubble\Scripts\SeamlessUI\UIMatchSize.cs" />
@@ -122,11 +126,13 @@
     <Compile Include="Assets\Scripts\PhoneInteract.cs" />
     <Compile Include="Assets\SojinAsset\Vintage Interactive Radio\Scripts\TunerKnob.cs" />
     <Compile Include="Assets\SojinAsset\Vintage Interactive Radio\Scripts\InteractiveRadio.cs" />
+    <Compile Include="Assets\Scripts\dialogue\12 Scene\CctvPcDvdInteractable.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\ItemData.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Slide\opencloseSlide.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\dialogue\12 Scene\FlashlightRuntimeController.cs" />
     <Compile Include="Assets\Scripts\DocumentInteractable.cs" />
     <Compile Include="Assets\Speech Bubble\Example\ScriptExample\Scripts\SpeechBubbleExample.cs" />
     <Compile Include="Assets\SojinAsset\ScareManager.cs" />

@@ -5528,12 +5528,12 @@ MonoBehaviour:
   - id: RICH_SURGERY_FOOTAGE
     clip: {fileID: 32900000, guid: a8d8ee0ae2d51104ab6cfd96b803fa65, type: 3}
   portraitImage: {fileID: 6551520973618259606}
-  defaultPortrait: {fileID: 21300000, guid: 7dedd89e742762c46b495d7234e4fc0f, type: 3}
+  defaultPortrait: {fileID: 21300000, guid: b0dbe9622475eb14a8d7907c8f27fede, type: 3}
   portraits:
   - speaker: Yujin Mogan
-    sprite: {fileID: 21300000, guid: 6d6e18892cab2944daaea4f3703f8749, type: 3}
+    sprite: {fileID: 21300000, guid: b0dbe9622475eb14a8d7907c8f27fede, type: 3}
   - speaker: Jackie Stevens
-    sprite: {fileID: 21300000, guid: 2569fead8775e3f499c0be4201545261, type: 3}
+    sprite: {fileID: 21300000, guid: b0dbe9622475eb14a8d7907c8f27fede, type: 3}
   objectiveVisibleSeconds: 3
   dialogueAdvanceBlockSeconds: 0.3
 --- !u!328 &1121354522805450850

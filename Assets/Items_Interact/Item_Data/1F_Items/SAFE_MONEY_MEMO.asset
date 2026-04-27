@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: SAFE_MONEY_MEMO
   displayName: envelopes and notes
-  description: 'Cash envelope + note: ''{PAST_DATE} / Receipt of subsidy (Source:{RICH_PATIENT_NAME})'''
+  description: 'Cash envelope + note: ''10/12/1996 / Receipt of subsidy (Source:Daniel
+    Jane Garret)'''
   icon: {fileID: 21300000, guid: 7dedd89e742762c46b495d7234e4fc0f, type: 3}

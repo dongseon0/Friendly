@@ -1,0 +1,29 @@
+{
+    "HorrorAI": {
+        "checkpoints": [
+            {
+                "steps": 0,
+                "file_path": "results\\HorrorTest15\\HorrorAI\\HorrorAI-0.onnx",
+                "reward": null,
+                "creation_time": 1777275666.0571318,
+                "auxillary_file_paths": [
+                    "results\\HorrorTest15\\HorrorAI\\HorrorAI-0.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 0,
+            "file_path": "results\\HorrorTest15\\HorrorAI.onnx",
+            "reward": null,
+            "creation_time": 1777275666.0571318,
+            "auxillary_file_paths": [
+                "results\\HorrorTest15\\HorrorAI\\HorrorAI-0.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "1.13.1+cpu"
+    }
+}

@@ -27074,6 +27074,7 @@ MonoBehaviour:
   redLights:
   - {fileID: 2011385289}
   - {fileID: 57023569}
+  isActing: 0
 --- !u!1 &1606652579
 GameObject:
   m_ObjectHideFlags: 0
@@ -35449,11 +35450,11 @@ SceneRoots:
   - {fileID: 651900726}
   - {fileID: 2047087023}
   - {fileID: 1156689704}
-  - {fileID: 1606355785}
+  - {fileID: 553171891}
   - {fileID: 1008302559}
+  - {fileID: 1606355785}
   - {fileID: 1747755357}
   - {fileID: 1536183284}
-  - {fileID: 553171891}
   - {fileID: 699617234}
   - {fileID: 1423405148}
   - {fileID: 5884271897777703123}

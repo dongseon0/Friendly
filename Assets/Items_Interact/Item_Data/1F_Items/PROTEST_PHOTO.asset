@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: PROTEST_PHOTO
   displayName: protest photo
-  description: '''Give me back my dad! Out of the way, doctor {PC_DAD_NAME}!'''
+  description: '''Give me back my dad! Out of the way, doctor Ian Mogan!'''
   icon: {fileID: 21300000, guid: 7dedd89e742762c46b495d7234e4fc0f, type: 3}

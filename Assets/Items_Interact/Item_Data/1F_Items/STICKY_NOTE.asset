@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: STICKY_NOTE
   displayName: sticky note
-  description: <b>M</b>M-D<b>D</b>-YY<b>YY</b>... I'm sorry, but it's gonna be good
-    for you, my friend
+  description: 10/12/1996... I'm sorry, but it's gonna be good for you, my friend
   icon: {fileID: 21300000, guid: 7dedd89e742762c46b495d7234e4fc0f, type: 3}

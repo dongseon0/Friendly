@@ -3151,8 +3151,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 5, z: 1}
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!82 &692881221
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7064,6 +7064,7 @@ GameObject:
   - component: {fileID: 1426681530}
   - component: {fileID: 1426681529}
   - component: {fileID: 1426681535}
+  - component: {fileID: 1426681536}
   m_Layer: 7
   m_Name: HospitalF1SceneLoader
   m_TagString: door
@@ -7100,6 +7101,8 @@ MonoBehaviour:
   audioSource: {fileID: 1426681535}
   loadSceneSound: {fileID: 8300000, guid: 0bb4cb33617799d4c9dbaeacdf46acf6, type: 3}
   waitForSoundBeforeLoad: 1
+  loadingText: 
+  minimumLoadingTime: 0.01
 --- !u!65 &1426681531
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7286,6 +7289,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1426681536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426681528}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &1451148555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8544,6 +8565,7 @@ GameObject:
   - component: {fileID: 1750476184}
   - component: {fileID: 1750476189}
   - component: {fileID: 1750476190}
+  - component: {fileID: 1750476191}
   m_Layer: 7
   m_Name: OssuarySceneLoader
   m_TagString: door
@@ -8568,6 +8590,8 @@ MonoBehaviour:
   audioSource: {fileID: 1750476190}
   loadSceneSound: {fileID: 8300000, guid: c699246e4e8f166458b2bbe195bb4404, type: 3}
   waitForSoundBeforeLoad: 1
+  loadingText: 
+  minimumLoadingTime: 0.01
 --- !u!65 &1750476185
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8766,6 +8790,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1750476191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750476183}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1763578558
 GameObject:
   m_ObjectHideFlags: 0

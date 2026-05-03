@@ -349,6 +349,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -971,11 +975,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 590543240985620583, guid: 90d301e5ac74e554e9e2be45b52075a2, type: 3}
   m_PrefabInstance: {fileID: 49943465}
-  m_PrefabAsset: {fileID: 0}
---- !u!108 &57023569 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 6067516794572113890, guid: a615dda7344211d47b8032925a63e51a, type: 3}
-  m_PrefabInstance: {fileID: 763248241}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &60242126
 PrefabInstance:
@@ -3287,6 +3286,10 @@ PrefabInstance:
     - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
       propertyPath: m_Name
       value: My_Ceiling Light Bright (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6182,6 +6185,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8113,6 +8120,9 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   currentDecibel: 0
   currentMouseDelta: 0
+  baselineDecibel: 0
+  baselineMouseDelta: 0
+  isBaselineReady: 0
 --- !u!4 &553171891
 Transform:
   m_ObjectHideFlags: 0
@@ -13470,6 +13480,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14988,6 +15002,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15536,17 +15554,6 @@ Transform:
   - {fileID: 1803449603}
   m_Father: {fileID: 33926012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &983259895 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6211732833309610925, guid: 1fad47503a3acf24a838653f977cff69, type: 3}
-  m_PrefabInstance: {fileID: 1747755357}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dda98355a4fefc84c90bb03c2a856a4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &984915185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15950,8 +15957,17 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  mousePanicValue: 0
-  micVolumeValue: 0
+  micWeight: 0.7
+  mouseWeight: 0.3
+  fearRewardScale: 1.5
+  repetitionPenalty: -0.8
+  decayPenalty: -0.5
+  diversityRewardScale: 0.4
+  silenceRewardPerStep: 0.05
+  silenceRewardCap: 0.3
+  wastedActionPenalty: -0.2
+  minSilenceStepsForReward: 3
+  maxSilenceStepsBeforePenalty: 20
 --- !u!114 &1008302561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16615,6 +16631,10 @@ PrefabInstance:
     - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
       propertyPath: m_Name
       value: My_Lamp_Ceiling_Apt_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17626,6 +17646,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17749,6 +17773,10 @@ PrefabInstance:
     - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
       propertyPath: m_Name
       value: My_Ceiling Light Bright (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18983,6 +19011,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1773632355}
+  - {fileID: 1946419810}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -20748,6 +20777,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Lamp_Ceiling_Apt_02
       objectReference: {fileID: 0}
+    - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20843,6 +20876,10 @@ PrefabInstance:
     - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
       propertyPath: m_Name
       value: My_Lamp_Ceiling_Apt_02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22171,6 +22208,10 @@ PrefabInstance:
     - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
       propertyPath: m_Name
       value: My_Ceiling Light Bright
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24260,6 +24301,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25043,6 +25088,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25618,6 +25667,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25628,135 +25685,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2242876248808109889, guid: a615dda7344211d47b8032925a63e51a, type: 3}
   m_PrefabInstance: {fileID: 1532805338}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1536183282
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1536183284}
-  - component: {fileID: 1536183283}
-  m_Layer: 0
-  m_Name: DeathWhistle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &1536183283
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536183282}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 302e14ff108fe6744bad40eec6707dc9, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 0.2
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &1536183284
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536183282}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 0.89, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1536250708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27033,6 +26961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1606355785}
   - component: {fileID: 1606355786}
+  - component: {fileID: 1606355787}
   m_Layer: 0
   m_Name: ScareManager
   m_TagString: Untagged
@@ -27067,14 +26996,119 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ea49de56a86b24fa8f308aab1faa59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mannequin: {fileID: 983259895}
+  mannequins: []
+  lightFlickerDuration: 1.5
   jumpScareCanvas: {fileID: 1156689703}
   jumpScareImage: {fileID: 1773632354}
-  scareAudio: {fileID: 1536183283}
-  redLights:
-  - {fileID: 2011385289}
-  - {fileID: 57023569}
+  jumpScare3D_1: {fileID: 0}
+  jumpScare3D_2: {fileID: 0}
+  scareAudio: {fileID: 1606355787}
+  footstepSound: {fileID: 0}
+  eerySound: {fileID: 0}
+  laughSound: {fileID: 0}
+  hospitalBeepSound: {fileID: 0}
+  screamSound: {fileID: 0}
+  doors: []
+  pictureGlitchManager: {fileID: 0}
   isActing: 0
+  nearbyCheckRadius: 8
+--- !u!82 &1606355787
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606355784}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1606652579
 GameObject:
   m_ObjectHideFlags: 0
@@ -27283,6 +27317,10 @@ PrefabInstance:
     - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
       propertyPath: m_Name
       value: My_Ceiling Light Bright (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29713,6 +29751,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29797,12 +29839,12 @@ GameObject:
   - component: {fileID: 1773632357}
   - component: {fileID: 1773632356}
   m_Layer: 0
-  m_Name: JumpscareImage
+  m_Name: BlackeyeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1773632355
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32459,6 +32501,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2064697645637646218, guid: ad6d97b53e376e34ebee3c25f036160b, type: 3}
   m_PrefabInstance: {fileID: 1943674818}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1946419809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1946419810}
+  - component: {fileID: 1946419812}
+  - component: {fileID: 1946419811}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1946419810
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946419809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1156689704}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1946419811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946419809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1946419812
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946419809}
+  m_CullTransparentMesh: 1
 --- !u!1 &1955619138
 GameObject:
   m_ObjectHideFlags: 0
@@ -32618,6 +32735,10 @@ PrefabInstance:
     - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
       propertyPath: m_Name
       value: My_Lamp_Ceiling_Apt_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33372,11 +33493,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5365626312988813196, guid: ca7092d15ad9f0a4f84db0268c886176, type: 3}
   m_PrefabInstance: {fileID: 1972548959}
   m_PrefabAsset: {fileID: 0}
---- !u!108 &2011385289 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 6067516794572113890, guid: a615dda7344211d47b8032925a63e51a, type: 3}
-  m_PrefabInstance: {fileID: 1662788165}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2011635186
 GameObject:
   m_ObjectHideFlags: 0
@@ -33633,6 +33749,10 @@ PrefabInstance:
     - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
       propertyPath: m_Name
       value: My_Ceiling Light Bright
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34033,6 +34153,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Ceiling Light Bright
       objectReference: {fileID: 0}
+    - target: {fileID: 4208926559941835536, guid: a615dda7344211d47b8032925a63e51a, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34192,6 +34316,10 @@ PrefabInstance:
     - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
       propertyPath: m_Name
       value: My_Lamp_Ceiling_Apt_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34935,6 +35063,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: My_Lamp_Ceiling_Apt_02 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8913750980977116659, guid: ef58ebe18ee2ab64b8eaac1f70024d29, type: 3}
+      propertyPath: m_TagString
+      value: ScareLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35454,7 +35586,6 @@ SceneRoots:
   - {fileID: 1008302559}
   - {fileID: 1606355785}
   - {fileID: 1747755357}
-  - {fileID: 1536183284}
   - {fileID: 699617234}
   - {fileID: 1423405148}
   - {fileID: 5884271897777703123}

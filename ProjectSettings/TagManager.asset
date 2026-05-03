@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - door
+  - ScareLight
   layers:
   - Default
   - TransparentFX

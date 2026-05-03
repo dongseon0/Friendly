@@ -63,7 +63,6 @@
     <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Library\PackageCache\com.unity.ai.inference@e760aa121ec7\Runtime\Core\SourceGenerator\SourceGenerators.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\SojinAsset\HorrorDirector.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Scenes\Quitgame.cs" />
     <Compile Include="Assets\Scripts\dialogue\Door unlocking item\unlockingItem.cs" />
     <Compile Include="Assets\SojinAsset\Office building\scripts\DoorAction.cs" />
@@ -102,6 +101,7 @@
     <Compile Include="Assets\Speech Bubble\Scripts\SpeechBubble_TMP.cs" />
     <Compile Include="Assets\Scripts\ItemPickup.cs" />
     <Compile Include="Assets\Models\MonsterModel\MannequinTrigger.cs" />
+    <Compile Include="Assets\Scripts\ScareManager.cs" />
     <Compile Include="Assets\SojinAsset\Vintage Interactive Radio\Scripts\RadioZoomController.cs" />
     <Compile Include="Assets\Scripts\dialogue\Annex2FSceneStoryStarter.cs" />
     <Compile Include="Assets\Scripts\dialogue\UIController.cs" />
@@ -126,7 +126,9 @@
     <Compile Include="Assets\Scripts\PhoneInteract.cs" />
     <Compile Include="Assets\SojinAsset\Vintage Interactive Radio\Scripts\TunerKnob.cs" />
     <Compile Include="Assets\SojinAsset\Vintage Interactive Radio\Scripts\InteractiveRadio.cs" />
+    <Compile Include="Assets\Scripts\TrainingManager.cs" />
     <Compile Include="Assets\Scripts\dialogue\12 Scene\CctvPcDvdInteractable.cs" />
+    <Compile Include="Assets\Scripts\ScareManager_Training.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\ItemData.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Slide\opencloseSlide.cs" />
@@ -135,10 +137,10 @@
     <Compile Include="Assets\Scripts\dialogue\12 Scene\FlashlightRuntimeController.cs" />
     <Compile Include="Assets\Scripts\DocumentInteractable.cs" />
     <Compile Include="Assets\Speech Bubble\Example\ScriptExample\Scripts\SpeechBubbleExample.cs" />
-    <Compile Include="Assets\SojinAsset\ScareManager.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\InteractUIMarker.cs" />
     <Compile Include="Assets\Speech Bubble\Scripts\SpeechBubbleStyle.cs" />
+    <Compile Include="Assets\Scripts\HorrorDirector.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\dialogue\dialog.cs" />
     <Compile Include="Assets\KeypadSafe\Keypad_Scripts\KeypadInteractionFPV.cs" />
@@ -157,11 +159,13 @@
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipL.cs" />
     <Compile Include="Assets\KeypadSafe\Keypad_Scripts\KeypadModalController.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Closet\ClosetopencloseDoor.cs" />
+    <Compile Include="Assets\Scripts\TrainingSignalSimulator.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
-    <Compile Include="Assets\SojinAsset\SignalCollector.cs" />
+    <Compile Include="Assets\Scripts\PlayerProfiler.cs" />
     <Compile Include="Assets\Scripts\dialogue\Door unlocking item\DoorFeedbackUI.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\Windows\opencloseWindowApt.cs" />
     <Compile Include="Assets\KeypadSafe\Keypad_Scripts\KeypadButton.cs" />
+    <Compile Include="Assets\Scripts\SignalCollector.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Brick Project Studio\Apartment Kit\Common\Scripts &amp; Animation\OvenOpen\OvenFlip.cs" />
     <Compile Include="Assets\Scripts\dialogue\ScriptLoader.cs" />

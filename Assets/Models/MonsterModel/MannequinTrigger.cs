@@ -4,6 +4,7 @@ public class MannequinTrigger : MonoBehaviour
 {
     private Animator mannequinAnimator;
     private bool isPlayerNearby = false;
+    public bool IsPlayerNearby => isPlayerNearby;
 
     void Start()
     {

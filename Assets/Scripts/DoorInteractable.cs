@@ -165,4 +165,5 @@ public class DoorInteractable : MonoBehaviour, IInteractable
     // 바깥 스크립트가 문 상태를 확인할 수 있도록 프로퍼티 제공
     public bool IsOpen => isOpen;
     public bool IsMoving => isMoving;
+    public bool GetIsLocked() => IsLocked(); 
 }

@@ -198,7 +198,9 @@ public class HorrorDirector : Agent
             else
             {
                 // 유효한 연출 → Fear Signal에 비례한 보상
-                AddReward(fearSignal * fearRewardScale);
+                //AddReward(fearSignal * fearRewardScale);
+                float fearReward = (fearSignal + 0.3f) * fearRewardScale;
+                AddReward(fearReward);
             }
         }
 

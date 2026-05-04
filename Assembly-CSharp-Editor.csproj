@@ -63,8 +63,10 @@
     <Analyzer Include="C:\Users\swu\Documents\sojin\Friendly\Library\PackageCache\com.unity.ai.inference@e760aa121ec7\Runtime\Core\SourceGenerator\SourceGenerators.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Editor\AutoBootstrapEditor.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
     <Compile Include="Assets\Speech Bubble\Scripts\Editor\SpeechBubbleEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\ItemDataAutoFillOnCreate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\EasyRoads3D\Editor\EasyRoads3Dv3Editor.dll" />

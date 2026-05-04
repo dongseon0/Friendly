@@ -164,9 +164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  baseNoise: 0.05
-  scareResponsePeak: 0.8
-  responseDecayRate: 3
+  baseNoise: 0.01
+  scareResponsePeak: 1
+  responseDecayRate: 2
   baselineDecibel: 0
   baselineMouseDelta: 0
   isBaselineReady: 1
@@ -208,14 +208,14 @@ MonoBehaviour:
   micWeight: 0.7
   mouseWeight: 0.3
   fearRewardScale: 1.5
-  repetitionPenalty: -0.8
-  decayPenalty: -0.5
+  repetitionPenalty: -0.5
+  decayPenalty: -0.2
   diversityRewardScale: 0.4
-  silenceRewardPerStep: 0.05
+  silenceRewardPerStep: 0.1
   silenceRewardCap: 0.3
-  wastedActionPenalty: -0.2
+  wastedActionPenalty: -0.05
   minSilenceStepsForReward: 3
-  maxSilenceStepsBeforePenalty: 20
+  maxSilenceStepsBeforePenalty: 40
 --- !u!114 &530122748
 MonoBehaviour:
   m_ObjectHideFlags: 0

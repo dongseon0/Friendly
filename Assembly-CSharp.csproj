@@ -73,7 +73,6 @@
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\SceneSwitchGen.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow.cs" />
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\MouseLook.cs" />
-    <Compile Include="Assets\Scripts\Editor(Don&apos;t Remove-DS)\ItemDataAutoFillOnCreate.cs" />
     <Compile Include="Assets\QuickOutline\Scripts\Outline.cs" />
     <Compile Include="Assets\Scripts\dialogue\12 Scene\FlashlightPickup.cs" />
     <Compile Include="Assets\Scripts\dialogue\Debug\DebugSceneSpawnOverride.cs" />
@@ -149,7 +148,6 @@
     <Compile Include="Assets\Brick Project Studio\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseStallDoor.cs" />
     <Compile Include="Assets\Speech Bubble\Scripts\SeamlessUI\RectTransformExtension.cs" />
     <Compile Include="Assets\SojinAsset\Vintage Interactive Radio\Scripts\JumpScareManager.cs" />
-    <Compile Include="Assets\Scripts\Editor(Don&apos;t Remove-DS)\AutoBootstrapEditor.cs" />
     <Compile Include="Assets\KeypadSafe\Safe_script\SafeStoryInteractable.cs" />
     <Compile Include="Assets\KeypadSafe\Keypad_Scripts\Keypad.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />

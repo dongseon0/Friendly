@@ -2,22 +2,22 @@
     "HorrorAI": {
         "checkpoints": [
             {
-                "steps": 340,
-                "file_path": "results\\HorrorTest_v1\\HorrorAI\\HorrorAI-340.onnx",
-                "reward": -125.43124289590804,
-                "creation_time": 1777837434.6125045,
+                "steps": 74,
+                "file_path": "results\\HorrorTest_v1\\HorrorAI\\HorrorAI-74.onnx",
+                "reward": -122.63453439565805,
+                "creation_time": 1777838388.8445613,
                 "auxillary_file_paths": [
-                    "results\\HorrorTest_v1\\HorrorAI\\HorrorAI-340.pt"
+                    "results\\HorrorTest_v1\\HorrorAI\\HorrorAI-74.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 340,
+            "steps": 74,
             "file_path": "results\\HorrorTest_v1\\HorrorAI.onnx",
-            "reward": -125.43124289590804,
-            "creation_time": 1777837434.6125045,
+            "reward": -122.63453439565805,
+            "creation_time": 1777838388.8445613,
             "auxillary_file_paths": [
-                "results\\HorrorTest_v1\\HorrorAI\\HorrorAI-340.pt"
+                "results\\HorrorTest_v1\\HorrorAI\\HorrorAI-74.pt"
             ]
         }
     },
